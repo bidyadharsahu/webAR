@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 50" fill="none">
+  <!-- AR Scanner Frame -->
+  <g stroke="#00cc66" stroke-width="2">
+    <!-- Top left corner -->
+    <path d="M2 12 L2 2 L12 2" stroke-linecap="round"/>
+    <!-- Top right corner -->
+    <path d="M28 2 L38 2 L38 12" stroke-linecap="round"/>
+    <!-- Bottom left corner -->
+    <path d="M2 28 L2 38 L12 38" stroke-linecap="round"/>
+    <!-- Bottom right corner -->
+    <path d="M28 38 L38 38 L38 28" stroke-linecap="round"/>
+  </g>
+  
+  <!-- Play/AR Symbol -->
+  <circle cx="20" cy="20" r="10" fill="#00cc66"/>
+  <path d="M17 15 L17 25 L25 20 Z" fill="white"/>
+  
+  <!-- Text: webAR -->
+  <text x="48" y="32" font-family="system-ui, -apple-system, sans-serif" font-size="28" font-weight="700" fill="#1a1a1a">
+    <tspan>web</tspan><tspan fill="#00cc66">AR</tspan>
+  </text>
+</svg>
