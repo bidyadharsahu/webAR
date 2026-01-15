@@ -35,10 +35,34 @@ function AnimatedSection({ children, className = '' }: { children: React.ReactNo
 }
 
 const values = [
-  { icon: '👤', title: 'Human-First', desc: 'Technology should enhance human connection, not replace it.' },
-  { icon: '🎯', title: 'Simple Technology', desc: 'Complex problems deserve simple, elegant solutions.' },
-  { icon: '💰', title: 'Real Business Value', desc: 'Every feature we build must create measurable impact.' },
-]
+  { 
+    title: 'Human-First', 
+    desc: 'Technology should enhance human connection, not replace it.',
+    icon: (
+      <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+      </svg>
+    )
+  },
+  { 
+    title: 'Simple Technology', 
+    desc: 'Complex problems deserve simple, elegant solutions.',
+    icon: (
+      <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+      </svg>
+    )
+  },
+  { 
+    title: 'Real Business Value', 
+    desc: 'Every feature we build must create measurable impact.',
+    icon: (
+      <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+      </svg>
+    )
+  },
+];
 
 const team = [
   { name: 'Founder', role: 'CEO & Visionary' },
@@ -121,7 +145,9 @@ export default function AboutPage() {
               variants={fadeUp}
               className="aspect-square bg-gradient-to-br from-primary/10 to-primary/5 rounded-3xl flex items-center justify-center"
             >
-              <span className="text-9xl">✨</span>
+              <svg className="w-32 h-32 text-primary/40" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={0.5} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+              </svg>
             </motion.div>
           </div>
         </div>
@@ -142,7 +168,9 @@ export default function AboutPage() {
                 variants={fadeUp}
                 className="card-bordered p-10 text-center"
               >
-                <span className="text-6xl mb-6 block">{value.icon}</span>
+                <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-primary/10 flex items-center justify-center text-primary">
+                  {value.icon}
+                </div>
                 <h3 className="heading-sm mb-4">{value.title}</h3>
                 <p className="text-body-sm">{value.desc}</p>
               </motion.div>
@@ -193,7 +221,9 @@ export default function AboutPage() {
                 className="text-center"
               >
                 <div className="aspect-square bg-gradient-to-br from-primary/10 to-primary/5 rounded-3xl mb-4 flex items-center justify-center">
-                  <span className="text-6xl">👤</span>
+                  <svg className="w-16 h-16 text-primary/30" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  </svg>
                 </div>
                 <h3 className="font-semibold text-lg">{member.name}</h3>
                 <p className="text-dark/50 text-sm">{member.role}</p>

@@ -47,6 +47,18 @@ html {
   color: white;
 }
 
+/* Ensure text visibility during animations */
+.animate-visible {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* Better contrast for animated elements */
+[class*="animate"] {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+
 /* Link base styles */
 a {
   color: inherit;

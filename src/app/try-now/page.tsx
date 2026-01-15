@@ -1,24 +1,36 @@
-'use client'
+'use client';
 
-import { useRef, useState } from 'react'
-import { motion, useInView } from 'framer-motion'
+import { useRef, useState } from 'react';
+import { motion, useInView } from 'framer-motion';
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0 }
-}
+  hidden: { opacity: 0, y: 30 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }
+  }
+};
+
+const fadeIn = {
+  hidden: { opacity: 0 },
+  visible: { 
+    opacity: 1,
+    transition: { duration: 0.5 }
+  }
+};
 
 const staggerContainer = {
-  hidden: { opacity: 0 },
+  hidden: { opacity: 1 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.1, delayChildren: 0.2 }
+    transition: { staggerChildren: 0.1, delayChildren: 0.1 }
   }
-}
+};
 
-function AnimatedSection({ children, className = '' }: { children: React.ReactNode, className?: string }) {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: '-100px' })
+function AnimatedSection({ children, className = '' }: { children: React.ReactNode; className?: string }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-80px' });
   
   return (
     <motion.section
@@ -30,11 +42,32 @@ function AnimatedSection({ children, className = '' }: { children: React.ReactNo
     >
       {children}
     </motion.section>
-  )
+  );
 }
 
 export default function TryNowPage() {
-  const [activeTab, setActiveTab] = useState<'customer' | 'restaurant'>('customer')
+  const [activeTab, setActiveTab] = useState<'customer' | 'restaurant'>('customer');
+  const [formData, setFormData] = useState({
+    restaurantName: '',
+    yourName: '',
+    email: '',
+    phone: '',
+    message: ''
+  });
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const subject = `Partnership Request from ${formData.restaurantName}`;
+    const body = `Restaurant Name: ${formData.restaurantName}%0D%0AContact Name: ${formData.yourName}%0D%0AEmail: ${formData.email}%0D%0APhone: ${formData.phone}%0D%0A%0D%0AMessage:%0D%0A${formData.message}`;
+    window.location.href = `mailto:namasterides@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
+  };
 
   return (
     <>
@@ -143,15 +176,21 @@ export default function TryNowPage() {
                   ))}
                 </div>
 
-                <button className="btn-primary">
+                <a href="mailto:namasterides@gmail.com?subject=Finding Partner Restaurants&body=Hi, I would like to know about WebAR partner restaurants in my area.%0D%0A%0D%0AMy location: " className="btn-primary">
                   Find Partner Restaurants
-                </button>
+                  <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                </a>
               </motion.div>
 
               <motion.div variants={fadeUp}>
                 <div className="card-bordered p-10 text-center">
                   <div className="w-48 h-48 bg-gradient-to-br from-primary/20 to-primary/5 rounded-3xl mx-auto mb-8 flex items-center justify-center">
-                    <span className="text-8xl">📱</span>
+                    <svg className="w-20 h-20 text-primary/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                    </svg>
                   </div>
                   <h3 className="heading-sm mb-4">Demo Experience</h3>
                   <p className="text-body-sm mb-6">
@@ -201,12 +240,16 @@ export default function TryNowPage() {
               <motion.div variants={fadeUp}>
                 <div className="card-bordered p-10">
                   <h3 className="heading-sm mb-6">Get Started</h3>
-                  <form className="space-y-4">
+                  <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
                       <label className="block text-sm font-medium mb-2">Restaurant Name</label>
                       <input
                         type="text"
-                        className="w-full px-4 py-3 rounded-xl border border-dark/10 focus:outline-none focus:border-primary"
+                        name="restaurantName"
+                        value={formData.restaurantName}
+                        onChange={handleInputChange}
+                        required
+                        className="w-full px-4 py-3 rounded-xl border border-dark/10 focus:outline-none focus:border-primary transition-colors"
                         placeholder="Your restaurant name"
                       />
                     </div>
@@ -214,7 +257,11 @@ export default function TryNowPage() {
                       <label className="block text-sm font-medium mb-2">Your Name</label>
                       <input
                         type="text"
-                        className="w-full px-4 py-3 rounded-xl border border-dark/10 focus:outline-none focus:border-primary"
+                        name="yourName"
+                        value={formData.yourName}
+                        onChange={handleInputChange}
+                        required
+                        className="w-full px-4 py-3 rounded-xl border border-dark/10 focus:outline-none focus:border-primary transition-colors"
                         placeholder="Your full name"
                       />
                     </div>
@@ -222,7 +269,11 @@ export default function TryNowPage() {
                       <label className="block text-sm font-medium mb-2">Email</label>
                       <input
                         type="email"
-                        className="w-full px-4 py-3 rounded-xl border border-dark/10 focus:outline-none focus:border-primary"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        required
+                        className="w-full px-4 py-3 rounded-xl border border-dark/10 focus:outline-none focus:border-primary transition-colors"
                         placeholder="your@email.com"
                       />
                     </div>
@@ -230,20 +281,29 @@ export default function TryNowPage() {
                       <label className="block text-sm font-medium mb-2">Phone</label>
                       <input
                         type="tel"
-                        className="w-full px-4 py-3 rounded-xl border border-dark/10 focus:outline-none focus:border-primary"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleInputChange}
+                        className="w-full px-4 py-3 rounded-xl border border-dark/10 focus:outline-none focus:border-primary transition-colors"
                         placeholder="+1 (555) 000-0000"
                       />
                     </div>
                     <div>
                       <label className="block text-sm font-medium mb-2">Message (Optional)</label>
                       <textarea
+                        name="message"
+                        value={formData.message}
+                        onChange={handleInputChange}
                         rows={3}
-                        className="w-full px-4 py-3 rounded-xl border border-dark/10 focus:outline-none focus:border-primary resize-none"
+                        className="w-full px-4 py-3 rounded-xl border border-dark/10 focus:outline-none focus:border-primary resize-none transition-colors"
                         placeholder="Tell us about your restaurant..."
                       />
                     </div>
                     <button type="submit" className="btn-primary w-full justify-center">
                       Submit Partnership Request
+                      <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                      </svg>
                     </button>
                   </form>
                 </div>
