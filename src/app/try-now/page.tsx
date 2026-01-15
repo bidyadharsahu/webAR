@@ -223,7 +223,7 @@ export default function TryNowPage() {
                 <div className="space-y-4 mb-8">
                   {[
                     'Fill out the partnership form',
-                    'We'll reach out to discuss your needs',
+                    'We will reach out to discuss your needs',
                     'We set up your AR menu experience',
                     'Start delighting customers with AR'
                   ].map((step, i) => (
