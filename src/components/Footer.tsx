@@ -4,15 +4,16 @@ import Link from 'next/link'
 import Image from 'next/image'
 
 const footerLinks = {
-  product: [
-    { label: 'Get Your Moment', href: '/product/get-your-moment' },
-    { label: 'Partner With Restaurants', href: '/product/partner-with-restaurants' },
+  services: [
+    { label: 'AR Photo Frames', href: '/services/ar-photo-frames' },
+    { label: 'Restaurant Menu AR', href: '/services/restaurant-menu' },
+    { label: 'AR Business Cards', href: '/services/ar-business-cards' },
+    { label: 'Real Estate AR', href: '/services/real-estate-ar' },
+    { label: '3D Modeling', href: '/services/3d-modeling' },
   ],
-  resources: [
-    { label: 'Blog', href: '/resources/blog' },
-    { label: 'News & Media', href: '/resources/news' },
-    { label: 'Videos', href: '/resources/videos' },
-    { label: 'White Papers', href: '/resources/white-papers' },
+  quickLinks: [
+    { label: 'Pricing', href: '/pricing' },
+    { label: 'Try Demo', href: '/try-now' },
   ],
   company: [
     { label: 'About', href: '/company/about' },
@@ -28,7 +29,7 @@ export default function Footer() {
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8">
           {/* Brand Column */}
-          <div className="lg:col-span-5">
+          <div className="lg:col-span-4">
             <Link href="/" className="inline-block mb-6">
               <Image 
                 src="/logo.svg" 
@@ -39,7 +40,7 @@ export default function Footer() {
               />
             </Link>
             <p className="text-white/60 max-w-sm mb-8 text-lg leading-relaxed">
-              Helping people relive moments and helping restaurants sell experiences — one scan at a time.
+              Bringing your world to life with augmented reality. From memories to menus, business cards to real estate — one scan at a time.
             </p>
             <div className="space-y-2">
               <a
@@ -53,14 +54,14 @@ export default function Footer() {
           </div>
 
           {/* Links Grid */}
-          <div className="lg:col-span-7 grid grid-cols-2 md:grid-cols-3 gap-8">
-            {/* Product */}
+          <div className="lg:col-span-8 grid grid-cols-2 md:grid-cols-3 gap-8">
+            {/* Services */}
             <div>
               <h4 className="text-sm font-semibold uppercase tracking-wider text-white/40 mb-6">
-                Product
+                Services
               </h4>
               <ul className="space-y-4">
-                {footerLinks.product.map((link) => (
+                {footerLinks.services.map((link) => (
                   <li key={link.href}>
                     <Link
                       href={link.href}
@@ -73,13 +74,13 @@ export default function Footer() {
               </ul>
             </div>
 
-            {/* Resources */}
+            {/* Quick Links */}
             <div>
               <h4 className="text-sm font-semibold uppercase tracking-wider text-white/40 mb-6">
-                Resources
+                Quick Links
               </h4>
               <ul className="space-y-4">
-                {footerLinks.resources.map((link) => (
+                {footerLinks.quickLinks.map((link) => (
                   <li key={link.href}>
                     <Link
                       href={link.href}

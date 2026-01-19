@@ -7,30 +7,43 @@ import { motion, AnimatePresence } from 'framer-motion'
 
 const navItems = [
   {
-    label: 'Product',
+    label: 'Services',
     children: [
       { 
-        label: 'Get Your Moment', 
-        href: '/product/get-your-moment', 
-        description: 'AR memories for customers',
-        tag: 'B2C'
+        label: 'AR Photo Frames', 
+        href: '/services/ar-photo-frames', 
+        description: 'Living memories from photos',
+        icon: '🖼️'
       },
       { 
-        label: 'Partner With Restaurants', 
-        href: '/product/partner-with-restaurants', 
-        description: 'AR menus for restaurants',
-        tag: 'B2B'
+        label: 'Restaurant Menu AR', 
+        href: '/services/restaurant-menu', 
+        description: '3D menus that sell',
+        icon: '🍽️'
+      },
+      { 
+        label: 'AR Business Cards', 
+        href: '/services/ar-business-cards', 
+        description: 'Digital networking magic',
+        icon: '💼'
+      },
+      { 
+        label: 'Real Estate AR', 
+        href: '/services/real-estate-ar', 
+        description: 'Virtual property tours',
+        icon: '🏠'
+      },
+      { 
+        label: '3D Modeling', 
+        href: '/services/3d-modeling', 
+        description: 'Custom 3D creations',
+        icon: '🎨'
       },
     ],
   },
   {
-    label: 'Resources',
-    children: [
-      { label: 'Blog', href: '/resources/blog', description: 'Stories and insights' },
-      { label: 'News & Media', href: '/resources/news', description: 'Press coverage' },
-      { label: 'Videos', href: '/resources/videos', description: 'See WebAR in action' },
-      { label: 'White Papers', href: '/resources/white-papers', description: 'Research & reports' },
-    ],
+    label: 'Pricing',
+    href: '/pricing',
   },
   {
     label: 'Company',
@@ -105,6 +118,7 @@ export default function Header() {
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center gap-1">
               {navItems.map((item) => (
+                'children' in item ? (
                 <div
                   key={item.label}
                   className="relative"
@@ -140,16 +154,14 @@ export default function Header() {
                               href={child.href}
                               className="flex items-start gap-3 p-4 rounded-xl hover:bg-cream transition-colors duration-200 group"
                             >
+                              {'icon' in child && (
+                                <span className="text-2xl">{child.icon}</span>
+                              )}
                               <div className="flex-1">
                                 <div className="flex items-center gap-2">
                                   <span className="font-medium text-dark group-hover:text-primary transition-colors">
                                     {child.label}
                                   </span>
-                                  {'tag' in child && (
-                                    <span className="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-primary/10 text-primary rounded-full">
-                                      {child.tag}
-                                    </span>
-                                  )}
                                 </div>
                                 <p className="text-sm text-dark/50 mt-0.5">
                                   {child.description}
@@ -170,6 +182,15 @@ export default function Header() {
                     )}
                   </AnimatePresence>
                 </div>
+                ) : (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  className="px-5 py-2 text-[15px] font-medium transition-colors duration-300 rounded-full text-dark/70 hover:text-dark hover:bg-primary/5"
+                >
+                  {item.label}
+                </Link>
+                )
               ))}
             </div>
 
@@ -234,41 +255,59 @@ export default function Header() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1 + 0.2 }}
                   >
-                    <h3 className="label mb-4">{item.label}</h3>
-                    <div className="space-y-2">
-                      {item.children?.map((child) => (
-                        <Link
-                          key={child.href}
-                          href={child.href}
-                          className="flex items-center justify-between p-4 bg-white rounded-2xl hover:shadow-md transition-all duration-300"
-                          onClick={() => setMobileMenuOpen(false)}
+                    {'children' in item ? (
+                      <>
+                        <h3 className="label mb-4">{item.label}</h3>
+                        <div className="space-y-2">
+                          {item.children?.map((child) => (
+                            <Link
+                              key={child.href}
+                              href={child.href}
+                              className="flex items-center justify-between p-4 bg-white rounded-2xl hover:shadow-md transition-all duration-300"
+                              onClick={() => setMobileMenuOpen(false)}
+                            >
+                              <div className="flex items-center gap-3">
+                                {'icon' in child && (
+                                  <span className="text-2xl">{child.icon}</span>
+                                )}
+                                <div>
+                                  <span className="font-medium text-dark">
+                                    {child.label}
+                                  </span>
+                                  <p className="text-sm text-dark/50 mt-1">
+                                    {child.description}
+                                  </p>
+                                </div>
+                              </div>
+                              <svg
+                                className="w-5 h-5 text-dark/30"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                              >
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                              </svg>
+                            </Link>
+                          ))}
+                        </div>
+                      </>
+                    ) : (
+                      <Link
+                        href={item.href}
+                        className="flex items-center justify-between p-4 bg-white rounded-2xl hover:shadow-md transition-all duration-300"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        <span className="font-medium text-dark text-lg">{item.label}</span>
+                        <svg
+                          className="w-5 h-5 text-dark/30"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
                         >
-                          <div>
-                            <div className="flex items-center gap-2">
-                              <span className="font-medium text-dark">
-                                {child.label}
-                              </span>
-                              {'tag' in child && (
-                                <span className="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-primary/10 text-primary rounded-full">
-                                  {child.tag}
-                                </span>
-                              )}
-                            </div>
-                            <p className="text-sm text-dark/50 mt-1">
-                              {child.description}
-                            </p>
-                          </div>
-                          <svg
-                            className="w-5 h-5 text-dark/30"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                          >
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                          </svg>
-                        </Link>
-                      ))}
-                    </div>
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </Link>
+                    )}
                   </motion.div>
                 ))}
 
