@@ -38,13 +38,14 @@ const staggerContainer = {
   }
 };
 
-function AnimatedSection({ children, className = '' }: { children: React.ReactNode; className?: string }) {
+function AnimatedSection({ children, className = '', id }: { children: React.ReactNode; className?: string; id?: string }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-80px' });
   
   return (
     <motion.section
       ref={ref}
+      id={id}
       initial="hidden"
       animate={isInView ? 'visible' : 'hidden'}
       variants={staggerContainer}
