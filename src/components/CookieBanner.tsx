@@ -22,61 +22,36 @@ export default function CookieBanner() {
     setIsVisible(false)
   }
 
-  const handleDecline = () => {
-    localStorage.setItem('webar-cookie-consent', 'declined')
-    setIsVisible(false)
-  }
-
   return (
     <AnimatePresence>
       {isVisible && (
         <motion.div
-          initial={{ y: '100%', opacity: 0 }}
+          initial={{ y: 100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          exit={{ y: '100%', opacity: 0 }}
+          exit={{ y: 100, opacity: 0 }}
           transition={{ 
-            type: 'spring', 
-            damping: 30, 
-            stiffness: 300,
-            duration: 0.5 
+            duration: 0.5,
+            ease: [0.22, 1, 0.36, 1]
           }}
-          className="fixed bottom-0 left-0 right-0 z-50 p-4 md:p-6"
+          className="fixed bottom-6 left-6 right-6 md:left-auto md:right-6 md:max-w-sm z-50"
         >
-          <div className="container-custom">
-            <div className="bg-dark rounded-2xl md:rounded-full p-6 md:py-4 md:px-8 shadow-2xl">
-              <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-                <div className="flex items-center gap-4 text-center md:text-left">
-                  <div className="hidden md:flex w-10 h-10 bg-primary/20 rounded-full items-center justify-center flex-shrink-0">
-                    <svg className="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  </div>
-                  <p className="text-white/80 text-sm md:text-base">
-                    We use cookies to enhance your experience. By continuing, you agree to our{' '}
-                    <Link 
-                      href="/privacy-policy" 
-                      className="text-primary hover:underline"
-                    >
-                      Privacy Policy
-                    </Link>
-                    .
-                  </p>
-                </div>
-                <div className="flex items-center gap-3 flex-shrink-0">
-                  <button
-                    onClick={handleDecline}
-                    className="px-5 py-2.5 text-sm font-medium text-white/60 hover:text-white transition-colors duration-300"
-                  >
-                    Decline
-                  </button>
-                  <button
-                    onClick={handleAccept}
-                    className="px-6 py-2.5 text-sm font-medium bg-primary hover:bg-primary-dark text-white rounded-full transition-all duration-300 hover:scale-105"
-                  >
-                    Accept
-                  </button>
-                </div>
-              </div>
+          <div className="bg-cream border border-dark/10 rounded-2xl p-5 shadow-lg">
+            <p className="text-dark/70 text-[15px] leading-relaxed mb-4">
+              We use cookies to make the experience better.
+            </p>
+            <div className="flex items-center gap-3">
+              <button
+                onClick={handleAccept}
+                className="px-5 py-2.5 bg-primary text-white text-sm font-medium rounded-full transition-all duration-300 hover:bg-primary-dark"
+              >
+                Accept
+              </button>
+              <Link
+                href="/privacy-policy"
+                className="px-5 py-2.5 text-sm font-medium text-dark/60 hover:text-dark transition-colors duration-300"
+              >
+                Learn more
+              </Link>
             </div>
           </div>
         </motion.div>

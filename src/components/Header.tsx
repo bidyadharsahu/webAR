@@ -1,64 +1,58 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const navItems = [
-  {
-    label: 'Services',
-    children: [
-      { 
-        label: 'AR Photo Frames', 
-        href: '/services/ar-photo-frames', 
-        description: 'Living memories from photos',
-        icon: '🖼️'
-      },
-      { 
-        label: 'Restaurant Menu AR', 
-        href: '/services/restaurant-menu', 
-        description: '3D menus that sell',
-        icon: '🍽️'
-      },
-      { 
-        label: 'AR Business Cards', 
-        href: '/services/ar-business-cards', 
-        description: 'Digital networking magic',
-        icon: '💼'
-      },
-      { 
-        label: 'Real Estate AR', 
-        href: '/services/real-estate-ar', 
-        description: 'Virtual property tours',
-        icon: '🏠'
-      },
-      { 
-        label: '3D Modeling', 
-        href: '/services/3d-modeling', 
-        description: 'Custom 3D creations',
-        icon: '🎨'
-      },
-    ],
-  },
-  {
-    label: 'Pricing',
-    href: '/pricing',
-  },
-  {
-    label: 'Company',
-    children: [
-      { label: 'About', href: '/company/about', description: 'Our story' },
-      { label: 'Join the Team', href: '/company/careers', description: 'Work with us' },
-    ],
-  },
+  { label: 'Experiences', href: '/#experiences' },
+  { label: 'Live Demo', href: '/try-now' },
+  { label: 'Pricing', href: '/pricing' },
+  { label: 'Careers', href: '/company/careers' },
+  { label: 'Contact', href: '/company/about' },
 ]
+
+// Logo Component - matches the webAR brand logo
+function Logo({ className = '' }: { className?: string }) {
+  return (
+    <div className={`flex items-center gap-1.5 ${className}`}>
+      {/* Logo Icon - Green bracket with play button */}
+      <svg className="w-8 h-8" viewBox="0 0 40 40" fill="none">
+        {/* Left bracket */}
+        <path 
+          d="M8 8L4 12V28L8 32" 
+          stroke="#2D5A3D" 
+          strokeWidth="3" 
+          strokeLinecap="round" 
+          strokeLinejoin="round"
+          fill="none"
+        />
+        {/* Right bracket */}
+        <path 
+          d="M32 8L36 12V28L32 32" 
+          stroke="#2D5A3D" 
+          strokeWidth="3" 
+          strokeLinecap="round" 
+          strokeLinejoin="round"
+          fill="none"
+        />
+        {/* Play triangle */}
+        <path 
+          d="M16 13L28 20L16 27V13Z" 
+          fill="#2D5A3D"
+        />
+      </svg>
+      {/* Logo Text */}
+      <span className="text-xl font-bold tracking-tight text-dark">
+        web<span className="text-primary">AR</span>
+      </span>
+    </div>
+  )
+}
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
-  const dropdownTimeout = useRef<NodeJS.Timeout | null>(null)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -79,149 +73,85 @@ export default function Header() {
     }
   }, [mobileMenuOpen])
 
-  const handleMouseEnter = (label: string) => {
-    if (dropdownTimeout.current) {
-      clearTimeout(dropdownTimeout.current)
-    }
-    setActiveDropdown(label)
-  }
-
-  const handleMouseLeave = () => {
-    dropdownTimeout.current = setTimeout(() => {
-      setActiveDropdown(null)
-    }, 150)
-  }
-
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out-expo ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           isScrolled
-            ? 'bg-cream/90 backdrop-blur-xl shadow-sm'
-            : 'bg-transparent'
+            ? 'bg-gradient-to-r from-cream via-sand-light/95 to-cream backdrop-blur-md shadow-sm shadow-primary/5'
+            : 'bg-gradient-to-b from-cream/80 to-transparent'
         }`}
       >
+        {/* Decorative line */}
+        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/10 to-transparent" />
+        
         <nav className="container-custom">
-          <div className="flex items-center justify-between h-20 lg:h-24">
+          <div className="flex items-center justify-between h-20">
             {/* Logo */}
-            <Link href="/" className="relative z-10 flex items-center">
-              <Image 
-                src="/logo.svg" 
-                alt="WebAR" 
-                width={120} 
-                height={36} 
-                className="h-9 w-auto"
-                priority
-              />
+            <Link href="/" className="relative z-10">
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+              >
+                <Logo />
+              </motion.div>
             </Link>
 
             {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center gap-1">
-              {navItems.map((item) => (
-                'children' in item ? (
-                <div
+            <div className="hidden md:flex items-center gap-8">
+              {navItems.map((item, i) => (
+                <motion.div
                   key={item.label}
-                  className="relative"
-                  onMouseEnter={() => handleMouseEnter(item.label)}
-                  onMouseLeave={handleMouseLeave}
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.1, duration: 0.5 }}
                 >
-                  <button
-                    className={`px-5 py-2 text-[15px] font-medium transition-colors duration-300 rounded-full ${
-                      activeDropdown === item.label
-                        ? 'text-primary bg-primary/5'
-                        : 'text-dark/70 hover:text-dark'
-                    }`}
+                  <Link
+                    href={item.href}
+                    className="relative text-[15px] text-dark/60 hover:text-dark transition-colors duration-300 group"
                   >
                     {item.label}
-                  </button>
-
-                  {/* Dropdown */}
-                  <AnimatePresence>
-                    {activeDropdown === item.label && (
-                      <motion.div
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
-                        transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                        className="absolute top-full left-0 pt-2"
-                        onMouseEnter={() => handleMouseEnter(item.label)}
-                        onMouseLeave={handleMouseLeave}
-                      >
-                        <div className="bg-white rounded-2xl shadow-xl border border-dark/5 p-2 min-w-[280px]">
-                          {item.children?.map((child) => (
-                            <Link
-                              key={child.href}
-                              href={child.href}
-                              className="flex items-start gap-3 p-4 rounded-xl hover:bg-cream transition-colors duration-200 group"
-                            >
-                              {'icon' in child && (
-                                <span className="text-2xl">{child.icon}</span>
-                              )}
-                              <div className="flex-1">
-                                <div className="flex items-center gap-2">
-                                  <span className="font-medium text-dark group-hover:text-primary transition-colors">
-                                    {child.label}
-                                  </span>
-                                </div>
-                                <p className="text-sm text-dark/50 mt-0.5">
-                                  {child.description}
-                                </p>
-                              </div>
-                              <svg
-                                className="w-5 h-5 text-dark/20 group-hover:text-primary group-hover:translate-x-1 transition-all duration-200 mt-0.5"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                              >
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                              </svg>
-                            </Link>
-                          ))}
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-                ) : (
-                <Link
-                  key={item.label}
-                  href={item.href}
-                  className="px-5 py-2 text-[15px] font-medium transition-colors duration-300 rounded-full text-dark/70 hover:text-dark hover:bg-primary/5"
-                >
-                  {item.label}
-                </Link>
-                )
+                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary rounded-full transition-all duration-300 group-hover:w-full" />
+                  </Link>
+                </motion.div>
               ))}
             </div>
 
-            {/* CTA Button */}
-            <div className="hidden lg:block">
-              <Link href="/try-now" className="btn-primary">
-                Try Now
-              </Link>
+            {/* Try Demo Button */}
+            <div className="hidden md:block">
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+              >
+                <Link
+                  href="/try-now"
+                  className="inline-flex items-center justify-center px-6 py-2.5 bg-primary text-white text-[15px] font-medium rounded-full transition-all duration-300 hover:bg-primary-dark hover:shadow-lg hover:shadow-primary/25"
+                >
+                  Try demo
+                </Link>
+              </motion.div>
             </div>
 
             {/* Mobile Menu Button */}
             <button
-              className="lg:hidden relative z-10 p-2 -mr-2"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden relative z-10 w-10 h-10 flex items-center justify-center"
               aria-label="Toggle menu"
             >
-              <div className="w-6 h-6 flex flex-col justify-center gap-1.5">
-                <span
-                  className={`w-6 h-0.5 bg-dark transition-all duration-300 ${
-                    mobileMenuOpen ? 'rotate-45 translate-y-2' : ''
-                  }`}
+              <div className="w-5 h-4 flex flex-col justify-between">
+                <motion.span
+                  animate={{ rotate: mobileMenuOpen ? 45 : 0, y: mobileMenuOpen ? 7 : 0 }}
+                  className="block h-0.5 w-full bg-dark origin-center"
                 />
-                <span
-                  className={`w-6 h-0.5 bg-dark transition-all duration-300 ${
-                    mobileMenuOpen ? 'opacity-0' : ''
-                  }`}
+                <motion.span
+                  animate={{ opacity: mobileMenuOpen ? 0 : 1, scaleX: mobileMenuOpen ? 0 : 1 }}
+                  className="block h-0.5 w-full bg-dark"
                 />
-                <span
-                  className={`w-6 h-0.5 bg-dark transition-all duration-300 ${
-                    mobileMenuOpen ? '-rotate-45 -translate-y-2' : ''
-                  }`}
+                <motion.span
+                  animate={{ rotate: mobileMenuOpen ? -45 : 0, y: mobileMenuOpen ? -7 : 0 }}
+                  className="block h-0.5 w-full bg-dark origin-center"
                 />
               </div>
             </button>
@@ -233,100 +163,46 @@ export default function Header() {
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 lg:hidden"
+            initial={{ opacity: 0, clipPath: 'circle(0% at top right)' }}
+            animate={{ opacity: 1, clipPath: 'circle(150% at top right)' }}
+            exit={{ opacity: 0, clipPath: 'circle(0% at top right)' }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            className="fixed inset-0 z-40 bg-gradient-to-b from-cream via-sand-light to-cream md:hidden"
           >
-            <div className="absolute inset-0 bg-cream" />
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 20 }}
-              transition={{ duration: 0.3, delay: 0.1 }}
-              className="relative h-full pt-24 pb-8 px-6 overflow-y-auto"
-            >
-              <div className="space-y-8">
+            <div className="container-custom pt-24 pb-8">
+              <nav className="space-y-1">
                 {navItems.map((item, index) => (
                   <motion.div
                     key={item.label}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.1 + 0.2 }}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.1, duration: 0.4 }}
                   >
-                    {'children' in item ? (
-                      <>
-                        <h3 className="label mb-4">{item.label}</h3>
-                        <div className="space-y-2">
-                          {item.children?.map((child) => (
-                            <Link
-                              key={child.href}
-                              href={child.href}
-                              className="flex items-center justify-between p-4 bg-white rounded-2xl hover:shadow-md transition-all duration-300"
-                              onClick={() => setMobileMenuOpen(false)}
-                            >
-                              <div className="flex items-center gap-3">
-                                {'icon' in child && (
-                                  <span className="text-2xl">{child.icon}</span>
-                                )}
-                                <div>
-                                  <span className="font-medium text-dark">
-                                    {child.label}
-                                  </span>
-                                  <p className="text-sm text-dark/50 mt-1">
-                                    {child.description}
-                                  </p>
-                                </div>
-                              </div>
-                              <svg
-                                className="w-5 h-5 text-dark/30"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                              >
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                              </svg>
-                            </Link>
-                          ))}
-                        </div>
-                      </>
-                    ) : (
-                      <Link
-                        href={item.href}
-                        className="flex items-center justify-between p-4 bg-white rounded-2xl hover:shadow-md transition-all duration-300"
-                        onClick={() => setMobileMenuOpen(false)}
-                      >
-                        <span className="font-medium text-dark text-lg">{item.label}</span>
-                        <svg
-                          className="w-5 h-5 text-dark/30"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                        </svg>
-                      </Link>
-                    )}
+                    <Link
+                      href={item.href}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="block py-4 text-2xl font-medium text-dark border-b border-primary/10 hover:text-primary transition-colors"
+                    >
+                      {item.label}
+                    </Link>
                   </motion.div>
                 ))}
-
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5 }}
-                  className="pt-8"
+                  transition={{ delay: navItems.length * 0.1, duration: 0.4 }}
+                  className="pt-6"
                 >
                   <Link
                     href="/try-now"
-                    className="btn-primary w-full justify-center text-lg"
                     onClick={() => setMobileMenuOpen(false)}
+                    className="btn-primary w-full justify-center"
                   >
-                    Try Now
+                    Try demo
                   </Link>
                 </motion.div>
-              </div>
-            </motion.div>
+              </nav>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

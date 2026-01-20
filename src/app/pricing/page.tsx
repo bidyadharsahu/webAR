@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { motion, useInView } from 'framer-motion';
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 40 },
+  hidden: { opacity: 0, y: 30 },
   visible: { 
     opacity: 1, 
     y: 0,
@@ -26,24 +26,15 @@ const staggerContainer = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.15,
+      staggerChildren: 0.12,
       delayChildren: 0.1
     }
   }
 };
 
-const scaleIn = {
-  hidden: { opacity: 0, scale: 0.9 },
-  visible: { 
-    opacity: 1, 
-    scale: 1,
-    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] }
-  }
-};
-
 function AnimatedSection({ children, className = '' }: { children: React.ReactNode; className?: string }) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-80px' });
+  const isInView = useInView(ref, { once: true, margin: '-60px' });
   
   return (
     <motion.section
@@ -60,91 +51,115 @@ function AnimatedSection({ children, className = '' }: { children: React.ReactNo
 
 const pricingPlans = [
   {
-    name: 'Super Lite',
+    name: 'Free',
+    tagline: 'For learning and experimentation',
+    monthlyPrice: 0,
+    yearlyPrice: 0,
+    billingNote: 'Free forever',
+    features: [
+      'Up to 5 AR experiences',
+      '500 AR views per year',
+      '100 MB storage',
+      'Standard Web AR support',
+      'Community access',
+    ],
+    cta: 'Start for free',
+    popular: false,
+  },
+  {
+    name: 'Starter',
+    tagline: 'For small businesses and creators',
     monthlyPrice: 29,
-    yearlyPrice: 290,
-    description: 'Perfect for individuals and small projects',
+    yearlyPrice: 288, // $24/month when billed yearly
+    billingNote: '$24/month when billed yearly',
     features: [
-      { text: 'Up to 5 AR experiences', included: true },
-      { text: 'Basic QR code generation', included: true },
-      { text: 'Standard 3D models', included: true },
-      { text: 'Email support', included: true },
-      { text: '1 user account', included: true },
-      { text: 'Basic analytics', included: true },
-      { text: 'Custom QR branding', included: false },
-      { text: 'Priority support', included: false },
-      { text: 'API access', included: false },
+      'Up to 25 AR experiences',
+      '10,000 AR views per month',
+      '1 GB storage',
+      'Custom QR code styling',
+      'Basic analytics',
+      'Email support',
     ],
-    cta: 'Start Free Trial',
+    cta: 'Get started',
     popular: false,
-    color: 'bg-cream-dark',
   },
   {
-    name: 'Lite',
+    name: 'Growth',
+    tagline: 'For growing brands and teams',
     monthlyPrice: 79,
-    yearlyPrice: 790,
-    description: 'Great for growing businesses',
+    yearlyPrice: 780, // $65/month when billed yearly
+    billingNote: '$65/month when billed yearly',
     features: [
-      { text: 'Up to 25 AR experiences', included: true },
-      { text: 'Custom QR code branding', included: true },
-      { text: 'HD 3D models', included: true },
-      { text: 'Priority email support', included: true },
-      { text: '5 user accounts', included: true },
-      { text: 'Advanced analytics', included: true },
-      { text: 'Custom domain', included: true },
-      { text: 'Remove WebAR branding', included: true },
-      { text: 'API access', included: false },
+      'Up to 100 AR experiences',
+      '50,000 AR views per month',
+      '5 GB storage',
+      'Advanced analytics dashboard',
+      'Custom branded experiences',
+      'Priority email support',
     ],
-    cta: 'Get Started',
+    cta: 'Choose Growth',
     popular: true,
-    color: 'bg-dark text-white',
   },
   {
-    name: 'Prime',
+    name: 'Pro',
+    tagline: 'For agencies and businesses at scale',
     monthlyPrice: 199,
-    yearlyPrice: 1990,
-    description: 'For enterprises and agencies',
+    yearlyPrice: 1920, // $160/month when billed yearly
+    billingNote: '$160/month when billed yearly',
     features: [
-      { text: 'Unlimited AR experiences', included: true },
-      { text: 'White-label solution', included: true },
-      { text: 'Ultra HD 3D models', included: true },
-      { text: '24/7 dedicated support', included: true },
-      { text: 'Unlimited users', included: true },
-      { text: 'Enterprise analytics', included: true },
-      { text: 'Full API access', included: true },
-      { text: 'Custom integrations', included: true },
-      { text: 'Priority rendering', included: true },
+      'Unlimited AR experiences',
+      '150,000 AR views per month',
+      '10 GB storage',
+      'Advanced analytics with export',
+      'White label experience',
+      'API access',
+      'Dedicated support',
     ],
-    cta: 'Contact Sales',
+    cta: 'Go Pro',
     popular: false,
-    color: 'bg-cream-dark',
   },
+];
+
+const comparisonFeatures = [
+  { feature: 'AR experiences', free: '5', starter: '25', growth: '100', pro: 'Unlimited' },
+  { feature: 'Monthly AR views', free: '500/year', starter: '10,000', growth: '50,000', pro: '150,000' },
+  { feature: 'Storage', free: '100 MB', starter: '1 GB', growth: '5 GB', pro: '10 GB' },
+  { feature: 'Web AR access', free: true, starter: true, growth: true, pro: true },
+  { feature: 'App installation required', free: false, starter: false, growth: false, pro: false },
+  { feature: 'QR code customization', free: false, starter: true, growth: true, pro: true },
+  { feature: 'Analytics', free: '—', starter: 'Basic', growth: 'Advanced', pro: 'Advanced + export' },
+  { feature: 'Branding removal', free: false, starter: false, growth: 'Partial', pro: true },
+  { feature: 'API access', free: false, starter: false, growth: false, pro: true },
+  { feature: 'Support', free: 'Community', starter: 'Email', growth: 'Priority email', pro: 'Dedicated' },
+];
+
+const addOns = [
+  { name: 'Extra AR views', price: '$50 per additional 50,000 views' },
+  { name: 'Additional storage', price: '$10 per extra 1 GB per month' },
+  { name: 'Custom domain mapping', price: '$15 per month' },
+  { name: 'Training and onboarding session', price: 'One-time fee of $299' },
 ];
 
 const faqs = [
   {
-    question: 'What AR services are included in each plan?',
-    answer: 'All plans include access to AR Photo Frames, Restaurant Menu AR, AR Business Cards, Real Estate AR, and 3D Modeling. The difference is in the number of experiences you can create and the quality/features available.'
+    question: 'What AR experiences can I create?',
+    answer: 'You can create AR photo stories, food previews for menus, brand moments for packaging and business cards, space previews for real estate, and fully custom AR experiences.'
   },
   {
-    question: 'Can I upgrade or downgrade my plan anytime?',
-    answer: 'Yes! You can upgrade instantly and the price difference will be prorated. Downgrades take effect at the end of your billing cycle.'
+    question: 'Can I upgrade or downgrade anytime?',
+    answer: 'Yes. Upgrades take effect immediately with prorated billing. Downgrades take effect at the end of your billing cycle.'
   },
   {
     question: 'Is there a free trial?',
-    answer: 'Yes, all plans come with a 14-day free trial. No credit card required to start. You can explore all features before committing.'
+    answer: 'Yes, Starter and Growth plans include a 14-day free trial with no credit card required.'
   },
   {
-    question: 'What happens to my AR experiences if I cancel?',
-    answer: 'Your AR experiences will remain active for 30 days after cancellation. After that, they will be archived but not deleted — you can reactivate them by resubscribing.'
+    question: 'What happens if I exceed my view limit?',
+    answer: 'You can purchase additional AR views as needed, or upgrade to a higher plan for more included views.'
   },
   {
-    question: 'Do you offer custom enterprise solutions?',
-    answer: 'Absolutely! For large organizations with specific needs, we offer custom packages with dedicated support, custom integrations, and volume pricing. Contact our sales team.'
-  },
-  {
-    question: 'What file formats do you support for 3D models?',
-    answer: 'We support GLTF, GLB, USDZ (for iOS AR), OBJ, and FBX. Our team can help convert your existing models to AR-ready formats.'
+    question: 'Do you offer custom solutions?',
+    answer: 'Yes. For organizations with specific needs, we offer Enterprise packages with unlimited views, dedicated support, and custom integrations.'
   },
 ];
 
@@ -155,137 +170,119 @@ export default function PricingPage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 overflow-hidden">
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute -top-1/2 -right-1/2 w-full h-full bg-gradient-to-br from-primary/5 to-transparent rounded-full blur-3xl" />
-          <div className="absolute -bottom-1/2 -left-1/2 w-full h-full bg-gradient-to-tr from-primary/3 to-transparent rounded-full blur-3xl" />
-        </div>
-
-        <div className="container-custom relative z-10 text-center">
-          <motion.div
+      <section className="pt-32 pb-16 bg-cream">
+        <div className="container-custom text-center">
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="mb-6"
+            className="text-dark/50 text-sm tracking-wide uppercase mb-6"
           >
-            <span className="label">Pricing</span>
-          </motion.div>
+            Pricing
+          </motion.p>
 
           <motion.h1
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1 }}
-            className="heading-xl mb-6"
+            className="text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight text-dark mb-6"
           >
-            Simple, Transparent{' '}
-            <span className="text-gradient">Pricing</span>
+            Simple pricing that grows with you
           </motion.h1>
 
           <motion.p
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-body max-w-2xl mx-auto mb-10"
+            className="text-xl text-dark/60 max-w-xl mx-auto mb-12"
           >
-            Choose the perfect plan for your needs. All plans include a 14-day free trial.
-            No credit card required.
+            Start small, scale when you're ready. No hidden costs.
           </motion.p>
 
           {/* Billing Toggle */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
             className="flex items-center justify-center gap-4"
           >
-            <span className={`font-medium ${!isYearly ? 'text-dark' : 'text-dark/50'}`}>Monthly</span>
+            <span className={`text-[15px] ${!isYearly ? 'text-dark font-medium' : 'text-dark/50'}`}>Monthly</span>
             <button
               onClick={() => setIsYearly(!isYearly)}
-              className="relative w-16 h-8 bg-dark rounded-full p-1 transition-colors"
+              className="relative w-14 h-7 bg-dark/10 rounded-full p-1 transition-colors"
             >
               <motion.div
-                className="w-6 h-6 bg-primary rounded-full"
-                animate={{ x: isYearly ? 32 : 0 }}
+                className="w-5 h-5 bg-primary rounded-full"
+                animate={{ x: isYearly ? 28 : 0 }}
                 transition={{ type: 'spring', stiffness: 500, damping: 30 }}
               />
             </button>
-            <span className={`font-medium ${isYearly ? 'text-dark' : 'text-dark/50'}`}>
+            <span className={`text-[15px] ${isYearly ? 'text-dark font-medium' : 'text-dark/50'}`}>
               Yearly
-              <span className="ml-2 text-sm text-primary font-semibold">Save 17%</span>
+              <span className="ml-2 text-xs text-primary font-medium">Save up to 20%</span>
             </span>
           </motion.div>
         </div>
       </section>
 
       {/* Pricing Cards */}
-      <AnimatedSection className="section-padding pt-0">
+      <AnimatedSection className="py-24 bg-sand">
         <div className="container-custom">
           <motion.div 
             variants={staggerContainer}
-            className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto items-stretch"
+            className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch"
           >
             {pricingPlans.map((plan, index) => (
               <motion.div
                 key={index}
-                variants={scaleIn}
-                whileHover={{ y: -8, transition: { duration: 0.3 } }}
-                className={`relative rounded-3xl p-8 flex flex-col h-full ${plan.color} ${
-                  plan.popular ? 'ring-4 ring-primary shadow-2xl md:-my-4 md:py-12 z-10' : ''
+                variants={fadeUp}
+                className={`bg-cream rounded-2xl p-8 flex flex-col transition-all duration-400 hover:shadow-lg hover:shadow-primary/5 ${
+                  plan.popular ? 'ring-2 ring-primary lg:scale-105 lg:z-10' : ''
                 }`}
               >
                 {plan.popular && (
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-primary text-white text-sm font-semibold rounded-full">
-                    Most Popular
-                  </div>
+                  <span className="inline-block text-xs font-medium text-white bg-primary px-3 py-1 rounded-full mb-4 self-start">
+                    Most popular
+                  </span>
                 )}
                 
-                <div className="text-center mb-8">
-                  <h3 className="text-2xl font-bold mb-2">{plan.name}</h3>
-                  <p className={`text-sm mb-6 ${plan.popular ? 'text-white/60' : 'text-dark/60'}`}>
-                    {plan.description}
-                  </p>
-                  <div className="flex items-baseline justify-center gap-1">
-                    <span className="text-5xl font-bold">
-                      ${isYearly ? Math.round(plan.yearlyPrice / 12) : plan.monthlyPrice}
-                    </span>
-                    <span className={plan.popular ? 'text-white/60' : 'text-dark/60'}>/month</span>
-                  </div>
-                  {isYearly && (
-                    <p className={`text-sm mt-2 ${plan.popular ? 'text-white/50' : 'text-dark/50'}`}>
-                      Billed ${plan.yearlyPrice}/year
-                    </p>
+                <h3 className="text-xl font-semibold text-dark mb-1">{plan.name}</h3>
+                <p className="text-dark/50 text-sm mb-4">{plan.tagline}</p>
+                
+                <div className="flex items-baseline gap-1 mb-1">
+                  {plan.monthlyPrice === 0 ? (
+                    <span className="text-4xl font-bold text-dark">$0</span>
+                  ) : (
+                    <>
+                      <span className="text-4xl font-bold text-dark">
+                        ${isYearly ? Math.round(plan.yearlyPrice / 12) : plan.monthlyPrice}
+                      </span>
+                      <span className="text-dark/50">/month</span>
+                    </>
                   )}
                 </div>
+                
+                <p className="text-sm text-dark/40 mb-6">
+                  {plan.monthlyPrice === 0 ? plan.billingNote : (isYearly ? `Billed $${plan.yearlyPrice}/year` : plan.billingNote)}
+                </p>
 
                 <ul className="space-y-3 mb-8 flex-grow">
                   {plan.features.map((feature, i) => (
-                    <li key={i} className="flex items-center gap-3">
-                      {feature.included ? (
-                        <svg className="w-5 h-5 flex-shrink-0 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                      ) : (
-                        <svg className={`w-5 h-5 flex-shrink-0 ${plan.popular ? 'text-white/30' : 'text-dark/30'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                      )}
-                      <span className={`text-sm ${
-                        feature.included 
-                          ? (plan.popular ? 'text-white/90' : 'text-dark/80')
-                          : (plan.popular ? 'text-white/40' : 'text-dark/40')
-                      }`}>
-                        {feature.text}
-                      </span>
+                    <li key={i} className="flex items-start gap-3 text-sm text-dark/70">
+                      <svg className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      {feature}
                     </li>
                   ))}
                 </ul>
 
                 <Link 
-                  href={plan.name === 'Prime' ? '/company/about' : '/try-now'}
-                  className={`block text-center py-4 px-6 rounded-full font-medium transition-all duration-300 mt-auto ${
+                  href="/try-now"
+                  className={`block text-center py-3 px-6 rounded-full text-[15px] font-medium transition-all duration-300 ${
                     plan.popular
-                      ? 'bg-primary text-white hover:shadow-[0_0_30px_rgba(0,204,102,0.4)] hover:scale-105'
-                      : 'bg-dark text-white hover:bg-dark/80 hover:scale-105'
+                      ? 'bg-primary text-white hover:bg-primary/90'
+                      : 'bg-dark/5 text-dark hover:bg-dark/10'
                   }`}
                 >
                   {plan.cta}
@@ -293,47 +290,125 @@ export default function PricingPage() {
               </motion.div>
             ))}
           </motion.div>
+
+          {/* Enterprise Section */}
+          <motion.div 
+            variants={fadeUp}
+            className="mt-12 bg-cream rounded-2xl p-8 md:p-12"
+          >
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+              <div className="flex-1">
+                <h3 className="text-2xl font-semibold text-dark mb-2">Enterprise</h3>
+                <p className="text-dark/60 mb-4">
+                  Custom solutions for large teams and high-traffic use cases.
+                </p>
+                <ul className="flex flex-wrap gap-x-6 gap-y-2">
+                  {[
+                    'Unlimited AR experiences and views',
+                    'Unlimited storage',
+                    'Dedicated account manager',
+                    'Custom integrations',
+                    'SLA and priority onboarding',
+                  ].map((feature, i) => (
+                    <li key={i} className="flex items-center gap-2 text-sm text-dark/70">
+                      <svg className="w-4 h-4 text-primary flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="flex-shrink-0">
+                <Link 
+                  href="/company/about"
+                  className="inline-block bg-primary text-white py-3 px-8 rounded-full text-[15px] font-medium transition-all duration-300 hover:bg-primary/90"
+                >
+                  Contact sales
+                </Link>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </AnimatedSection>
 
-      {/* Feature Comparison */}
-      <AnimatedSection className="section-padding bg-white">
+      {/* Feature Comparison Table */}
+      <AnimatedSection className="py-24 bg-cream">
         <div className="container-custom">
-          <motion.div variants={fadeIn} className="text-center mb-16">
-            <span className="label mb-4 block">Compare Plans</span>
-            <h2 className="heading-lg">
-              Detailed <span className="text-gradient">Comparison</span>
-            </h2>
-          </motion.div>
+          <motion.p variants={fadeIn} className="text-dark/50 text-sm tracking-wide uppercase mb-6 text-center">
+            Compare
+          </motion.p>
+          <motion.h2 variants={fadeUp} className="text-3xl md:text-4xl font-semibold text-dark mb-16 text-center">
+            Compare plans
+          </motion.h2>
 
-          <motion.div variants={fadeUp} className="overflow-x-auto">
-            <table className="w-full min-w-[640px]">
+          <motion.div variants={fadeUp} className="overflow-x-auto -mx-4 px-4">
+            <table className="w-full min-w-[700px]">
               <thead>
                 <tr className="border-b border-dark/10">
-                  <th className="text-left py-4 px-4 font-semibold">Feature</th>
-                  <th className="text-center py-4 px-4 font-semibold">Super Lite</th>
-                  <th className="text-center py-4 px-4 font-semibold text-primary">Lite</th>
-                  <th className="text-center py-4 px-4 font-semibold">Prime</th>
+                  <th className="text-left py-4 px-4 font-semibold text-dark">Feature</th>
+                  <th className="text-center py-4 px-4 font-semibold text-dark">Free</th>
+                  <th className="text-center py-4 px-4 font-semibold text-dark">Starter</th>
+                  <th className="text-center py-4 px-4 font-semibold text-primary">Growth</th>
+                  <th className="text-center py-4 px-4 font-semibold text-dark">Pro</th>
                 </tr>
               </thead>
               <tbody>
-                {[
-                  ['AR Experiences', '5', '25', 'Unlimited'],
-                  ['3D Model Quality', 'Standard', 'HD', 'Ultra HD'],
-                  ['User Accounts', '1', '5', 'Unlimited'],
-                  ['QR Code Branding', 'No', 'Yes', 'Yes'],
-                  ['Custom Domain', 'No', 'Yes', 'Yes'],
-                  ['White Label', 'No', 'No', 'Yes'],
-                  ['API Access', 'No', 'No', 'Yes'],
-                  ['Analytics', 'Basic', 'Advanced', 'Enterprise'],
-                  ['Support', 'Email', 'Priority', '24/7 Dedicated'],
-                  ['Remove Branding', 'No', 'Yes', 'Yes'],
-                ].map((row, i) => (
-                  <tr key={i} className="border-b border-dark/5 hover:bg-cream/50 transition-colors">
-                    <td className="py-4 px-4 font-medium">{row[0]}</td>
-                    <td className="text-center py-4 px-4 text-dark/70">{row[1]}</td>
-                    <td className="text-center py-4 px-4 text-dark/70 bg-primary/5">{row[2]}</td>
-                    <td className="text-center py-4 px-4 text-dark/70">{row[3]}</td>
+                {comparisonFeatures.map((row, i) => (
+                  <tr key={i} className="border-b border-dark/5">
+                    <td className="py-4 px-4 font-medium text-dark">{row.feature}</td>
+                    <td className="text-center py-4 px-4 text-dark/70">
+                      {typeof row.free === 'boolean' ? (
+                        row.free ? (
+                          <svg className="w-5 h-5 text-primary mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                          </svg>
+                        ) : (
+                          <svg className="w-5 h-5 text-dark/30 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                          </svg>
+                        )
+                      ) : row.free}
+                    </td>
+                    <td className="text-center py-4 px-4 text-dark/70">
+                      {typeof row.starter === 'boolean' ? (
+                        row.starter ? (
+                          <svg className="w-5 h-5 text-primary mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                          </svg>
+                        ) : (
+                          <svg className="w-5 h-5 text-dark/30 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                          </svg>
+                        )
+                      ) : row.starter}
+                    </td>
+                    <td className="text-center py-4 px-4 text-dark/70 bg-primary/5">
+                      {typeof row.growth === 'boolean' ? (
+                        row.growth ? (
+                          <svg className="w-5 h-5 text-primary mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                          </svg>
+                        ) : (
+                          <svg className="w-5 h-5 text-dark/30 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                          </svg>
+                        )
+                      ) : row.growth}
+                    </td>
+                    <td className="text-center py-4 px-4 text-dark/70">
+                      {typeof row.pro === 'boolean' ? (
+                        row.pro ? (
+                          <svg className="w-5 h-5 text-primary mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                          </svg>
+                        ) : (
+                          <svg className="w-5 h-5 text-dark/30 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                          </svg>
+                        )
+                      ) : row.pro}
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -342,30 +417,63 @@ export default function PricingPage() {
         </div>
       </AnimatedSection>
 
-      {/* FAQs */}
-      <AnimatedSection className="section-padding">
-        <div className="container-custom max-w-3xl">
-          <motion.div variants={fadeIn} className="text-center mb-16">
-            <span className="label mb-4 block">FAQs</span>
-            <h2 className="heading-lg">
-              Common <span className="text-gradient">Questions</span>
-            </h2>
+      {/* Optional Add-ons */}
+      <AnimatedSection className="py-24 bg-sand">
+        <div className="container-custom">
+          <motion.p variants={fadeIn} className="text-dark/50 text-sm tracking-wide uppercase mb-6 text-center">
+            Add-ons
+          </motion.p>
+          <motion.h2 variants={fadeUp} className="text-3xl md:text-4xl font-semibold text-dark mb-16 text-center">
+            Optional add-ons
+          </motion.h2>
+
+          <motion.div variants={staggerContainer} className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {addOns.map((addon, index) => (
+              <motion.div
+                key={index}
+                variants={fadeUp}
+                className="bg-cream rounded-xl p-6"
+              >
+                <h3 className="font-semibold text-dark mb-2">{addon.name}</h3>
+                <p className="text-dark/60 text-sm">{addon.price}</p>
+              </motion.div>
+            ))}
           </motion.div>
 
-          <motion.div variants={staggerContainer} className="space-y-4">
+          {/* Billing Footnote */}
+          <motion.div variants={fadeUp} className="mt-12 text-center">
+            <p className="text-dark/50 text-sm max-w-2xl mx-auto">
+              Monthly billing offers flexibility. Yearly billing provides approximately 20 to 30 percent savings. 
+              Starter and Growth plans include a 14-day free trial with no credit card required.
+            </p>
+          </motion.div>
+        </div>
+      </AnimatedSection>
+
+      {/* FAQs */}
+      <AnimatedSection className="py-24 bg-cream">
+        <div className="container-custom max-w-3xl">
+          <motion.p variants={fadeIn} className="text-dark/50 text-sm tracking-wide uppercase mb-6 text-center">
+            Questions
+          </motion.p>
+          <motion.h2 variants={fadeUp} className="text-3xl md:text-4xl font-semibold text-dark mb-16 text-center">
+            Common questions
+          </motion.h2>
+
+          <motion.div variants={staggerContainer} className="space-y-3">
             {faqs.map((faq, index) => (
               <motion.div
                 key={index}
                 variants={fadeUp}
-                className="bg-white rounded-2xl overflow-hidden"
+                className="bg-sand rounded-xl overflow-hidden"
               >
                 <button
                   onClick={() => setOpenFaq(openFaq === index ? null : index)}
-                  className="w-full flex items-center justify-between p-6 text-left hover:bg-cream/50 transition-colors"
+                  className="w-full flex items-center justify-between p-5 text-left hover:bg-sand/80 transition-colors"
                 >
-                  <span className="font-semibold pr-4">{faq.question}</span>
+                  <span className="font-medium text-dark pr-4">{faq.question}</span>
                   <svg
-                    className={`w-5 h-5 flex-shrink-0 transition-transform duration-300 ${
+                    className={`w-5 h-5 flex-shrink-0 text-dark/40 transition-transform duration-300 ${
                       openFaq === index ? 'rotate-180' : ''
                     }`}
                     fill="none"
@@ -381,7 +489,7 @@ export default function PricingPage() {
                   transition={{ duration: 0.3 }}
                   className="overflow-hidden"
                 >
-                  <p className="px-6 pb-6 text-dark/60">{faq.answer}</p>
+                  <p className="px-5 pb-5 text-dark/60">{faq.answer}</p>
                 </motion.div>
               </motion.div>
             ))}
@@ -390,44 +498,25 @@ export default function PricingPage() {
       </AnimatedSection>
 
       {/* CTA */}
-      <AnimatedSection className="section-padding">
+      <AnimatedSection className="py-24 bg-sand">
         <div className="container-custom">
-          <motion.div
-            variants={scaleIn}
-            whileHover={{ scale: 1.01, transition: { duration: 0.4 } }}
-            className="bg-dark rounded-3xl p-12 md:p-20 text-center text-white relative overflow-hidden"
-          >
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
-              <div className="absolute top-0 right-0 w-96 h-96 bg-primary/20 rounded-full blur-3xl" />
-              <div className="absolute bottom-0 left-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
-            </div>
-
-            <div className="relative z-10">
-              <motion.span variants={fadeIn} className="text-primary text-sm font-semibold tracking-wider uppercase mb-4 block">Need Help Deciding?</motion.span>
-              <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-                Still Have{' '}
-                <span className="text-primary">Questions?</span>
-              </motion.h2>
-              <motion.p variants={fadeUp} className="text-lg text-white/60 max-w-2xl mx-auto mb-10">
-                Our team is here to help you choose the right plan and get started with AR.
-                Schedule a free consultation today.
-              </motion.p>
-              <motion.div variants={fadeUp} className="flex flex-wrap justify-center gap-4">
-                <Link 
-                  href="/company/about" 
-                  className="inline-flex items-center justify-center px-8 py-4 bg-primary text-white rounded-full font-medium transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,204,102,0.4)] hover:scale-105"
-                >
-                  Contact Sales
-                </Link>
-                <Link 
-                  href="/try-now" 
-                  className="inline-flex items-center justify-center px-8 py-4 border-2 border-white/30 text-white rounded-full font-medium transition-all duration-300 hover:bg-white hover:text-dark hover:scale-105"
-                >
-                  Start Free Trial
-                </Link>
-              </motion.div>
-            </div>
-          </motion.div>
+          <div className="max-w-2xl mx-auto text-center">
+            <motion.h2 variants={fadeUp} className="text-3xl md:text-4xl font-semibold text-dark mb-6">
+              Need help choosing?
+            </motion.h2>
+            <motion.p variants={fadeUp} className="text-dark/60 text-lg mb-10">
+              Our team is here to help you find the right plan. 
+              Schedule a free consultation.
+            </motion.p>
+            <motion.div variants={fadeUp} className="flex flex-wrap justify-center gap-4">
+              <Link href="/company/about" className="btn-primary">
+                Contact us
+              </Link>
+              <Link href="/try-now" className="btn-secondary">
+                Start free trial
+              </Link>
+            </motion.div>
+          </div>
         </div>
       </AnimatedSection>
     </>

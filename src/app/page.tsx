@@ -2,10 +2,9 @@
 
 import { useRef } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
-import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 
-// Smooth animation variants
+// Animation variants - smooth and sophisticated
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
   visible: { 
@@ -19,7 +18,25 @@ const fadeIn = {
   hidden: { opacity: 0 },
   visible: { 
     opacity: 1,
-    transition: { duration: 0.6, ease: 'easeOut' }
+    transition: { duration: 0.7, ease: 'easeOut' }
+  }
+};
+
+const fadeLeft = {
+  hidden: { opacity: 0, x: 40 },
+  visible: { 
+    opacity: 1, 
+    x: 0,
+    transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] }
+  }
+};
+
+const fadeRight = {
+  hidden: { opacity: 0, x: -40 },
+  visible: { 
+    opacity: 1, 
+    x: 0,
+    transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] }
   }
 };
 
@@ -43,55 +60,6 @@ const scaleIn = {
   }
 };
 
-const slideIn = {
-  hidden: { opacity: 0, x: -30 },
-  visible: { 
-    opacity: 1, 
-    x: 0,
-    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
-  }
-};
-
-// Magnetic button component
-function MagneticButton({ children, href, variant = 'primary' }: { children: React.ReactNode; href: string; variant?: 'primary' | 'outline' | 'outline-light' }) {
-  const buttonRef = useRef<HTMLAnchorElement>(null);
-  
-  const handleMouseMove = (e: React.MouseEvent) => {
-    const button = buttonRef.current;
-    if (!button) return;
-    const rect = button.getBoundingClientRect();
-    const x = e.clientX - rect.left - rect.width / 2;
-    const y = e.clientY - rect.top - rect.height / 2;
-    button.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px) scale(1.02)`;
-  };
-  
-  const handleMouseLeave = () => {
-    const button = buttonRef.current;
-    if (!button) return;
-    button.style.transform = 'translate(0, 0) scale(1)';
-  };
-  
-  const baseClasses = 'inline-flex items-center justify-center px-8 py-4 rounded-full font-medium transition-all duration-300';
-  const variants = {
-    primary: 'bg-primary text-white hover:shadow-[0_0_30px_rgba(0,204,102,0.4)]',
-    outline: 'border-2 border-dark text-dark hover:bg-dark hover:text-white',
-    'outline-light': 'border-2 border-white/30 text-white hover:bg-white hover:text-dark'
-  };
-  
-  return (
-    <Link
-      ref={buttonRef}
-      href={href}
-      className={`${baseClasses} ${variants[variant]}`}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{ transition: 'transform 0.2s ease-out, box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease' }}
-    >
-      {children}
-    </Link>
-  );
-}
-
 // Section wrapper with scroll animation
 function AnimatedSection({ children, className = '', id = '' }: { children: React.ReactNode; className?: string; id?: string }) {
   const ref = useRef(null);
@@ -111,630 +79,673 @@ function AnimatedSection({ children, className = '', id = '' }: { children: Reac
   );
 }
 
-// Service Card Component
-function ServiceCard({ 
-  title, 
-  description, 
-  icon, 
-  href, 
-  gradient 
-}: { 
-  title: string; 
-  description: string; 
-  icon: React.ReactNode; 
-  href: string;
-  gradient: string;
-}) {
-  return (
-    <motion.div 
-      variants={scaleIn}
-      whileHover={{ y: -10, transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] } }}
-    >
-      <Link href={href} className="block group h-full">
-        <div className="card-bordered h-full p-8 hover:border-primary/50 hover:shadow-2xl transition-all duration-500 relative overflow-hidden">
-          <div className={`absolute top-0 right-0 w-32 h-32 ${gradient} opacity-10 rounded-full blur-2xl group-hover:opacity-20 group-hover:scale-150 transition-all duration-700`} />
-          <div className="relative z-10">
-            <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-300">
-              {icon}
-            </div>
-            <h3 className="text-xl font-semibold mb-3 group-hover:text-primary transition-colors duration-300">
-              {title}
-            </h3>
-            <p className="text-dark/60 mb-6 leading-relaxed">
-              {description}
-            </p>
-            <div className="flex items-center gap-2 text-primary font-medium">
-              <span>Explore</span>
-              <svg 
-                className="w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" 
-                fill="none" 
-                viewBox="0 0 24 24" 
-                stroke="currentColor"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </div>
-          </div>
-        </div>
-      </Link>
-    </motion.div>
-  );
-}
-
-// QR Code Demo Component
-function QRDemoCard({ title, description, qrPlaceholder }: { title: string; description: string; qrPlaceholder: string }) {
-  return (
-    <motion.div 
-      variants={fadeUp}
-      className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300"
-    >
-      <div className="aspect-square bg-gradient-to-br from-gray-100 to-gray-50 rounded-2xl flex items-center justify-center mb-6 relative overflow-hidden">
-        <div className="w-32 h-32 bg-dark/5 rounded-xl flex items-center justify-center border-2 border-dashed border-dark/20">
-          <span className="text-dark/40 text-sm text-center px-4">{qrPlaceholder}</span>
-        </div>
-        <div className="absolute inset-0 bg-gradient-to-t from-white/50 to-transparent" />
-      </div>
-      <h4 className="font-semibold text-lg mb-2">{title}</h4>
-      <p className="text-dark/60 text-sm">{description}</p>
-    </motion.div>
-  );
-}
-
-// Services Data
-const services = [
+// Experience card data
+const experiences = [
   {
-    title: 'AR Photo Frames',
-    description: 'Transform your cherished memories into living experiences. Scan and watch photos come alive with videos and animations.',
+    title: 'AR Photo Stories',
+    description: 'Turn printed photos into living memories. Scan to play videos, messages, or animations right from the image.',
     href: '/services/ar-photo-frames',
-    gradient: 'bg-pink-500',
-    icon: (
-      <svg className="w-7 h-7 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-      </svg>
-    ),
   },
   {
-    title: 'Restaurant Menu AR',
-    description: 'Let customers see dishes in stunning 3D before ordering. Increase sales and reduce order confusion with immersive menus.',
+    title: 'AR Food Preview',
+    description: 'Let customers see dishes in 3D before ordering. Reduce waste, increase confidence, boost sales.',
     href: '/services/restaurant-menu',
-    gradient: 'bg-orange-500',
-    icon: (
-      <svg className="w-7 h-7 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-      </svg>
-    ),
   },
   {
-    title: 'AR Business Cards',
-    description: 'Make unforgettable first impressions. Your business card becomes a digital portfolio with videos, links, and contact info.',
+    title: 'AR Brand Moments',
+    description: 'Add interactive layers to packaging, posters, or business cards. Make every touchpoint memorable.',
     href: '/services/ar-business-cards',
-    gradient: 'bg-blue-500',
-    icon: (
-      <svg className="w-7 h-7 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2" />
-      </svg>
-    ),
   },
   {
-    title: 'Real Estate AR',
-    description: 'Virtual property tours that sell. Let buyers explore properties in immersive 3D from anywhere in the world.',
+    title: 'AR Space Preview',
+    description: 'Walk through properties or spaces remotely. Perfect for real estate, architecture, or event planning.',
     href: '/services/real-estate-ar',
-    gradient: 'bg-emerald-500',
-    icon: (
-      <svg className="w-7 h-7 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-      </svg>
-    ),
   },
   {
-    title: '3D Modeling Services',
-    description: 'Professional 3D models for any AR experience. From products to architectural visualizations, we bring ideas to life.',
+    title: 'Custom AR Experience',
+    description: 'Something unique in mind? We design and build bespoke AR experiences tailored to your vision.',
     href: '/services/3d-modeling',
-    gradient: 'bg-purple-500',
-    icon: (
-      <svg className="w-7 h-7 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5" />
-      </svg>
-    ),
   },
 ];
 
-// Pricing Plans
+// Pricing data
 const pricingPlans = [
   {
-    name: 'Super Lite',
-    price: '29',
-    description: 'Perfect for individuals and small projects',
+    name: 'Free',
+    price: '0',
+    description: 'For learning and experimentation',
     features: [
       'Up to 5 AR experiences',
-      'Basic QR code generation',
-      'Standard 3D models',
-      'Email support',
-      '1 user account',
+      '500 AR views per year',
+      '100 MB storage',
+      'Community access',
     ],
-    cta: 'Start Free Trial',
-    popular: false,
   },
   {
-    name: 'Lite',
-    price: '79',
-    description: 'Great for growing businesses',
+    name: 'Starter',
+    price: '29',
+    description: 'For small businesses and creators',
     features: [
       'Up to 25 AR experiences',
-      'Custom QR code branding',
-      'HD 3D models',
-      'Priority support',
-      '5 user accounts',
-      'Analytics dashboard',
-      'Custom domain',
+      '10,000 AR views/month',
+      '1 GB storage',
+      'Basic analytics',
     ],
-    cta: 'Get Started',
+  },
+  {
+    name: 'Growth',
+    price: '79',
+    description: 'For growing brands and teams',
+    features: [
+      'Up to 100 AR experiences',
+      '50,000 AR views/month',
+      '5 GB storage',
+      'Advanced analytics',
+      'Priority support',
+    ],
     popular: true,
   },
   {
-    name: 'Prime',
+    name: 'Pro',
     price: '199',
-    description: 'For enterprises and agencies',
+    description: 'For agencies at scale',
     features: [
       'Unlimited AR experiences',
-      'White-label solution',
-      'Ultra HD 3D models',
-      '24/7 dedicated support',
-      'Unlimited users',
-      'Advanced analytics',
+      '150,000 AR views/month',
+      '10 GB storage',
       'API access',
-      'Custom integrations',
-      'Priority rendering',
+      'Dedicated support',
     ],
-    cta: 'Contact Sales',
-    popular: false,
   },
 ];
 
-export default function HomePage() {
-  const heroRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ['start start', 'end start']
-  });
-  
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-  const heroY = useTransform(scrollYProgress, [0, 0.5], [0, 80]);
+// Showcase media items
+const showcaseMedia = [
+  { type: 'video', title: 'AR Food Menu Demo', category: 'Restaurant' },
+  { type: 'image', title: 'Photo Memory AR', category: 'Personal' },
+  { type: 'image', title: 'Business Card AR', category: 'Corporate' },
+  { type: 'video', title: 'Product Showcase', category: 'E-commerce' },
+  { type: 'image', title: 'Real Estate Tour', category: 'Property' },
+  { type: 'video', title: 'Event Experience', category: 'Events' },
+];
 
+export default function HomePage() {
   return (
     <>
-      {/* Hero Section */}
-      <section ref={heroRef} className="relative min-h-screen flex items-center pt-20 overflow-hidden">
-        {/* Subtle background gradient */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute -top-1/2 -right-1/2 w-full h-full bg-gradient-to-br from-primary/5 to-transparent rounded-full blur-3xl" />
-          <div className="absolute -bottom-1/2 -left-1/2 w-full h-full bg-gradient-to-tr from-primary/3 to-transparent rounded-full blur-3xl" />
+      {/* SECTION 1: HERO */}
+      <section className="min-h-screen flex items-center pt-20 pb-16 bg-gradient-to-b from-cream via-cream to-sand relative overflow-hidden">
+        {/* Background Effects */}
+        <div className="absolute inset-0 pointer-events-none">
+          <motion.div
+            animate={{ 
+              scale: [1, 1.2, 1],
+              opacity: [0.3, 0.5, 0.3]
+            }}
+            transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+            className="absolute top-20 right-1/4 w-[500px] h-[500px] bg-gradient-to-br from-primary/15 to-transparent rounded-full blur-3xl"
+          />
+          <motion.div
+            animate={{ 
+              scale: [1.2, 1, 1.2],
+              opacity: [0.2, 0.4, 0.2]
+            }}
+            transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
+            className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-to-tr from-sand to-transparent rounded-full blur-3xl"
+          />
         </div>
 
-        <motion.div 
-          style={{ opacity: heroOpacity, y: heroY }}
-          className="container-custom relative z-10"
-        >
-          <div className="max-w-5xl">
+        <div className="container-custom relative z-10">
+          <div className="max-w-3xl">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="mb-8"
+              className="mb-6"
             >
-              <span className="label">Augmented Reality Solutions</span>
+              <span className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full text-primary text-sm font-medium">
+                <motion.span 
+                  animate={{ scale: [1, 1.2, 1] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                  className="w-2 h-2 bg-primary rounded-full"
+                />
+                Web-based AR Platform
+              </span>
             </motion.div>
 
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.1 }}
-              className="heading-xl mb-8"
+              className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-dark leading-[1.1] mb-8"
             >
-              Bring Your World to{' '}
-              <span className="text-gradient">Life</span>
+              Point your phone at the real world.
               <br />
-              With Augmented{' '}
-              <span className="text-gradient">Reality</span>
+              <span className="bg-gradient-to-r from-primary via-primary-light to-primary bg-clip-text text-transparent">
+                We add the magic.
+              </span>
             </motion.h1>
 
             <motion.p
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-body max-w-2xl mb-12"
+              className="text-xl text-dark/60 max-w-xl mb-12 leading-relaxed"
             >
-              From photo frames that play memories to business cards that impress — 
-              we create immersive AR experiences for every industry. No app required, 
-              just scan and experience the magic.
+              Web-based augmented reality experiences that work instantly. 
+              No apps to download, no barriers to entry.
             </motion.p>
 
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="flex flex-wrap gap-4"
-            >
-              <MagneticButton href="/try-now" variant="primary">
-                Try AR Demo
-                <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </MagneticButton>
-              <MagneticButton href="/pricing" variant="outline">
-                View Pricing
-              </MagneticButton>
-            </motion.div>
           </div>
-        </motion.div>
+        </div>
 
+        {/* Floating Elements */}
+        <motion.div
+          animate={{ y: [-10, 10, -10] }}
+          transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+          className="hidden lg:block absolute right-20 top-1/3 w-20 h-20 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl rotate-12"
+        />
+        <motion.div
+          animate={{ y: [10, -10, 10] }}
+          transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+          className="hidden lg:block absolute right-40 bottom-1/3 w-16 h-16 bg-gradient-to-br from-sand to-cream rounded-full"
+        />
       </section>
 
-      {/* Services Section */}
-      <AnimatedSection className="section-padding bg-white" id="services">
+      {/* SECTION 2: WHAT HAPPENS */}
+      <AnimatedSection className="py-24 bg-gradient-to-b from-sand via-dark/[0.02] to-sand" id="how-it-works">
         <div className="container-custom">
-          <motion.div variants={fadeIn} className="text-center mb-16">
-            <span className="label mb-4 block">Our Services</span>
-            <h2 className="heading-lg mb-6">
-              AR Solutions for{' '}
-              <span className="text-gradient">Every Need</span>
-            </h2>
+          <motion.p variants={fadeIn} className="text-dark/50 text-sm tracking-wide uppercase mb-6">
+            How it works
+          </motion.p>
+          <motion.h2 variants={fadeUp} className="text-3xl md:text-4xl font-bold text-dark mb-16 max-w-2xl">
+            What happens when someone scans your image or product?
+          </motion.h2>
+
+          <motion.div variants={staggerContainer} className="grid md:grid-cols-3 gap-12 md:gap-16">
+            {[
+              { step: '01', title: 'They scan', desc: 'Using any smartphone camera, they point at your image, packaging, or product.' },
+              { step: '02', title: 'The browser opens', desc: 'No app needed. A lightweight web experience loads in seconds.' },
+              { step: '03', title: 'They experience it', desc: 'Video plays, 3D appears, or interactive content comes to life — right there.' },
+            ].map((item, i) => (
+              <motion.div 
+                key={i} 
+                variants={fadeUp}
+                whileHover={{ y: -5 }}
+                transition={{ type: 'spring', stiffness: 300 }}
+                className="relative"
+              >
+                <motion.span 
+                  className="text-6xl font-bold text-primary/10 absolute -top-4 -left-2"
+                  whileHover={{ scale: 1.1, color: 'rgba(45, 90, 61, 0.2)' }}
+                >
+                  {item.step}
+                </motion.span>
+                <div className="relative z-10 pt-8">
+                  <h3 className="text-xl font-semibold text-dark mb-3">{item.title}</h3>
+                  <p className="text-dark/60 leading-relaxed">{item.desc}</p>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </AnimatedSection>
+
+      {/* SECTION 2.5: VIDEO & PHOTO SHOWCASE */}
+      <AnimatedSection className="py-24 bg-gradient-to-b from-dark/[0.04] via-sand to-cream" id="showcase">
+        <div className="container-custom">
+          <motion.div variants={fadeUp} className="text-center mb-16">
+            <span className="label mb-4 block">Showcase</span>
+            <h2 className="heading-lg mb-4">See AR in Action</h2>
             <p className="text-body max-w-2xl mx-auto">
-              Whether you're preserving memories, showcasing products, or revolutionizing 
-              your business — we have the perfect AR solution for you.
+              Explore our collection of AR experiences across different industries and use cases.
             </p>
           </motion.div>
 
-          <motion.div 
-            variants={staggerContainer}
-            className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
-          >
-            {services.map((service, index) => (
-              <ServiceCard key={index} {...service} />
-            ))}
-          </motion.div>
-        </div>
-      </AnimatedSection>
-
-      {/* How It Works Section */}
-      <AnimatedSection className="section-padding">
-        <div className="container-custom">
-          <motion.div variants={fadeIn} className="text-center mb-16">
-            <span className="label mb-4 block">How It Works</span>
-            <h2 className="heading-lg">
-              Simple as <span className="text-gradient">1-2-3</span>
-            </h2>
-          </motion.div>
-
-          <motion.div variants={staggerContainer} className="grid md:grid-cols-3 gap-8">
-            {[
-              { 
-                step: '01', 
-                title: 'Choose Your Service', 
-                desc: 'Select from our range of AR solutions — photo frames, menus, business cards, real estate tours, or custom 3D models.',
-                icon: (
-                  <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
-                  </svg>
-                )
-              },
-              { 
-                step: '02', 
-                title: 'We Create the Magic', 
-                desc: 'Our team designs your AR experience with stunning visuals, smooth animations, and unique QR codes for instant access.',
-                icon: (
-                  <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                  </svg>
-                )
-              },
-              { 
-                step: '03', 
-                title: 'Scan & Experience', 
-                desc: 'Anyone with a smartphone can scan your QR code and instantly experience your content in augmented reality — no app needed.',
-                icon: (
-                  <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
-                  </svg>
-                )
-              },
-            ].map((item, i) => (
+          {/* Media Grid */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {showcaseMedia.map((item, i) => (
               <motion.div
                 key={i}
-                variants={fadeUp}
-                whileHover={{ y: -8, transition: { duration: 0.3 } }}
-                className="relative bg-white rounded-3xl p-8 shadow-sm hover:shadow-xl transition-shadow duration-500"
+                variants={scaleIn}
+                whileHover={{ scale: 1.03, y: -8 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                className="group cursor-pointer"
               >
-                <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mb-6">
-                  {item.icon}
+                <div className={`aspect-video rounded-2xl bg-gradient-to-br ${
+                  i % 3 === 0 ? 'from-primary/15 via-primary/5 to-sand' :
+                  i % 3 === 1 ? 'from-sand via-cream to-primary/10' :
+                  'from-primary/10 via-sand to-cream'
+                } flex items-center justify-center relative overflow-hidden`}>
+                  {/* Overlay */}
+                  <div className="absolute inset-0 bg-dark/0 group-hover:bg-dark/10 transition-colors duration-300" />
+                  
+                  {/* Play/View Icon */}
+                  <motion.div 
+                    className={`w-16 h-16 rounded-full flex items-center justify-center ${
+                      item.type === 'video' 
+                        ? 'bg-primary text-white' 
+                        : 'bg-white/80 text-primary'
+                    } shadow-lg group-hover:scale-110 transition-transform duration-300`}
+                    whileHover={{ scale: 1.15 }}
+                  >
+                    {item.type === 'video' ? (
+                      <svg className="w-6 h-6 ml-1" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M8 5v14l11-7z" />
+                      </svg>
+                    ) : (
+                      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
+                    )}
+                  </motion.div>
+
+                  {/* Category Badge */}
+                  <span className="absolute top-4 left-4 px-3 py-1 bg-white/90 backdrop-blur-sm text-xs font-medium text-dark rounded-full">
+                    {item.category}
+                  </span>
                 </div>
-                <span className="inline-block px-3 py-1 bg-primary/10 text-primary text-sm font-semibold rounded-full mb-4">Step {item.step}</span>
-                <h3 className="heading-sm mb-4">{item.title}</h3>
-                <p className="text-body-sm">{item.desc}</p>
+                
+                <div className="mt-4">
+                  <h3 className="font-semibold text-dark group-hover:text-primary transition-colors duration-300">
+                    {item.title}
+                  </h3>
+                  <p className="text-sm text-dark/50 flex items-center gap-1 mt-1">
+                    {item.type === 'video' ? (
+                      <>
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        Watch Video
+                      </>
+                    ) : (
+                      <>
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
+                        View Gallery
+                      </>
+                    )}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* CTA Button */}
+          <motion.div variants={fadeUp} className="text-center mt-12">
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Link href="/resources/videos" className="btn-secondary">
+                View All Media
+                <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </Link>
+            </motion.div>
+          </motion.div>
+        </div>
+      </AnimatedSection>
+
+      {/* SECTION 3: EXPERIENCES */}
+      <AnimatedSection className="py-24 bg-gradient-to-b from-cream via-dark/[0.02] to-sand" id="experiences">
+        <div className="container-custom">
+          <motion.p variants={fadeIn} className="text-dark/50 text-sm tracking-wide uppercase mb-6">
+            What you can create
+          </motion.p>
+          <motion.h2 variants={fadeUp} className="text-3xl md:text-4xl font-bold text-dark mb-16">
+            Experiences built for real moments
+          </motion.h2>
+
+          <motion.div variants={staggerContainer} className="space-y-4">
+            {experiences.map((exp, i) => (
+              <motion.div key={i} variants={fadeUp}>
+                <Link 
+                  href={exp.href}
+                  className="block bg-gradient-to-r from-sand/50 to-sand rounded-2xl p-8 md:p-10 transition-all duration-500 hover:shadow-xl hover:shadow-primary/10 hover:from-sand hover:to-cream group border border-transparent hover:border-primary/10"
+                >
+                  <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                    <div className="flex-1">
+                      <h3 className="text-xl md:text-2xl font-semibold text-dark mb-2 group-hover:text-primary transition-colors duration-300">
+                        {exp.title}
+                      </h3>
+                      <p className="text-dark/60 leading-relaxed max-w-2xl">
+                        {exp.description}
+                      </p>
+                    </div>
+                    <div className="flex-shrink-0">
+                      <span className="inline-flex items-center text-primary font-medium">
+                        Learn more
+                        <motion.svg 
+                          className="w-5 h-5 ml-2" 
+                          fill="none" 
+                          viewBox="0 0 24 24" 
+                          stroke="currentColor"
+                          whileHover={{ x: 5 }}
+                        >
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </motion.svg>
+                      </span>
+                    </div>
+                  </div>
+                </Link>
               </motion.div>
             ))}
           </motion.div>
         </div>
       </AnimatedSection>
 
-      {/* QR Demo Section */}
-      <AnimatedSection className="section-padding bg-dark text-white" id="demos">
+      {/* SECTION 4: WHY WEB AR */}
+      <AnimatedSection className="py-24 bg-gradient-to-b from-dark/[0.03] via-sand to-cream">
         <div className="container-custom">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div>
-              <motion.span variants={fadeIn} className="label mb-4 block">Try It Yourself</motion.span>
-              <motion.h2 variants={fadeUp} className="heading-lg mb-6">
-                Scan & Experience{' '}
-                <span className="text-primary">AR Magic</span>
-              </motion.h2>
-              <motion.p variants={fadeUp} className="text-xl text-white/70 mb-8">
-                Use your smartphone camera to scan any of our demo QR codes and 
-                experience the future of augmented reality firsthand.
-              </motion.p>
-              <motion.div variants={fadeUp} className="flex flex-wrap gap-4">
-                <MagneticButton href="/try-now" variant="primary">
-                  See All Demos
-                </MagneticButton>
-              </motion.div>
-            </div>
-            
-            <motion.div 
-              variants={staggerContainer}
-              className="grid grid-cols-2 gap-4"
-            >
-              <QRDemoCard 
-                title="AR Photo Frame"
-                description="Scan to see a memory come alive"
-                qrPlaceholder="QR Code Here"
-              />
-              <QRDemoCard 
-                title="AR Menu Demo"
-                description="See 3D dishes before ordering"
-                qrPlaceholder="QR Code Here"
-              />
-              <QRDemoCard 
-                title="Business Card AR"
-                description="Experience digital networking"
-                qrPlaceholder="QR Code Here"
-              />
-              <QRDemoCard 
-                title="Real Estate Tour"
-                description="Walk through properties virtually"
-                qrPlaceholder="QR Code Here"
-              />
-            </motion.div>
-          </div>
-        </div>
-      </AnimatedSection>
+          <motion.p variants={fadeIn} className="text-dark/50 text-sm tracking-wide uppercase mb-6">
+            Why web AR
+          </motion.p>
+          <motion.h2 variants={fadeUp} className="text-3xl md:text-4xl font-bold text-dark mb-16 max-w-3xl">
+            No app to install. No friction. Just point, scan, and experience.
+          </motion.h2>
 
-      {/* Why WebAR Section */}
-      <AnimatedSection className="section-padding">
-        <div className="container-custom">
-          <motion.div variants={fadeIn} className="text-center mb-16">
-            <span className="label mb-4 block">Why Choose Us</span>
-            <h2 className="heading-lg">
-              Simple. Instant. <span className="text-gradient">Powerful.</span>
-            </h2>
-          </motion.div>
-
-          <motion.div variants={staggerContainer} className="grid md:grid-cols-2 lg:grid-cols-5 gap-6">
+          <motion.div variants={staggerContainer} className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
               { 
-                title: 'No App Required', 
-                desc: 'Works in browser',
+                title: 'Instant access', 
+                desc: 'Works in any browser. No downloads, no waiting.',
                 icon: (
-                  <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                  </svg>
-                )
-              },
-              { 
-                title: 'Instant Access', 
-                desc: 'Just scan QR',
-                icon: (
-                  <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="w-6 h-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
                   </svg>
                 )
               },
               { 
-                title: 'Any Smartphone', 
-                desc: 'Universal support',
+                title: 'Any smartphone', 
+                desc: 'iOS, Android — if it has a camera, it works.',
                 icon: (
-                  <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                  <svg className="w-6 h-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
                   </svg>
                 )
               },
               { 
-                title: 'Multi-Industry', 
-                desc: 'Any business type',
+                title: 'Higher engagement', 
+                desc: 'Remove the app barrier and reach more people.',
                 icon: (
-                  <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                  <svg className="w-6 h-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                   </svg>
                 )
               },
               { 
-                title: 'Human Touch', 
-                desc: 'Tech stays hidden',
+                title: 'Easy updates', 
+                desc: 'Change content anytime without user action.',
                 icon: (
-                  <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                  <svg className="w-6 h-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                   </svg>
                 )
               },
             ].map((item, i) => (
-              <motion.div
-                key={i}
+              <motion.div 
+                key={i} 
                 variants={fadeUp}
-                className="bg-white rounded-2xl p-6 text-center shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+                whileHover={{ y: -8, transition: { duration: 0.3 } }}
+                className="bg-cream/80 backdrop-blur-sm rounded-2xl p-6 border border-dark/5 hover:border-primary/20 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300"
               >
-                <div className="w-14 h-14 mx-auto mb-4 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+                <div 
+                  className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4"
+                >
                   {item.icon}
                 </div>
-                <h3 className="font-semibold mb-1">{item.title}</h3>
-                <p className="text-sm text-dark/60">{item.desc}</p>
+                <h3 className="text-lg font-semibold text-dark mb-2">{item.title}</h3>
+                <p className="text-dark/60">{item.desc}</p>
               </motion.div>
             ))}
           </motion.div>
         </div>
       </AnimatedSection>
 
-      {/* Pricing Section */}
-      <AnimatedSection className="section-padding bg-white" id="pricing">
-        <div className="container-custom">
-          <motion.div variants={fadeIn} className="text-center mb-16">
-            <span className="label mb-4 block">Pricing Plans</span>
-            <h2 className="heading-lg mb-6">
-              Choose Your <span className="text-gradient">Perfect Plan</span>
-            </h2>
-            <p className="text-body max-w-2xl mx-auto">
-              Flexible pricing for every stage of your journey. Start small and scale as you grow.
-            </p>
-          </motion.div>
-
-          <motion.div 
-            variants={staggerContainer}
-            className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto items-stretch"
-          >
-            {pricingPlans.map((plan, index) => (
-              <motion.div
-                key={index}
-                variants={scaleIn}
-                whileHover={{ y: -8, transition: { duration: 0.3 } }}
-                className={`relative rounded-3xl p-8 flex flex-col h-full ${
-                  plan.popular 
-                    ? 'bg-dark text-white ring-4 ring-primary shadow-2xl md:-my-4 md:py-12' 
-                    : 'bg-cream-dark'
-                }`}
-              >
-                {plan.popular && (
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-primary text-white text-sm font-semibold rounded-full">
-                    Most Popular
-                  </div>
-                )}
-                <div className="text-center mb-8">
-                  <h3 className="text-xl font-semibold mb-2">{plan.name}</h3>
-                  <p className={`text-sm mb-4 ${plan.popular ? 'text-white/60' : 'text-dark/60'}`}>
-                    {plan.description}
-                  </p>
-                  <div className="flex items-baseline justify-center gap-1">
-                    <span className="text-4xl font-bold">${plan.price}</span>
-                    <span className={plan.popular ? 'text-white/60' : 'text-dark/60'}>/month</span>
-                  </div>
-                </div>
-                <ul className="space-y-3 mb-8 flex-grow">
-                  {plan.features.map((feature, i) => (
-                    <li key={i} className="flex items-center gap-3">
-                      <svg className="w-5 h-5 flex-shrink-0 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                      <span className={`text-sm ${plan.popular ? 'text-white/80' : 'text-dark/70'}`}>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Link 
-                  href="/pricing"
-                  className={`block text-center py-4 px-6 rounded-full font-medium transition-all duration-300 mt-auto ${
-                    plan.popular
-                      ? 'bg-primary text-white hover:shadow-[0_0_30px_rgba(0,204,102,0.4)] hover:scale-105'
-                      : 'bg-dark text-white hover:bg-dark/80 hover:scale-105'
-                  }`}
-                >
-                  {plan.cta}
-                </Link>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </AnimatedSection>
-
-      {/* Video/Demo Section */}
-      <AnimatedSection className="section-padding">
+      {/* SECTION 5: LIVE DEMO */}
+      <AnimatedSection className="py-24 bg-gradient-to-b from-sand via-dark/[0.03] to-sand" id="demo">
         <div className="container-custom">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <motion.div variants={fadeUp}>
-              <span className="label mb-4 block">See It In Action</span>
-              <h2 className="heading-lg mb-6">
-                Watch How <span className="text-gradient">AR Works</span>
-              </h2>
-              <p className="text-body mb-8">
-                Experience the magic of augmented reality through our demo videos. 
-                See how businesses and individuals are using WebAR to create 
-                unforgettable experiences.
-              </p>
-              <div className="flex flex-wrap gap-4">
-                <MagneticButton href="/try-now" variant="primary">
-                  Try It Now
-                </MagneticButton>
-                <Link href="/company/about" className="btn-ghost">
-                  Learn More About Us
-                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </Link>
-              </div>
-            </motion.div>
+            <div>
+              <motion.p variants={fadeIn} className="text-dark/50 text-sm tracking-wide uppercase mb-6">
+                Try it now
+              </motion.p>
+              <motion.h2 variants={fadeUp} className="text-3xl md:text-4xl font-bold text-dark mb-6">
+                See it for yourself
+              </motion.h2>
+              <motion.p variants={fadeUp} className="text-dark/60 text-lg leading-relaxed mb-8">
+                Scan this QR code with your phone camera. No app needed — 
+                the experience opens right in your browser.
+              </motion.p>
+              <motion.div variants={fadeUp}>
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                  <Link href="/try-now" className="btn-primary">
+                    View all demos
+                    <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </Link>
+                </motion.div>
+              </motion.div>
+            </div>
             
-            <motion.div 
-              variants={scaleIn}
-              className="relative aspect-video bg-dark rounded-3xl overflow-hidden group cursor-pointer"
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-purple-500/20" />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform duration-300">
-                  <svg className="w-8 h-8 text-primary ml-1" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M8 5v14l11-7z" />
-                  </svg>
+            <motion.div variants={scaleIn} className="flex justify-center">
+              <motion.div 
+                className="bg-gradient-to-br from-cream to-white rounded-3xl p-10 shadow-xl shadow-primary/10"
+                whileHover={{ scale: 1.02, boxShadow: '0 25px 50px -12px rgba(45, 90, 61, 0.2)' }}
+                transition={{ type: 'spring', stiffness: 300 }}
+              >
+                <div className="w-56 h-56 bg-gradient-to-br from-primary/5 to-primary/10 rounded-2xl flex items-center justify-center border-2 border-dashed border-primary/30">
+                  <div className="text-center">
+                    <motion.div
+                      animate={{ rotate: [0, 5, -5, 0] }}
+                      transition={{ duration: 4, repeat: Infinity }}
+                      className="w-16 h-16 mx-auto mb-3 bg-primary/10 rounded-xl flex items-center justify-center"
+                    >
+                      <svg className="w-8 h-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
+                      </svg>
+                    </motion.div>
+                    <span className="text-dark/50 text-sm">
+                      QR Code<br />Coming Soon
+                    </span>
+                  </div>
                 </div>
-              </div>
-              <div className="absolute bottom-6 left-6 right-6">
-                <p className="text-white font-medium">Watch Demo Video</p>
-                <p className="text-white/60 text-sm">2 min • See AR in action</p>
-              </div>
+                <p className="text-center text-dark/50 text-sm mt-6 flex items-center justify-center gap-2">
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                  </svg>
+                  Point your camera here
+                </p>
+              </motion.div>
             </motion.div>
           </div>
         </div>
       </AnimatedSection>
 
-      {/* CTA Section */}
-      <AnimatedSection className="section-padding">
+      {/* SECTION 6: HOW WE BUILD */}
+      <AnimatedSection className="py-24 bg-gradient-to-b from-cream via-dark/[0.02] to-cream">
         <div className="container-custom">
-          <motion.div
-            variants={scaleIn}
-            whileHover={{ scale: 1.01, transition: { duration: 0.4 } }}
-            className="bg-dark rounded-3xl p-12 md:p-20 text-center text-white relative overflow-hidden"
-          >
-            {/* Background decoration */}
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
-              <div className="absolute top-0 right-0 w-96 h-96 bg-primary/20 rounded-full blur-3xl" />
-              <div className="absolute bottom-0 left-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
-            </div>
+          <motion.p variants={fadeIn} className="text-dark/50 text-sm tracking-wide uppercase mb-6">
+            Our approach
+          </motion.p>
+          <motion.h2 variants={fadeUp} className="text-3xl md:text-4xl font-bold text-dark mb-16 max-w-2xl">
+            How we build your experience
+          </motion.h2>
 
-            <div className="relative z-10">
-              <motion.span variants={fadeIn} className="text-primary text-sm font-semibold tracking-wider uppercase mb-4 block">Ready to Get Started?</motion.span>
-              <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-                Your AR Journey Begins{' '}
-                <span className="text-primary">Today</span>
-              </motion.h2>
-              <motion.p variants={fadeUp} className="text-lg text-white/60 max-w-2xl mx-auto mb-10">
-                Whether you're a photographer, restaurant owner, real estate agent, or business professional
-                — we're ready to bring your vision to life with AR.
-              </motion.p>
-              <motion.div variants={fadeUp} className="flex flex-wrap justify-center gap-4">
-                <MagneticButton href="/try-now" variant="primary">
-                  Start Free Trial
+          <motion.div variants={staggerContainer} className="max-w-2xl space-y-8">
+            {[
+              { num: '01', text: 'We start with a conversation about what you want people to feel.' },
+              { num: '02', text: 'We design and build the AR experience to fit that moment.' },
+              { num: '03', text: 'You get everything you need — QR codes, files, and support.' },
+            ].map((item, i) => (
+              <motion.div 
+                key={i} 
+                variants={fadeRight}
+                className="flex items-start gap-6 group"
+              >
+                <motion.span 
+                  className="text-4xl font-bold text-primary/20 group-hover:text-primary/40 transition-colors duration-300"
+                  whileHover={{ scale: 1.1 }}
+                >
+                  {item.num}
+                </motion.span>
+                <p className="text-xl text-dark/70 leading-relaxed pt-2">
+                  {item.text}
+                </p>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </AnimatedSection>
+
+      {/* SECTION 7: PRICING */}
+      <AnimatedSection className="py-24 bg-gradient-to-b from-dark/[0.04] via-sand to-cream" id="pricing">
+        <div className="container-custom">
+          <motion.p variants={fadeIn} className="text-dark/50 text-sm tracking-wide uppercase mb-6">
+            Pricing
+          </motion.p>
+          <motion.h2 variants={fadeUp} className="text-3xl md:text-4xl font-bold text-dark mb-6">
+            Simple pricing that grows with you
+          </motion.h2>
+          <motion.p variants={fadeUp} className="text-dark/60 text-lg mb-16 max-w-xl">
+            Start small, scale when you're ready. No hidden costs.
+          </motion.p>
+
+          <motion.div variants={staggerContainer} className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {pricingPlans.map((plan, i) => (
+              <motion.div 
+                key={i} 
+                variants={scaleIn}
+                whileHover={{ 
+                  y: -10, 
+                  boxShadow: plan.popular 
+                    ? '0 25px 50px -12px rgba(45, 90, 61, 0.25)' 
+                    : '0 20px 40px -12px rgba(0, 0, 0, 0.1)'
+                }}
+                className={`bg-cream rounded-2xl p-8 transition-all duration-400 border ${
+                  plan.popular 
+                    ? 'ring-2 ring-primary lg:scale-105 lg:z-10 border-primary/20' 
+                    : 'border-primary/5 hover:border-primary/20'
+                }`}
+              >
+                {plan.popular && (
+                  <motion.span 
+                    className="inline-block text-xs font-medium text-white bg-primary px-3 py-1 rounded-full mb-4"
+                    animate={{ scale: [1, 1.05, 1] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  >
+                    Most popular
+                  </motion.span>
+                )}
+                <h3 className="text-xl font-semibold text-dark mb-2">{plan.name}</h3>
+                <div className="flex items-baseline gap-1 mb-3">
+                  {plan.price === '0' ? (
+                    <span className="text-3xl font-bold text-dark">$0</span>
+                  ) : (
+                    <>
+                      <span className="text-3xl font-bold text-dark">${plan.price}</span>
+                      <span className="text-dark/50">/month</span>
+                    </>
+                  )}
+                </div>
+                <p className="text-dark/60 text-sm mb-6">{plan.description}</p>
+                <ul className="space-y-3">
+                  {plan.features.map((feature, j) => (
+                    <li key={j} className="flex items-start gap-3 text-sm text-dark/70">
+                      <svg className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          <motion.div variants={fadeUp} className="text-center mt-12">
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Link href="/pricing" className="btn-secondary">
+                View full pricing details
+                <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </Link>
+            </motion.div>
+          </motion.div>
+        </div>
+      </AnimatedSection>
+
+      {/* SECTION 8: HUMAN TOUCH */}
+      <AnimatedSection className="py-24 bg-cream">
+        <div className="container-custom">
+          <div className="max-w-3xl">
+            <motion.p variants={fadeIn} className="text-dark/50 text-sm tracking-wide uppercase mb-6">
+              Who we are
+            </motion.p>
+            <motion.h2 variants={fadeUp} className="text-3xl md:text-4xl font-bold text-dark mb-8">
+              Built by people who care about the details
+            </motion.h2>
+            <motion.p variants={fadeUp} className="text-xl text-dark/60 leading-relaxed mb-8">
+              We're a small team that believes technology should feel invisible. 
+              The best AR experiences are the ones where people forget they're using AR 
+              — they're just having a moment.
+            </motion.p>
+            <motion.p variants={fadeUp} className="text-lg text-dark/60 leading-relaxed mb-8">
+              Every project gets our full attention. We're not here to sell you features. 
+              We're here to help you create something meaningful.
+            </motion.p>
+            <motion.div variants={fadeUp}>
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="inline-block">
+                <Link href="/company/careers" className="btn-outline">
+                  Join our team
                   <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>
-                </MagneticButton>
-                <MagneticButton href="/pricing" variant="outline-light">
-                  View All Plans
-                </MagneticButton>
+                </Link>
               </motion.div>
-            </div>
-          </motion.div>
+            </motion.div>
+          </div>
+        </div>
+      </AnimatedSection>
+
+      {/* SECTION 9: FINAL CTA */}
+      <AnimatedSection className="py-24 bg-gradient-to-br from-sand via-cream to-sand relative overflow-hidden">
+        {/* Background decoration */}
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ duration: 60, repeat: Infinity, ease: 'linear' }}
+          className="absolute -right-40 -bottom-40 w-96 h-96 bg-gradient-to-br from-primary/5 to-transparent rounded-full"
+        />
+        
+        <div className="container-custom relative z-10">
+          <div className="max-w-2xl mx-auto text-center">
+            <motion.h2 variants={fadeUp} className="text-3xl md:text-4xl font-bold text-dark mb-6">
+              Ready to create something?
+            </motion.h2>
+            <motion.p variants={fadeUp} className="text-dark/60 text-lg mb-10">
+              Start with a demo, or reach out to talk about your project. 
+              No pressure, just a conversation.
+            </motion.p>
+            <motion.div variants={fadeUp} className="flex flex-wrap justify-center gap-4">
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Link href="/try-now" className="btn-primary">
+                  Try demo
+                  <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </Link>
+              </motion.div>
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Link href="/company/about" className="btn-secondary">
+                  Get in touch
+                </Link>
+              </motion.div>
+            </motion.div>
+          </div>
         </div>
       </AnimatedSection>
     </>

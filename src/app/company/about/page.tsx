@@ -1,12 +1,15 @@
 'use client'
 
-import { useRef } from 'react'
-import Link from 'next/link'
+import { useRef, useState } from 'react'
 import { motion, useInView } from 'framer-motion'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0 }
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] }
+  }
 }
 
 const staggerContainer = {
@@ -34,48 +37,43 @@ function AnimatedSection({ children, className = '' }: { children: React.ReactNo
   )
 }
 
-const values = [
-  { 
-    title: 'Human-First', 
-    desc: 'Technology should enhance human connection, not replace it.',
-    icon: (
-      <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-      </svg>
-    )
-  },
-  { 
-    title: 'Simple Technology', 
-    desc: 'Complex problems deserve simple, elegant solutions.',
-    icon: (
-      <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-      </svg>
-    )
-  },
-  { 
-    title: 'Real Business Value', 
-    desc: 'Every feature we build must create measurable impact.',
-    icon: (
-      <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-      </svg>
-    )
-  },
-];
+export default function ContactPage() {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    company: '',
+    message: ''
+  })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
 
-const team = [
-  { name: 'Founder', role: 'CEO & Visionary' },
-  { name: 'Tech Lead', role: 'CTO & Innovation' },
-  { name: 'Design Lead', role: 'Creative Director' },
-  { name: 'Operations', role: 'COO & Strategy' },
-]
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+    
+    // Create mailto link with form data
+    const subject = `Contact from ${formData.name} - ${formData.company || 'WebAR Inquiry'}`
+    const body = `Name: ${formData.name}%0D%0AEmail: ${formData.email}%0D%0ACompany: ${formData.company || 'Not provided'}%0D%0A%0D%0AMessage:%0D%0A${formData.message}`
+    
+    window.location.href = `mailto:namasterides@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`
+    
+    setTimeout(() => {
+      setIsSubmitting(false)
+      setSubmitted(true)
+    }, 1000)
+  }
 
-export default function AboutPage() {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }))
+  }
+
   return (
     <>
       {/* Hero Section */}
-      <section className="min-h-[70vh] flex items-center pt-20 relative overflow-hidden">
+      <section className="min-h-[60vh] flex items-center pt-20 relative overflow-hidden bg-gradient-to-b from-cream via-sand to-dark/[0.03]">
         <div className="absolute inset-0">
           <motion.div
             animate={{ scale: [1, 1.1, 1] }}
@@ -85,168 +83,278 @@ export default function AboutPage() {
         </div>
 
         <div className="container-custom relative z-10">
-          <div className="max-w-4xl">
+          <div className="max-w-3xl">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <span className="label mb-4 block">Company</span>
+              <span className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full text-primary text-sm font-medium mb-6">
+                <span className="w-2 h-2 bg-primary rounded-full" />
+                Get in Touch
+              </span>
             </motion.div>
 
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.1 }}
-              className="heading-xl mb-6"
+              className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-dark leading-[1.1] mb-8"
             >
-              About <span className="text-gradient">WebAR</span>
+              Let's Build
+              <br />
+              <span className="bg-gradient-to-r from-primary via-primary-light to-primary bg-clip-text text-transparent">
+                Something Amazing
+              </span>
             </motion.h1>
 
             <motion.p
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-2xl md:text-3xl text-dark/70 font-light"
+              className="text-xl text-dark/60 max-w-xl leading-relaxed"
             >
-              We believe moments should be relived, and food should 
-              be experienced before it's ordered.
+              Have a project in mind? Want to learn more about WebAR? 
+              We'd love to hear from you.
             </motion.p>
           </div>
         </div>
       </section>
 
-      {/* Story Section */}
-      <AnimatedSection className="section-padding bg-white">
+      {/* Contact Section */}
+      <AnimatedSection className="py-24 bg-gradient-to-b from-dark/[0.03] via-sand to-cream">
         <div className="container-custom">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="grid lg:grid-cols-2 gap-16">
+            {/* Contact Info */}
             <motion.div variants={fadeUp}>
-              <span className="label mb-4 block">Our Story</span>
-              <h2 className="heading-lg mb-6">Built on a Simple Idea</h2>
-              <div className="space-y-6 text-body">
-                <p>
-                  WebAR was founded on a simple observation: the most meaningful experiences 
-                  in life happen around food. Celebrations, first dates, family gatherings — 
-                  some of our most cherished memories are made at the table.
-                </p>
-                <p>
-                  We are a team of creators, technologists, and storytellers building AR 
-                  experiences for the real world — starting with restaurants.
-                </p>
-                <p>
-                  Our platform serves both sides of the dining experience: helping customers 
-                  capture and relive special moments, while empowering restaurants with 
-                  immersive tools to showcase their food and grow their business.
-                </p>
+              <h2 className="text-3xl font-bold text-dark mb-8">Contact Information</h2>
+              
+              <div className="space-y-8">
+                {/* Email */}
+                <div className="flex items-start gap-4">
+                  <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center flex-shrink-0">
+                    <svg className="w-6 h-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-dark mb-1">Email</h3>
+                    <a 
+                      href="mailto:namasterides@gmail.com" 
+                      className="text-dark/60 hover:text-primary transition-colors"
+                    >
+                      namasterides@gmail.com
+                    </a>
+                  </div>
+                </div>
+
+                {/* Location */}
+                <div className="flex items-start gap-4">
+                  <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center flex-shrink-0">
+                    <svg className="w-6 h-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-dark mb-1">Location</h3>
+                    <p className="text-dark/60">Tampa, Florida</p>
+                  </div>
+                </div>
+
+                {/* Response Time */}
+                <div className="flex items-start gap-4">
+                  <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center flex-shrink-0">
+                    <svg className="w-6 h-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-dark mb-1">Response Time</h3>
+                    <p className="text-dark/60">We typically respond within 24 hours</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Quick Links */}
+              <div className="mt-12 pt-8 border-t border-dark/10">
+                <h3 className="font-semibold text-dark mb-4">Quick Links</h3>
+                <div className="flex flex-wrap gap-3">
+                  <a 
+                    href="/pricing" 
+                    className="px-4 py-2 bg-dark/5 rounded-full text-sm text-dark/70 hover:bg-primary/10 hover:text-primary transition-colors"
+                  >
+                    View Pricing
+                  </a>
+                  <a 
+                    href="/try-now" 
+                    className="px-4 py-2 bg-dark/5 rounded-full text-sm text-dark/70 hover:bg-primary/10 hover:text-primary transition-colors"
+                  >
+                    Try Demo
+                  </a>
+                  <a 
+                    href="/company/careers" 
+                    className="px-4 py-2 bg-dark/5 rounded-full text-sm text-dark/70 hover:bg-primary/10 hover:text-primary transition-colors"
+                  >
+                    Join Our Team
+                  </a>
+                </div>
               </div>
             </motion.div>
 
-            <motion.div 
-              variants={fadeUp}
-              className="aspect-square bg-gradient-to-br from-primary/10 to-primary/5 rounded-3xl flex items-center justify-center"
-            >
-              <svg className="w-32 h-32 text-primary/40" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={0.5} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+            {/* Contact Form */}
+            <motion.div variants={fadeUp}>
+              <div className="bg-cream/80 backdrop-blur-sm rounded-3xl p-8 md:p-10 border border-dark/5">
+                <h2 className="text-2xl font-bold text-dark mb-6">Send us a Message</h2>
+                
+                {submitted ? (
+                  <motion.div 
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="text-center py-12"
+                  >
+                    <div className="w-16 h-16 mx-auto mb-4 bg-primary/10 rounded-full flex items-center justify-center">
+                      <svg className="w-8 h-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <h3 className="text-xl font-semibold text-dark mb-2">Message Sent!</h3>
+                    <p className="text-dark/60">We'll get back to you as soon as possible.</p>
+                    <button 
+                      onClick={() => {
+                        setSubmitted(false)
+                        setFormData({ name: '', email: '', company: '', message: '' })
+                      }}
+                      className="mt-6 text-primary hover:underline"
+                    >
+                      Send another message
+                    </button>
+                  </motion.div>
+                ) : (
+                  <form onSubmit={handleSubmit} className="space-y-6">
+                    <div>
+                      <label htmlFor="name" className="block text-sm font-medium text-dark mb-2">
+                        Your Name *
+                      </label>
+                      <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        required
+                        value={formData.name}
+                        onChange={handleChange}
+                        className="w-full px-4 py-3 bg-white border border-dark/10 rounded-xl focus:outline-none focus:border-primary/30 focus:ring-2 focus:ring-primary/10 transition-all"
+                        placeholder="John Doe"
+                      />
+                    </div>
+
+                    <div>
+                      <label htmlFor="email" className="block text-sm font-medium text-dark mb-2">
+                        Email Address *
+                      </label>
+                      <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        required
+                        value={formData.email}
+                        onChange={handleChange}
+                        className="w-full px-4 py-3 bg-white border border-dark/10 rounded-xl focus:outline-none focus:border-primary/30 focus:ring-2 focus:ring-primary/10 transition-all"
+                        placeholder="john@example.com"
+                      />
+                    </div>
+
+                    <div>
+                      <label htmlFor="company" className="block text-sm font-medium text-dark mb-2">
+                        Company (Optional)
+                      </label>
+                      <input
+                        type="text"
+                        id="company"
+                        name="company"
+                        value={formData.company}
+                        onChange={handleChange}
+                        className="w-full px-4 py-3 bg-white border border-dark/10 rounded-xl focus:outline-none focus:border-primary/30 focus:ring-2 focus:ring-primary/10 transition-all"
+                        placeholder="Your Company"
+                      />
+                    </div>
+
+                    <div>
+                      <label htmlFor="message" className="block text-sm font-medium text-dark mb-2">
+                        Message *
+                      </label>
+                      <textarea
+                        id="message"
+                        name="message"
+                        required
+                        rows={5}
+                        value={formData.message}
+                        onChange={handleChange}
+                        className="w-full px-4 py-3 bg-white border border-dark/10 rounded-xl focus:outline-none focus:border-primary/30 focus:ring-2 focus:ring-primary/10 transition-all resize-none"
+                        placeholder="Tell us about your project or inquiry..."
+                      />
+                    </div>
+
+                    <motion.button
+                      type="submit"
+                      disabled={isSubmitting}
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      className="w-full py-4 bg-primary text-white font-medium rounded-xl hover:bg-primary-dark transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <svg className="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                          </svg>
+                          Sending...
+                        </>
+                      ) : (
+                        <>
+                          Send Message
+                          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                          </svg>
+                        </>
+                      )}
+                    </motion.button>
+                  </form>
+                )}
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </AnimatedSection>
+
+      {/* Map / Location Visual */}
+      <AnimatedSection className="py-24 bg-gradient-to-b from-cream to-sand">
+        <div className="container-custom">
+          <motion.div 
+            variants={fadeUp}
+            className="bg-gradient-to-br from-dark/[0.03] via-primary/5 to-dark/[0.02] rounded-3xl p-12 md:p-16 text-center"
+          >
+            <div className="w-20 h-20 mx-auto mb-6 bg-primary/10 rounded-2xl flex items-center justify-center">
+              <svg className="w-10 h-10 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-            </motion.div>
-          </div>
-        </div>
-      </AnimatedSection>
-
-      {/* Values Section */}
-      <AnimatedSection className="section-padding">
-        <div className="container-custom">
-          <motion.div variants={fadeUp} className="text-center mb-16">
-            <span className="label mb-4 block">Our Focus</span>
-            <h2 className="heading-lg">What We Believe</h2>
-          </motion.div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {values.map((value, i) => (
-              <motion.div
-                key={i}
-                variants={fadeUp}
-                className="card-bordered p-10 text-center"
-              >
-                <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-primary/10 flex items-center justify-center text-primary">
-                  {value.icon}
-                </div>
-                <h3 className="heading-sm mb-4">{value.title}</h3>
-                <p className="text-body-sm">{value.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </AnimatedSection>
-
-      {/* Vision & Mission */}
-      <AnimatedSection className="section-padding bg-dark text-white">
-        <div className="container-custom">
-          <div className="grid lg:grid-cols-2 gap-16">
-            <motion.div variants={fadeUp}>
-              <span className="label mb-4 block">Vision</span>
-              <h2 className="heading-md mb-6">Where We're Going</h2>
-              <p className="text-xl text-white/70">
-                To make augmented reality a natural part of everyday moments — 
-                as simple as taking a photo, but infinitely more meaningful.
-              </p>
-            </motion.div>
-
-            <motion.div variants={fadeUp}>
-              <span className="label mb-4 block">Mission</span>
-              <h2 className="heading-md mb-6">Why We Exist</h2>
-              <p className="text-xl text-white/70">
-                To help people feel their memories again and help restaurants grow 
-                through immersive experiences that put emotion before technology.
-              </p>
-            </motion.div>
-          </div>
-        </div>
-      </AnimatedSection>
-
-      {/* Team Section */}
-      <AnimatedSection className="section-padding">
-        <div className="container-custom">
-          <motion.div variants={fadeUp} className="text-center mb-16">
-            <span className="label mb-4 block">Our Team</span>
-            <h2 className="heading-lg mb-4">The People Behind WebAR</h2>
-            <p className="text-body">Dreamers, builders, and experience creators.</p>
-          </motion.div>
-
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-            {team.map((member, i) => (
-              <motion.div
-                key={i}
-                variants={fadeUp}
-                className="text-center"
-              >
-                <div className="aspect-square bg-gradient-to-br from-primary/10 to-primary/5 rounded-3xl mb-4 flex items-center justify-center">
-                  <svg className="w-16 h-16 text-primary/30" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                  </svg>
-                </div>
-                <h3 className="font-semibold text-lg">{member.name}</h3>
-                <p className="text-dark/50 text-sm">{member.role}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </AnimatedSection>
-
-      {/* CTA */}
-      <AnimatedSection className="section-padding bg-primary/5">
-        <div className="container-custom text-center">
-          <motion.div variants={fadeUp}>
-            <h2 className="heading-lg mb-6">
-              Want to <span className="text-gradient">Join Us</span>?
-            </h2>
-            <p className="text-body max-w-xl mx-auto mb-10">
-              We're always looking for passionate people to help us build 
-              the future of immersive experiences.
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold text-dark mb-4">Based in Tampa, Florida</h2>
+            <p className="text-xl text-dark/60 max-w-2xl mx-auto mb-8">
+              We work with clients worldwide, bringing immersive AR experiences 
+              to businesses across every timezone.
             </p>
-            <Link href="/company/careers" className="btn-primary">
-              View Open Positions
-            </Link>
+            <div className="flex flex-wrap justify-center gap-4">
+              <span className="px-4 py-2 bg-white/80 rounded-full text-sm text-dark/60">
+                Remote-First Team
+              </span>
+              <span className="px-4 py-2 bg-white/80 rounded-full text-sm text-dark/60">
+                24hr Response Time
+              </span>
+              <span className="px-4 py-2 bg-white/80 rounded-full text-sm text-dark/60">
+                Global Clients
+              </span>
+            </div>
           </motion.div>
         </div>
       </AnimatedSection>

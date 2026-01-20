@@ -2,13 +2,14 @@
 
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
+import Link from 'next/link';
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 30 },
+  hidden: { opacity: 0, y: 40 },
   visible: { 
     opacity: 1, 
     y: 0,
-    transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }
+    transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] }
   }
 };
 
@@ -16,7 +17,16 @@ const fadeIn = {
   hidden: { opacity: 0 },
   visible: { 
     opacity: 1,
-    transition: { duration: 0.5 }
+    transition: { duration: 0.6 }
+  }
+};
+
+const scaleIn = {
+  hidden: { opacity: 0, scale: 0.9 },
+  visible: { 
+    opacity: 1, 
+    scale: 1,
+    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
   }
 };
 
@@ -24,7 +34,7 @@ const staggerContainer = {
   hidden: { opacity: 1 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.1, delayChildren: 0.1 }
+    transition: { staggerChildren: 0.12, delayChildren: 0.1 }
   }
 };
 
@@ -45,175 +55,316 @@ function AnimatedSection({ children, className = '' }: { children: React.ReactNo
   );
 }
 
-const roles = [
+// Job listings data
+const jobOpenings = [
+  {
+    id: 'ui-ux-designer',
+    title: 'UI/UX Designer',
+    department: 'Design',
+    location: 'Remote / Florida',
+    type: 'Full-time',
+    salary: '$80K - $120K',
+    description: 'Design beautiful, intuitive interfaces that make AR experiences feel magical.',
+    requirements: [
+      '4+ years of product design experience',
+      'Strong portfolio showcasing web and mobile design',
+      'Proficiency in Figma and design systems',
+      'Experience with motion design is a plus',
+    ],
+  },
+  {
+    id: 'ai-designer',
+    title: 'AI Designer',
+    department: 'AI/ML',
+    location: 'Remote',
+    type: 'Full-time',
+    salary: '$100K - $150K',
+    description: 'Shape how AI enhances AR experiences through intelligent design and interactions.',
+    requirements: [
+      'Experience designing AI-powered products',
+      'Understanding of ML/AI capabilities and limitations',
+      'Background in conversational UI or generative design',
+      'Ability to translate complex AI concepts into simple UX',
+    ],
+  },
+  {
+    id: 'ar-designer',
+    title: 'AR Designer',
+    department: 'Creative',
+    location: 'Remote / Florida',
+    type: 'Full-time',
+    salary: '$90K - $140K',
+    description: 'Create immersive AR experiences that blur the line between digital and physical.',
+    requirements: [
+      '3+ years of AR/VR design experience',
+      'Proficiency in 3D design tools (Blender, Unity, etc.)',
+      'Strong understanding of spatial design principles',
+      'Portfolio of shipped AR projects',
+    ],
+  },
+  {
+    id: 'sales-representative',
+    title: 'Sales Representative',
+    department: 'Sales',
+    location: 'Florida',
+    type: 'Full-time',
+    salary: '$60K - $100K + Commission',
+    description: 'Connect restaurants and businesses with AR experiences that drive engagement.',
+    requirements: [
+      '2+ years of B2B sales experience',
+      'Excellent communication and presentation skills',
+      'Experience with CRM tools (Salesforce, HubSpot)',
+      'Self-motivated with a track record of exceeding targets',
+    ],
+  },
+  {
+    id: 'sales-manager',
+    title: 'Sales Manager',
+    department: 'Sales',
+    location: 'Florida',
+    type: 'Full-time',
+    salary: '$90K - $130K + Commission',
+    description: 'Lead and grow our sales team to expand WebAR adoption across industries.',
+    requirements: [
+      '5+ years of sales experience with 2+ in management',
+      'Proven track record of building and leading sales teams',
+      'Experience in SaaS or tech industry preferred',
+      'Strategic thinking and hands-on leadership style',
+    ],
+  },
   {
     id: 'senior-ar-developer',
     title: 'Senior AR Developer',
     department: 'Engineering',
     location: 'Remote / Florida',
     type: 'Full-time',
-    description: 'Build immersive AR experiences that work seamlessly on any device.'
-  },
-  {
-    id: 'product-designer',
-    title: 'Product Designer',
-    department: 'Design',
-    location: 'Remote',
-    type: 'Full-time',
-    description: 'Design intuitive, beautiful interfaces for our AR platform.'
-  },
-  {
-    id: 'business-development-manager',
-    title: 'Business Development Manager',
-    department: 'Sales',
-    location: 'Florida',
-    type: 'Full-time',
-    description: 'Build partnerships with restaurants and grow our B2B business.'
-  },
-  {
-    id: 'content-creator',
-    title: 'Content Creator',
-    department: 'Marketing',
-    location: 'Remote',
-    type: 'Full-time',
-    description: 'Tell our story through compelling content and creative campaigns.'
-  },
-  {
-    id: 'full-stack-developer',
-    title: 'Full Stack Developer',
-    department: 'Engineering',
-    location: 'Remote',
-    type: 'Full-time',
-    description: 'Build scalable systems that power millions of AR experiences.'
+    salary: '$120K - $180K',
+    description: 'Build immersive AR experiences that work seamlessly on any device.',
+    requirements: [
+      '5+ years of software development experience',
+      'Experience with WebXR, AR.js, or similar frameworks',
+      'Strong JavaScript/TypeScript skills',
+      'Understanding of 3D graphics and rendering',
+    ],
   },
 ];
-
-const cultureIcons = {
-  rocket: (
-    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
-    </svg>
-  ),
-  creative: (
-    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-    </svg>
-  ),
-  experiment: (
-    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
-    </svg>
-  ),
-  impact: (
-    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
-    </svg>
-  ),
-};
 
 const culture = [
-  { icon: 'rocket', title: 'Fast-Moving', desc: 'We ship fast and learn faster.' },
-  { icon: 'creative', title: 'Creative-First', desc: 'Bold ideas are always welcome.' },
-  { icon: 'experiment', title: 'Experiment-Driven', desc: 'We test, measure, and iterate.' },
-  { icon: 'impact', title: 'Impact-Focused', desc: 'Every day should matter.' },
+  { 
+    title: 'Fast-Moving', 
+    desc: 'We ship fast and learn faster. Every week counts.' 
+  },
+  { 
+    title: 'Creative-First', 
+    desc: 'Bold ideas are always welcome. We encourage experimentation.' 
+  },
+  { 
+    title: 'Experiment-Driven', 
+    desc: 'We test, measure, and iterate. Data guides our decisions.' 
+  },
+  { 
+    title: 'Impact-Focused', 
+    desc: 'Every project should make a difference. Quality matters.' 
+  },
 ];
 
-const lookingFor = [
-  'Designers who think in experiences',
-  'Developers who love challenges',
-  'AR creators who push boundaries',
-  'Sales minds who build relationships',
-  'Storytellers who inspire action'
+const benefits = [
+  { title: 'Remote-First', desc: 'Work from anywhere in the world' },
+  { title: 'Growth', desc: 'Learn and grow with the company' },
+  { title: 'Competitive Pay', desc: 'Salary plus equity for all roles' },
+  { title: 'Flexible PTO', desc: 'Take time when you need it' },
+  { title: 'Best Tools', desc: 'Latest hardware and software' },
+  { title: 'Team Events', desc: 'Regular meetups and celebrations' },
+];
+
+const teamPhotos = [
+  { title: 'Team Meeting', color: 'from-primary/20 to-primary/5' },
+  { title: 'Office Space', color: 'from-sand to-cream' },
+  { title: 'AR Demo', color: 'from-primary-light/20 to-sand' },
+  { title: 'Team Event', color: 'from-cream to-sand' },
 ];
 
 export default function CareersPage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="min-h-[70vh] flex items-center pt-20 relative overflow-hidden">
+      <section className="min-h-[80vh] flex items-center pt-20 relative overflow-hidden">
+        {/* Background Effects */}
         <div className="absolute inset-0">
           <motion.div
-            animate={{ scale: [1, 1.1, 1] }}
-            transition={{ duration: 15, repeat: Infinity }}
-            className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-gradient-to-tr from-primary/10 to-transparent rounded-full blur-3xl"
+            animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
+            transition={{ duration: 10, repeat: Infinity }}
+            className="absolute top-20 right-1/4 w-96 h-96 bg-gradient-to-br from-primary/20 to-transparent rounded-full blur-3xl"
+          />
+          <motion.div
+            animate={{ scale: [1.2, 1, 1.2], opacity: [0.2, 0.4, 0.2] }}
+            transition={{ duration: 12, repeat: Infinity }}
+            className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-gradient-to-tr from-sand to-transparent rounded-full blur-3xl"
           />
         </div>
 
         <div className="container-custom relative z-10">
           <div className="max-w-4xl">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
+              transition={{ duration: 0.8 }}
             >
-              <span className="label mb-4 block">Careers</span>
+              <span className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full text-primary text-sm font-medium mb-6">
+                <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
+                We're Hiring!
+              </span>
             </motion.div>
 
             <motion.h1
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.1 }}
-              className="heading-xl mb-6"
+              className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-dark leading-[1.1] mb-8"
             >
-              Join the <span className="text-gradient">Team</span>
+              Join the Team
+              <br />
+              <span className="bg-gradient-to-r from-primary via-primary-light to-primary bg-clip-text text-transparent">
+                Building the Future
+              </span>
             </motion.h1>
 
             <motion.p
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-2xl md:text-3xl text-dark/70 font-light mb-8"
+              className="text-xl md:text-2xl text-dark/60 font-light mb-8 max-w-2xl"
             >
-              We're building the future of experiences — and we're just getting started.
+              We're creating the future of augmented reality experiences — and we need exceptional people to help us get there.
             </motion.p>
 
-            <motion.p
+            <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="text-body"
+              className="flex flex-wrap gap-4"
             >
-              If you're curious, creative, and excited about AR, we'd love to hear from you.
-            </motion.p>
+              <a href="#openings" className="btn-primary">
+                View Open Positions
+                <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </a>
+              <a href="mailto:namasterides@gmail.com" className="btn-secondary">
+                Contact Us
+              </a>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* What We Look For */}
-      <AnimatedSection className="section-padding bg-white">
+      {/* Team Photos / Video Section */}
+      <AnimatedSection className="py-20 bg-gradient-to-b from-cream to-sand">
+        <div className="container-custom">
+          <motion.div variants={fadeUp} className="text-center mb-12">
+            <span className="label mb-4 block">Our Team</span>
+            <h2 className="heading-lg mb-4">Life at WebAR</h2>
+            <p className="text-body max-w-2xl mx-auto">
+              Get a glimpse of our team, workspace, and the exciting projects we work on.
+            </p>
+          </motion.div>
+
+          {/* Photo/Video Grid */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {teamPhotos.map((photo, i) => (
+              <motion.div
+                key={i}
+                variants={scaleIn}
+                whileHover={{ scale: 1.03, y: -5 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                className={`aspect-square rounded-2xl bg-gradient-to-br ${photo.color} flex items-center justify-center cursor-pointer overflow-hidden group`}
+              >
+                <div className="text-center">
+                  <div className="w-16 h-16 mx-auto mb-3 bg-white/50 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <svg className="w-8 h-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  <span className="text-sm text-dark/60 font-medium">{photo.title}</span>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Video Placeholder */}
+          <motion.div
+            variants={fadeUp}
+            className="mt-8"
+          >
+            <div className="aspect-video rounded-2xl bg-gradient-to-br from-dark/5 to-dark/10 flex items-center justify-center cursor-pointer group overflow-hidden relative">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10" />
+              <motion.div 
+                whileHover={{ scale: 1.1 }}
+                className="relative z-10 w-20 h-20 bg-primary rounded-full flex items-center justify-center shadow-lg shadow-primary/30"
+              >
+                <svg className="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              </motion.div>
+              <p className="absolute bottom-6 text-dark/50 text-sm">Watch our team story</p>
+            </div>
+          </motion.div>
+        </div>
+      </AnimatedSection>
+
+      {/* Culture Section */}
+      <AnimatedSection className="py-24 bg-sand">
         <div className="container-custom">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <motion.div variants={fadeUp}>
-              <span className="label mb-4 block">We Look For</span>
-              <h2 className="heading-lg mb-8">People Who Dream Big</h2>
+              <span className="label mb-4 block">Our Culture</span>
+              <h2 className="heading-lg mb-6">We Dream Big & Ship Fast</h2>
+              <p className="text-body mb-8">
+                We're a small, passionate team that believes in creating meaningful experiences. 
+                Every team member has a direct impact on what we build and how we grow.
+              </p>
               
               <div className="space-y-4">
-                {lookingFor.map((item, i) => (
-                  <div key={i} className="flex items-center gap-4">
+                {[
+                  'Designers who think in experiences',
+                  'Developers who love challenges',
+                  'AR creators who push boundaries',
+                  'Sales minds who build relationships',
+                  'Storytellers who inspire action'
+                ].map((item, i) => (
+                  <motion.div 
+                    key={i} 
+                    className="flex items-center gap-4"
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.1 }}
+                  >
                     <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
                       <svg className="w-4 h-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
                     </div>
-                    <span className="text-lg">{item}</span>
-                  </div>
+                    <span className="text-lg text-dark/80">{item}</span>
+                  </motion.div>
                 ))}
               </div>
             </motion.div>
 
-            <motion.div variants={fadeUp}>
+            <motion.div variants={staggerContainer}>
               <div className="grid grid-cols-2 gap-4">
                 {culture.map((item, i) => (
-                  <div 
+                  <motion.div 
                     key={i}
-                    className="card-bordered p-6 text-center"
+                    variants={scaleIn}
+                    whileHover={{ y: -5, boxShadow: '0 10px 40px rgba(45, 90, 61, 0.1)' }}
+                    className="bg-cream rounded-2xl p-6 text-center transition-all duration-300"
                   >
-                    <div className="w-12 h-12 mx-auto mb-3 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
-                      {cultureIcons[item.icon as keyof typeof cultureIcons]}
+                    <div className="w-12 h-12 mx-auto mb-3 bg-primary/10 rounded-xl flex items-center justify-center">
+                      <span className="w-3 h-3 bg-primary rounded-full"></span>
                     </div>
-                    <h3 className="font-semibold mb-1">{item.title}</h3>
+                    <h3 className="font-semibold mb-1 text-dark">{item.title}</h3>
                     <p className="text-sm text-dark/50">{item.desc}</p>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </motion.div>
@@ -222,48 +373,72 @@ export default function CareersPage() {
       </AnimatedSection>
 
       {/* Open Positions */}
-      <AnimatedSection className="section-padding">
+      <AnimatedSection className="py-24 bg-cream" id="openings">
         <div className="container-custom">
           <motion.div variants={fadeUp} className="text-center mb-16">
             <span className="label mb-4 block">Open Positions</span>
-            <h2 className="heading-lg">Find Your Role</h2>
+            <h2 className="heading-lg mb-4">Find Your Role</h2>
+            <p className="text-body max-w-xl mx-auto">
+              We're looking for talented individuals who want to shape the future of AR.
+            </p>
           </motion.div>
 
           <div className="space-y-4">
-            {roles.map((role, i) => (
+            {jobOpenings.map((job, i) => (
               <motion.div
-                key={i}
+                key={job.id}
                 variants={fadeUp}
-                className="card-bordered p-8 hover:border-primary/30 transition-all duration-300 group"
+                whileHover={{ scale: 1.01 }}
+                className="bg-white rounded-2xl p-6 md:p-8 border border-primary/10 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-400 group"
               >
                 <div className="flex flex-col lg:flex-row lg:items-center gap-6">
                   <div className="flex-1">
                     <div className="flex flex-wrap items-center gap-3 mb-3">
                       <span className="px-3 py-1 text-xs font-medium bg-primary/10 text-primary rounded-full">
-                        {role.department}
+                        {job.department}
                       </span>
-                      <span className="text-sm text-dark/40">{role.location}</span>
-                      <span className="text-sm text-dark/40">•</span>
-                      <span className="text-sm text-dark/40">{role.type}</span>
+                      <span className="px-3 py-1 text-xs font-medium bg-sand text-dark/60 rounded-full">
+                        {job.location}
+                      </span>
+                      <span className="px-3 py-1 text-xs font-medium bg-sand text-dark/60 rounded-full">
+                        {job.type}
+                      </span>
+                      <span className="px-3 py-1 text-xs font-medium bg-primary/5 text-primary rounded-full">
+                        {job.salary}
+                      </span>
                     </div>
                     
-                    <h3 className="text-xl font-semibold mb-2 group-hover:text-primary transition-colors duration-300">
-                      {role.title}
+                    <h3 className="text-xl font-semibold mb-2 text-dark group-hover:text-primary transition-colors duration-300">
+                      {job.title}
                     </h3>
                     
-                    <p className="text-body-sm">{role.description}</p>
+                    <p className="text-dark/60 mb-4">{job.description}</p>
+
+                    {/* Requirements Preview */}
+                    <div className="hidden md:flex flex-wrap gap-2">
+                      {job.requirements.slice(0, 2).map((req, j) => (
+                        <span key={j} className="text-xs text-dark/40 bg-dark/5 px-2 py-1 rounded">
+                          {req}
+                        </span>
+                      ))}
+                      {job.requirements.length > 2 && (
+                        <span className="text-xs text-primary">+{job.requirements.length - 2} more</span>
+                      )}
+                    </div>
                   </div>
 
                   <div className="flex-shrink-0">
-                    <a 
-                      href={`mailto:namasterides@gmail.com?subject=Application for ${role.title}&body=Hi WebAR Team,%0D%0A%0D%0AI am interested in applying for the ${role.title} position.%0D%0A%0D%0APlease find my details below:%0D%0A%0D%0AName: %0D%0APhone: %0D%0AExperience: %0D%0A%0D%0AThank you!`}
+                    <motion.a 
+                      href={`mailto:namasterides@gmail.com?subject=Application for ${job.title}&body=Hi WebAR Team,%0D%0A%0D%0AI am interested in applying for the ${job.title} position.%0D%0A%0D%0APlease find my details below:%0D%0A%0D%0AName: %0D%0APhone: %0D%0AExperience: %0D%0APortfolio/LinkedIn: %0D%0A%0D%0AThank you!`}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
                       className="btn-primary"
                     >
                       Apply Now
-                      <svg className="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                       </svg>
-                    </a>
+                    </motion.a>
                   </div>
                 </div>
               </motion.div>
@@ -273,78 +448,26 @@ export default function CareersPage() {
       </AnimatedSection>
 
       {/* Benefits */}
-      <AnimatedSection className="section-padding bg-dark text-white">
+      <AnimatedSection className="py-24 bg-dark text-white">
         <div className="container-custom">
           <motion.div variants={fadeIn} className="text-center mb-16">
-            <span className="label mb-4 block">Benefits</span>
+            <span className="label mb-4 block !text-white/40">Benefits</span>
             <h2 className="heading-lg">Why Work With Us</h2>
+            <p className="text-white/60 mt-4 max-w-xl mx-auto">
+              We believe in taking care of our team so they can do their best work.
+            </p>
           </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              { 
-                title: 'Remote-First', 
-                desc: 'Work from anywhere in the world',
-                icon: (
-                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                )
-              },
-              { 
-                title: 'Growth', 
-                desc: 'Learn and grow with the company',
-                icon: (
-                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                  </svg>
-                )
-              },
-              { 
-                title: 'Competitive Pay', 
-                desc: 'Salary plus equity for all roles',
-                icon: (
-                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                )
-              },
-              { 
-                title: 'Flexible PTO', 
-                desc: 'Take time when you need it',
-                icon: (
-                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                )
-              },
-              { 
-                title: 'Best Tools', 
-                desc: 'Latest hardware and software',
-                icon: (
-                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                )
-              },
-              { 
-                title: 'Team Events', 
-                desc: 'Regular meetups and celebrations',
-                icon: (
-                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                  </svg>
-                )
-              },
-            ].map((item, i) => (
+            {benefits.map((item, i) => (
               <motion.div
                 key={i}
-                variants={fadeUp}
-                className="bg-white/5 rounded-2xl p-8 text-center hover:bg-white/10 transition-colors duration-300"
+                variants={scaleIn}
+                whileHover={{ y: -5, backgroundColor: 'rgba(255,255,255,0.1)' }}
+                className="bg-white/5 rounded-2xl p-8 text-center transition-all duration-300"
               >
-                <div className="w-12 h-12 mx-auto mb-4 rounded-xl bg-primary/20 flex items-center justify-center text-primary">
-                  {item.icon}
+                <div className="w-12 h-12 mx-auto mb-4 bg-white/10 rounded-xl flex items-center justify-center">
+                  <span className="w-3 h-3 bg-white rounded-full"></span>
                 </div>
                 <h3 className="font-semibold text-lg mb-2">{item.title}</h3>
                 <p className="text-white/60 text-sm">{item.desc}</p>
@@ -355,7 +478,7 @@ export default function CareersPage() {
       </AnimatedSection>
 
       {/* CTA */}
-      <AnimatedSection className="section-padding bg-primary/5">
+      <AnimatedSection className="py-24 bg-gradient-to-br from-sand via-cream to-sand">
         <div className="container-custom text-center">
           <motion.div variants={fadeUp}>
             <h2 className="heading-lg mb-6">
@@ -365,9 +488,17 @@ export default function CareersPage() {
               We're always looking for talented people. Send us your resume 
               and tell us how you'd make WebAR better.
             </p>
-            <a href="mailto:namasterides@gmail.com" className="btn-primary">
+            <motion.a 
+              href="mailto:namasterides@gmail.com?subject=General Application - WebAR&body=Hi WebAR Team,%0D%0A%0D%0AI am interested in joining WebAR.%0D%0A%0D%0AAbout me:%0D%0A%0D%0AName: %0D%0ARole I'm interested in: %0D%0AExperience: %0D%0APortfolio/LinkedIn: %0D%0A%0D%0AWhy I want to join WebAR:%0D%0A%0D%0AThank you!"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="btn-primary inline-flex"
+            >
               Get in Touch
-            </a>
+              <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+            </motion.a>
           </motion.div>
         </div>
       </AnimatedSection>
