@@ -4,6 +4,7 @@ import './globals.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import CookieBanner from '@/components/CookieBanner'
+import Chatbot from '@/components/Chatbot'
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -16,6 +17,10 @@ export const metadata: Metadata = {
   description: 'Transform dining experiences with augmented reality. AR memories for customers, AR menus for restaurants. No app required.',
   keywords: ['WebAR', 'augmented reality', 'AR menu', 'restaurant technology', 'AR memories', 'QR experience'],
   authors: [{ name: 'WebAR' }],
+  icons: {
+    icon: '/favicon.svg',
+    apple: '/apple-touch-icon.svg',
+  },
   openGraph: {
     title: 'WebAR | Moments & Menus Come Alive',
     description: 'Transform dining experiences with augmented reality.',
@@ -47,6 +52,7 @@ export default function RootLayout({
         </main>
         <Footer />
         <CookieBanner />
+        <Chatbot />
       </body>
     </html>
   )
