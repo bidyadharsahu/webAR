@@ -186,19 +186,16 @@ export default function TryNowPage() {
               </motion.div>
 
               <motion.div variants={fadeUp}>
-                <div className="card-bordered p-10 text-center">
-                  <div className="w-48 h-48 bg-gradient-to-br from-primary/20 to-primary/5 rounded-3xl mx-auto mb-8 flex items-center justify-center">
-                    <svg className="w-20 h-20 text-primary/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                    </svg>
-                  </div>
+                <div className="card-bordered p-8 text-center">
                   <h3 className="heading-sm mb-4">Demo Experience</h3>
                   <p className="text-body-sm mb-6">
                     Scan the QR code below to see a sample AR experience on your phone.
                   </p>
-                  <div className="w-32 h-32 bg-dark mx-auto rounded-xl flex items-center justify-center">
-                    <span className="text-white text-xs">QR Code</span>
-                  </div>
+                  <img 
+                    src="/qr-code.png" 
+                    alt="Scan QR Code for AR Demo" 
+                    className="w-48 h-48 mx-auto object-contain"
+                  />
                 </div>
               </motion.div>
             </div>

@@ -53,12 +53,12 @@ const socialLinks = [
 function Logo({ className = '' }: { className?: string }) {
   return (
     <div className={`flex items-center gap-1.5 ${className}`}>
-      {/* Logo Icon - Green bracket with play button */}
+      {/* Logo Icon - White bracket with play button */}
       <svg className="w-8 h-8" viewBox="0 0 40 40" fill="none">
         {/* Left bracket */}
         <path 
           d="M8 8L4 12V28L8 32" 
-          stroke="#2D5A3D" 
+          stroke="currentColor" 
           strokeWidth="3" 
           strokeLinecap="round" 
           strokeLinejoin="round"
@@ -67,7 +67,7 @@ function Logo({ className = '' }: { className?: string }) {
         {/* Right bracket */}
         <path 
           d="M32 8L36 12V28L32 32" 
-          stroke="#2D5A3D" 
+          stroke="currentColor" 
           strokeWidth="3" 
           strokeLinecap="round" 
           strokeLinejoin="round"
@@ -76,12 +76,12 @@ function Logo({ className = '' }: { className?: string }) {
         {/* Play triangle */}
         <path 
           d="M16 13L28 20L16 27V13Z" 
-          fill="#2D5A3D"
+          fill="currentColor"
         />
       </svg>
       {/* Logo Text */}
-      <span className="text-xl font-bold tracking-tight text-dark">
-        web<span className="text-primary">AR</span>
+      <span className="text-xl font-bold tracking-tight">
+        web<span className="opacity-80">AR</span>
       </span>
     </div>
   )
@@ -89,15 +89,15 @@ function Logo({ className = '' }: { className?: string }) {
 
 export default function Footer() {
   return (
-    <footer className="relative bg-gradient-to-b from-sand via-sand to-cream-dark overflow-hidden">
+    <footer className="relative bg-primary text-white overflow-hidden">
       {/* Background Decorations */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-primary/3 rounded-full blur-3xl" />
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-white/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-white/3 rounded-full blur-3xl" />
       </div>
 
       {/* Top Decorative Border */}
-      <div className="h-1 bg-gradient-to-r from-cream via-primary/20 to-cream" />
+      <div className="h-1 bg-gradient-to-r from-primary via-white/20 to-primary" />
 
       <div className="container-custom py-16 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-8">
@@ -111,7 +111,7 @@ export default function Footer() {
                 <Logo />
               </motion.div>
             </Link>
-            <p className="text-dark/60 text-[15px] mb-4 max-w-xs">
+            <p className="text-white/70 text-[15px] mb-4 max-w-xs">
               Web-based augmented reality experiences that work instantly. No apps, no barriers.
             </p>
             
@@ -119,14 +119,14 @@ export default function Footer() {
             <div className="space-y-2 mb-6">
               <a 
                 href="mailto:namasterides@gmail.com" 
-                className="flex items-center gap-2 text-dark/60 hover:text-primary transition-colors text-sm"
+                className="flex items-center gap-2 text-white/70 hover:text-white transition-colors text-sm"
               >
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
                 namasterides@gmail.com
               </a>
-              <p className="flex items-center gap-2 text-dark/60 text-sm">
+              <p className="flex items-center gap-2 text-white/70 text-sm">
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -143,7 +143,7 @@ export default function Footer() {
                   href={social.href}
                   whileHover={{ scale: 1.1, y: -2 }}
                   whileTap={{ scale: 0.95 }}
-                  className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-colors duration-300"
+                  className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center text-white hover:bg-white hover:text-primary transition-colors duration-300"
                   aria-label={social.name}
                 >
                   {social.icon}
@@ -154,13 +154,13 @@ export default function Footer() {
 
           {/* Product Links */}
           <div>
-            <h4 className="font-semibold text-dark mb-4">Product</h4>
+            <h4 className="font-semibold text-white mb-4">Product</h4>
             <ul className="space-y-3">
               {footerLinks.product.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-[15px] text-dark/50 hover:text-primary transition-colors duration-300"
+                    className="text-[15px] text-white/60 hover:text-white transition-colors duration-300"
                   >
                     {link.label}
                   </Link>
@@ -171,13 +171,13 @@ export default function Footer() {
 
           {/* Company Links */}
           <div>
-            <h4 className="font-semibold text-dark mb-4">Company</h4>
+            <h4 className="font-semibold text-white mb-4">Company</h4>
             <ul className="space-y-3">
               {footerLinks.company.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-[15px] text-dark/50 hover:text-primary transition-colors duration-300"
+                    className="text-[15px] text-white/60 hover:text-white transition-colors duration-300"
                   >
                     {link.label}
                   </Link>
@@ -188,13 +188,13 @@ export default function Footer() {
 
           {/* Legal Links */}
           <div>
-            <h4 className="font-semibold text-dark mb-4">Legal</h4>
+            <h4 className="font-semibold text-white mb-4">Legal</h4>
             <ul className="space-y-3">
               {footerLinks.legal.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-[15px] text-dark/50 hover:text-primary transition-colors duration-300"
+                    className="text-[15px] text-white/60 hover:text-white transition-colors duration-300"
                   >
                     {link.label}
                   </Link>
@@ -205,22 +205,22 @@ export default function Footer() {
         </div>
 
         {/* Newsletter Section */}
-        <div className="mt-16 pt-8 border-t border-primary/10">
+        <div className="mt-16 pt-8 border-t border-white/10">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
             <div>
-              <h4 className="font-semibold text-dark mb-1">Stay Updated</h4>
-              <p className="text-dark/50 text-sm">Get the latest AR trends and updates.</p>
+              <h4 className="font-semibold text-white mb-1">Stay Updated</h4>
+              <p className="text-white/60 text-sm">Get the latest AR trends and updates.</p>
             </div>
             <div className="flex gap-3">
               <input 
                 type="email" 
                 placeholder="Enter your email" 
-                className="px-4 py-2.5 bg-white/80 border border-primary/10 rounded-full text-sm focus:outline-none focus:border-primary/30 transition-colors w-64"
+                className="px-4 py-2.5 bg-white/10 border border-white/20 rounded-full text-sm text-white placeholder:text-white/50 focus:outline-none focus:border-white/40 transition-colors w-64"
               />
               <motion.button 
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="px-6 py-2.5 bg-primary text-white text-sm font-medium rounded-full hover:bg-primary-dark transition-colors"
+                className="px-6 py-2.5 bg-white text-primary text-sm font-medium rounded-full hover:bg-white/90 transition-colors"
               >
                 Subscribe
               </motion.button>
@@ -229,12 +229,12 @@ export default function Footer() {
         </div>
 
         {/* Copyright */}
-        <div className="mt-12 pt-8 border-t border-primary/10">
+        <div className="mt-12 pt-8 border-t border-white/10">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-            <p className="text-dark/40 text-sm">
+            <p className="text-white/50 text-sm">
               © {new Date().getFullYear()} webAR. All rights reserved.
             </p>
-            <p className="text-dark/40 text-sm">
+            <p className="text-white/50 text-sm">
               Tampa, Florida
             </p>
           </div>

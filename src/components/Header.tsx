@@ -16,12 +16,12 @@ const navItems = [
 function Logo({ className = '' }: { className?: string }) {
   return (
     <div className={`flex items-center gap-1.5 ${className}`}>
-      {/* Logo Icon - Green bracket with play button */}
+      {/* Logo Icon - White bracket with play button */}
       <svg className="w-8 h-8" viewBox="0 0 40 40" fill="none">
         {/* Left bracket */}
         <path 
           d="M8 8L4 12V28L8 32" 
-          stroke="#2D5A3D" 
+          stroke="currentColor" 
           strokeWidth="3" 
           strokeLinecap="round" 
           strokeLinejoin="round"
@@ -30,7 +30,7 @@ function Logo({ className = '' }: { className?: string }) {
         {/* Right bracket */}
         <path 
           d="M32 8L36 12V28L32 32" 
-          stroke="#2D5A3D" 
+          stroke="currentColor" 
           strokeWidth="3" 
           strokeLinecap="round" 
           strokeLinejoin="round"
@@ -39,12 +39,12 @@ function Logo({ className = '' }: { className?: string }) {
         {/* Play triangle */}
         <path 
           d="M16 13L28 20L16 27V13Z" 
-          fill="#2D5A3D"
+          fill="currentColor"
         />
       </svg>
       {/* Logo Text */}
-      <span className="text-xl font-bold tracking-tight text-dark">
-        web<span className="text-primary">AR</span>
+      <span className="text-xl font-bold tracking-tight">
+        web<span className="opacity-80">AR</span>
       </span>
     </div>
   )
@@ -76,14 +76,14 @@ export default function Header() {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-primary text-white ${
           isScrolled
-            ? 'bg-gradient-to-r from-cream via-sand-light/95 to-cream backdrop-blur-md shadow-sm shadow-primary/5'
-            : 'bg-gradient-to-b from-cream/80 to-transparent'
+            ? 'shadow-lg shadow-black/10'
+            : ''
         }`}
       >
         {/* Decorative line */}
-        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/10 to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-px bg-white/10" />
         
         <nav className="container-custom">
           <div className="flex items-center justify-between h-20">
@@ -109,10 +109,10 @@ export default function Header() {
                 >
                   <Link
                     href={item.href}
-                    className="relative text-[15px] text-dark/60 hover:text-dark transition-colors duration-300 group"
+                    className="relative text-[15px] text-white/80 hover:text-white transition-colors duration-300 group"
                   >
                     {item.label}
-                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary rounded-full transition-all duration-300 group-hover:w-full" />
+                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white rounded-full transition-all duration-300 group-hover:w-full" />
                   </Link>
                 </motion.div>
               ))}
@@ -125,12 +125,12 @@ export default function Header() {
                 whileTap={{ scale: 0.95 }}
                 transition={{ type: 'spring', stiffness: 400, damping: 17 }}
               >
-                <Link
-                  href="/try-now"
-                  className="inline-flex items-center justify-center px-6 py-2.5 bg-primary text-white text-[15px] font-medium rounded-full transition-all duration-300 hover:bg-primary-dark hover:shadow-lg hover:shadow-primary/25"
+                <a
+                  href="https://webar-lovat.vercel.app/"
+                  className="inline-flex items-center justify-center px-6 py-2.5 bg-white text-primary text-[15px] font-medium rounded-full transition-all duration-300 hover:bg-white/90 hover:shadow-lg hover:shadow-black/10"
                 >
                   Try demo
-                </Link>
+                </a>
               </motion.div>
             </div>
 
@@ -143,15 +143,15 @@ export default function Header() {
               <div className="w-5 h-4 flex flex-col justify-between">
                 <motion.span
                   animate={{ rotate: mobileMenuOpen ? 45 : 0, y: mobileMenuOpen ? 7 : 0 }}
-                  className="block h-0.5 w-full bg-dark origin-center"
+                  className={`block h-0.5 w-full origin-center ${mobileMenuOpen ? 'bg-dark' : 'bg-white'}`}
                 />
                 <motion.span
                   animate={{ opacity: mobileMenuOpen ? 0 : 1, scaleX: mobileMenuOpen ? 0 : 1 }}
-                  className="block h-0.5 w-full bg-dark"
+                  className={`block h-0.5 w-full ${mobileMenuOpen ? 'bg-dark' : 'bg-white'}`}
                 />
                 <motion.span
                   animate={{ rotate: mobileMenuOpen ? -45 : 0, y: mobileMenuOpen ? -7 : 0 }}
-                  className="block h-0.5 w-full bg-dark origin-center"
+                  className={`block h-0.5 w-full origin-center ${mobileMenuOpen ? 'bg-dark' : 'bg-white'}`}
                 />
               </div>
             </button>
@@ -193,13 +193,13 @@ export default function Header() {
                   transition={{ delay: navItems.length * 0.1, duration: 0.4 }}
                   className="pt-6"
                 >
-                  <Link
-                    href="/try-now"
+                  <a
+                    href="https://webar-lovat.vercel.app/"
                     onClick={() => setMobileMenuOpen(false)}
                     className="btn-primary w-full justify-center"
                   >
                     Try demo
-                  </Link>
+                  </a>
                 </motion.div>
               </nav>
             </div>

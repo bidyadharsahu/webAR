@@ -219,7 +219,7 @@ export default function PricingPage() {
             </button>
             <span className={`text-[15px] ${isYearly ? 'text-dark font-medium' : 'text-dark/50'}`}>
               Yearly
-              <span className="ml-2 text-xs text-primary font-medium">Save up to 20%</span>
+              {isYearly && <span className="ml-2 text-xs text-primary font-medium">Save up to 20%</span>}
             </span>
           </motion.div>
         </div>

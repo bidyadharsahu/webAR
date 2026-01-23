@@ -159,68 +159,39 @@ const pricingPlans = [
   },
 ];
 
-// Showcase media items
-const showcaseMedia = [
-  { type: 'video', title: 'AR Food Menu Demo', category: 'Restaurant' },
-  { type: 'image', title: 'Photo Memory AR', category: 'Personal' },
-  { type: 'image', title: 'Business Card AR', category: 'Corporate' },
-  { type: 'video', title: 'Product Showcase', category: 'E-commerce' },
-  { type: 'image', title: 'Real Estate Tour', category: 'Property' },
-  { type: 'video', title: 'Event Experience', category: 'Events' },
-];
+
 
 export default function HomePage() {
   return (
     <>
       {/* SECTION 1: HERO */}
-      <section className="min-h-screen flex items-center pt-20 pb-16 bg-gradient-to-b from-cream via-cream to-sand relative overflow-hidden">
-        {/* Background Effects */}
-        <div className="absolute inset-0 pointer-events-none">
-          <motion.div
-            animate={{ 
-              scale: [1, 1.2, 1],
-              opacity: [0.3, 0.5, 0.3]
-            }}
-            transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-            className="absolute top-20 right-1/4 w-[500px] h-[500px] bg-gradient-to-br from-primary/15 to-transparent rounded-full blur-3xl"
-          />
-          <motion.div
-            animate={{ 
-              scale: [1.2, 1, 1.2],
-              opacity: [0.2, 0.4, 0.2]
-            }}
-            transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
-            className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-to-tr from-sand to-transparent rounded-full blur-3xl"
-          />
+      <section className="min-h-screen flex items-center pt-20 pb-16 relative overflow-hidden">
+        {/* Background Video */}
+        <div className="absolute inset-0 w-full h-full">
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover"
+          >
+            <source src="/hero-video.mp4" type="video/mp4" />
+          </video>
+          {/* Dark overlay for text readability */}
+          <div className="absolute inset-0 bg-black/50" />
         </div>
 
         <div className="container-custom relative z-10">
           <div className="max-w-3xl">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="mb-6"
-            >
-              <span className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full text-primary text-sm font-medium">
-                <motion.span 
-                  animate={{ scale: [1, 1.2, 1] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                  className="w-2 h-2 bg-primary rounded-full"
-                />
-                Web-based AR Platform
-              </span>
-            </motion.div>
-
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.1 }}
-              className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-dark leading-[1.1] mb-8"
+              className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white leading-[1.1] mb-8"
             >
               Point your phone at the real world.
               <br />
-              <span className="bg-gradient-to-r from-primary via-primary-light to-primary bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-green-300 via-emerald-300 to-green-300 bg-clip-text text-transparent">
                 We add the magic.
               </span>
             </motion.h1>
@@ -229,7 +200,7 @@ export default function HomePage() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-xl text-dark/60 max-w-xl mb-12 leading-relaxed"
+              className="text-xl text-white/80 max-w-xl mb-12 leading-relaxed"
             >
               Web-based augmented reality experiences that work instantly. 
               No apps to download, no barriers to entry.
@@ -237,18 +208,6 @@ export default function HomePage() {
 
           </div>
         </div>
-
-        {/* Floating Elements */}
-        <motion.div
-          animate={{ y: [-10, 10, -10] }}
-          transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-          className="hidden lg:block absolute right-20 top-1/3 w-20 h-20 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl rotate-12"
-        />
-        <motion.div
-          animate={{ y: [10, -10, 10] }}
-          transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-          className="hidden lg:block absolute right-40 bottom-1/3 w-16 h-16 bg-gradient-to-br from-sand to-cream rounded-full"
-        />
       </section>
 
       {/* SECTION 2: WHAT HAPPENS */}
@@ -286,103 +245,6 @@ export default function HomePage() {
                 </div>
               </motion.div>
             ))}
-          </motion.div>
-        </div>
-      </AnimatedSection>
-
-      {/* SECTION 2.5: VIDEO & PHOTO SHOWCASE */}
-      <AnimatedSection className="py-24 bg-gradient-to-b from-dark/[0.04] via-sand to-cream" id="showcase">
-        <div className="container-custom">
-          <motion.div variants={fadeUp} className="text-center mb-16">
-            <span className="label mb-4 block">Showcase</span>
-            <h2 className="heading-lg mb-4">See AR in Action</h2>
-            <p className="text-body max-w-2xl mx-auto">
-              Explore our collection of AR experiences across different industries and use cases.
-            </p>
-          </motion.div>
-
-          {/* Media Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {showcaseMedia.map((item, i) => (
-              <motion.div
-                key={i}
-                variants={scaleIn}
-                whileHover={{ scale: 1.03, y: -8 }}
-                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                className="group cursor-pointer"
-              >
-                <div className={`aspect-video rounded-2xl bg-gradient-to-br ${
-                  i % 3 === 0 ? 'from-primary/15 via-primary/5 to-sand' :
-                  i % 3 === 1 ? 'from-sand via-cream to-primary/10' :
-                  'from-primary/10 via-sand to-cream'
-                } flex items-center justify-center relative overflow-hidden`}>
-                  {/* Overlay */}
-                  <div className="absolute inset-0 bg-dark/0 group-hover:bg-dark/10 transition-colors duration-300" />
-                  
-                  {/* Play/View Icon */}
-                  <motion.div 
-                    className={`w-16 h-16 rounded-full flex items-center justify-center ${
-                      item.type === 'video' 
-                        ? 'bg-primary text-white' 
-                        : 'bg-white/80 text-primary'
-                    } shadow-lg group-hover:scale-110 transition-transform duration-300`}
-                    whileHover={{ scale: 1.15 }}
-                  >
-                    {item.type === 'video' ? (
-                      <svg className="w-6 h-6 ml-1" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M8 5v14l11-7z" />
-                      </svg>
-                    ) : (
-                      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                      </svg>
-                    )}
-                  </motion.div>
-
-                  {/* Category Badge */}
-                  <span className="absolute top-4 left-4 px-3 py-1 bg-white/90 backdrop-blur-sm text-xs font-medium text-dark rounded-full">
-                    {item.category}
-                  </span>
-                </div>
-                
-                <div className="mt-4">
-                  <h3 className="font-semibold text-dark group-hover:text-primary transition-colors duration-300">
-                    {item.title}
-                  </h3>
-                  <p className="text-sm text-dark/50 flex items-center gap-1 mt-1">
-                    {item.type === 'video' ? (
-                      <>
-                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        Watch Video
-                      </>
-                    ) : (
-                      <>
-                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                        </svg>
-                        View Gallery
-                      </>
-                    )}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* CTA Button */}
-          <motion.div variants={fadeUp} className="text-center mt-12">
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Link href="/resources/videos" className="btn-secondary">
-                View All Media
-                <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </Link>
-            </motion.div>
           </motion.div>
         </div>
       </AnimatedSection>
@@ -520,43 +382,29 @@ export default function HomePage() {
               </motion.p>
               <motion.div variants={fadeUp}>
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                  <Link href="/try-now" className="btn-primary">
+                  <a href="https://webar-lovat.vercel.app/" className="btn-primary">
                     View all demos
                     <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                     </svg>
-                  </Link>
+                  </a>
                 </motion.div>
               </motion.div>
             </div>
             
             <motion.div variants={scaleIn} className="flex justify-center">
               <motion.div 
-                className="bg-gradient-to-br from-cream to-white rounded-3xl p-10 shadow-xl shadow-primary/10"
+                className="bg-white rounded-3xl p-8 shadow-xl shadow-primary/10"
                 whileHover={{ scale: 1.02, boxShadow: '0 25px 50px -12px rgba(45, 90, 61, 0.2)' }}
                 transition={{ type: 'spring', stiffness: 300 }}
               >
-                <div className="w-56 h-56 bg-gradient-to-br from-primary/5 to-primary/10 rounded-2xl flex items-center justify-center border-2 border-dashed border-primary/30">
-                  <div className="text-center">
-                    <motion.div
-                      animate={{ rotate: [0, 5, -5, 0] }}
-                      transition={{ duration: 4, repeat: Infinity }}
-                      className="w-16 h-16 mx-auto mb-3 bg-primary/10 rounded-xl flex items-center justify-center"
-                    >
-                      <svg className="w-8 h-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
-                      </svg>
-                    </motion.div>
-                    <span className="text-dark/50 text-sm">
-                      QR Code<br />Coming Soon
-                    </span>
-                  </div>
-                </div>
-                <p className="text-center text-dark/50 text-sm mt-6 flex items-center justify-center gap-2">
-                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                  </svg>
-                  Point your camera here
+                <img 
+                  src="/qr-code.png" 
+                  alt="Scan QR Code for AR Demo" 
+                  className="w-64 h-64 object-contain"
+                />
+                <p className="text-center text-dark/60 text-sm mt-4 font-medium">
+                  Scan with your camera
                 </p>
               </motion.div>
             </motion.div>
@@ -731,13 +579,13 @@ export default function HomePage() {
             </motion.p>
             <motion.div variants={fadeUp} className="flex flex-wrap justify-center gap-4">
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Link href="/try-now" className="btn-primary">
+                <a href="https://webar-lovat.vercel.app/" className="btn-primary">
                   Try demo
                   <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                </Link>
+                </a>
               </motion.div>
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Link href="/company/about" className="btn-secondary">

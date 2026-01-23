@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 interface Message {
@@ -66,7 +66,59 @@ export default function Chatbot() {
   ])
   const [inputValue, setInputValue] = useState('')
   const [isTyping, setIsTyping] = useState(false)
+  const [isNearFooter, setIsNearFooter] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
+
+  // Track if chat button overlaps with green/primary colored sections
+  useEffect(() => {
+    const checkOverlapWithGreen = () => {
+      // Get button position (bottom-right corner)
+      const buttonBottom = window.innerHeight - 24 // bottom-6 = 24px
+      const buttonRight = window.innerWidth - 24
+      const buttonCenterY = buttonBottom - 32 // center of button
+      const buttonCenterX = buttonRight - 32
+      
+      // Get element at button position
+      const elementAtButton = document.elementFromPoint(buttonCenterX, buttonCenterY)
+      
+      if (elementAtButton) {
+        // Check if element or its parents have green/primary background
+        let element: Element | null = elementAtButton
+        let isOverGreen = false
+        
+        while (element && element !== document.body) {
+          const computedStyle = window.getComputedStyle(element)
+          const bgColor = computedStyle.backgroundColor
+          
+          // Check for primary green color (rgb(45, 90, 61) or similar)
+          if (bgColor.includes('45, 90, 61') || 
+              bgColor.includes('45,90,61') ||
+              element.classList.contains('bg-primary') ||
+              element.classList.contains('from-primary') ||
+              element.tagName === 'FOOTER') {
+            isOverGreen = true
+            break
+          }
+          element = element.parentElement
+        }
+        
+        setIsNearFooter(isOverGreen)
+      }
+    }
+
+    window.addEventListener('scroll', checkOverlapWithGreen)
+    window.addEventListener('resize', checkOverlapWithGreen)
+    checkOverlapWithGreen() // Check initial position
+    
+    // Also check periodically for dynamic content
+    const interval = setInterval(checkOverlapWithGreen, 500)
+    
+    return () => {
+      window.removeEventListener('scroll', checkOverlapWithGreen)
+      window.removeEventListener('resize', checkOverlapWithGreen)
+      clearInterval(interval)
+    }
+  }, [])
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -115,7 +167,7 @@ export default function Chatbot() {
         onClick={() => setIsOpen(!isOpen)}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        className="fixed bottom-6 right-6 w-16 h-16 bg-primary text-white rounded-full shadow-xl shadow-primary/30 flex items-center justify-center z-50 hover:bg-primary-dark transition-colors"
+        className={`fixed bottom-4 right-4 md:bottom-6 md:right-6 w-12 h-12 md:w-16 md:h-16 rounded-full shadow-xl flex items-center justify-center z-50 transition-all duration-300 ${isNearFooter ? 'bg-cream text-primary shadow-dark/20 hover:bg-white' : 'bg-primary text-white shadow-primary/30 hover:bg-primary-dark'}`}
         aria-label="Open chat"
       >
         <AnimatePresence mode="wait">
@@ -126,7 +178,7 @@ export default function Chatbot() {
               animate={{ rotate: 0, opacity: 1 }}
               exit={{ rotate: 90, opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="w-6 h-6"
+              className="w-5 h-5 md:w-6 md:h-6"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -140,7 +192,7 @@ export default function Chatbot() {
               animate={{ rotate: 0, opacity: 1 }}
               exit={{ rotate: -90, opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="w-6 h-6"
+              className="w-5 h-5 md:w-6 md:h-6"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -159,7 +211,7 @@ export default function Chatbot() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="fixed bottom-24 right-6 w-[380px] h-[600px] bg-cream rounded-2xl shadow-2xl z-50 flex flex-col overflow-hidden border border-primary/10"
+            className="fixed bottom-20 md:bottom-24 right-4 md:right-6 w-[calc(100vw-2rem)] md:w-[350px] h-[60vh] md:h-[480px] max-h-[480px] bg-cream rounded-2xl shadow-2xl z-50 flex flex-col overflow-hidden border border-primary/10"
           >
             {/* Header */}
             <div className="bg-gradient-to-r from-primary to-primary-dark text-white p-4 flex items-center gap-3">
