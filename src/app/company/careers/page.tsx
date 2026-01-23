@@ -178,13 +178,6 @@ const benefits = [
   { title: 'Team Events', desc: 'Regular meetups and celebrations' },
 ];
 
-const teamPhotos = [
-  { title: 'Team Meeting', color: 'from-primary/20 to-primary/5' },
-  { title: 'Office Space', color: 'from-sand to-cream' },
-  { title: 'AR Demo', color: 'from-primary-light/20 to-sand' },
-  { title: 'Team Event', color: 'from-cream to-sand' },
-];
-
 export default function CareersPage() {
   return (
     <>
@@ -258,60 +251,6 @@ export default function CareersPage() {
           </div>
         </div>
       </section>
-
-      {/* Team Photos / Video Section */}
-      <AnimatedSection className="py-20 bg-gradient-to-b from-cream to-sand">
-        <div className="container-custom">
-          <motion.div variants={fadeUp} className="text-center mb-12">
-            <span className="label mb-4 block">Our Team</span>
-            <h2 className="heading-lg mb-4">Life at WebAR</h2>
-            <p className="text-body max-w-2xl mx-auto">
-              Get a glimpse of our team, workspace, and the exciting projects we work on.
-            </p>
-          </motion.div>
-
-          {/* Photo/Video Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {teamPhotos.map((photo, i) => (
-              <motion.div
-                key={i}
-                variants={scaleIn}
-                whileHover={{ scale: 1.03, y: -5 }}
-                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                className={`aspect-square rounded-2xl bg-gradient-to-br ${photo.color} flex items-center justify-center cursor-pointer overflow-hidden group`}
-              >
-                <div className="text-center">
-                  <div className="w-16 h-16 mx-auto mb-3 bg-white/50 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                    <svg className="w-8 h-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                  </div>
-                  <span className="text-sm text-dark/60 font-medium">{photo.title}</span>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Video Placeholder */}
-          <motion.div
-            variants={fadeUp}
-            className="mt-8"
-          >
-            <div className="aspect-video rounded-2xl bg-gradient-to-br from-dark/5 to-dark/10 flex items-center justify-center cursor-pointer group overflow-hidden relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10" />
-              <motion.div 
-                whileHover={{ scale: 1.1 }}
-                className="relative z-10 w-20 h-20 bg-primary rounded-full flex items-center justify-center shadow-lg shadow-primary/30"
-              >
-                <svg className="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M8 5v14l11-7z" />
-                </svg>
-              </motion.div>
-              <p className="absolute bottom-6 text-dark/50 text-sm">Watch our team story</p>
-            </div>
-          </motion.div>
-        </div>
-      </AnimatedSection>
 
       {/* Culture Section */}
       <AnimatedSection className="py-24 bg-sand">
