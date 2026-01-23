@@ -68,6 +68,7 @@ export default function Chatbot() {
   const [isTyping, setIsTyping] = useState(false)
   const [isNearFooter, setIsNearFooter] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null)
 
   // Track if chat button overlaps with green/primary colored sections
   useEffect(() => {
@@ -106,17 +107,24 @@ export default function Chatbot() {
       }
     }
 
-    window.addEventListener('scroll', checkOverlapWithGreen)
+    // Debounced version to prevent flickering
+    const handleScrollDebounced = () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
+      }
+      timeoutRef.current = setTimeout(checkOverlapWithGreen, 50)
+    }
+
+    window.addEventListener('scroll', handleScrollDebounced, { passive: true })
     window.addEventListener('resize', checkOverlapWithGreen)
     checkOverlapWithGreen() // Check initial position
     
-    // Also check periodically for dynamic content
-    const interval = setInterval(checkOverlapWithGreen, 500)
-    
     return () => {
-      window.removeEventListener('scroll', checkOverlapWithGreen)
+      window.removeEventListener('scroll', handleScrollDebounced)
       window.removeEventListener('resize', checkOverlapWithGreen)
-      clearInterval(interval)
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
+      }
     }
   }, [])
 
