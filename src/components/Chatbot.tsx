@@ -66,64 +66,92 @@ export default function Chatbot() {
   ])
   const [inputValue, setInputValue] = useState('')
   const [isTyping, setIsTyping] = useState(false)
-  const [isNearFooter, setIsNearFooter] = useState(false)
+  const [isOverDark, setIsOverDark] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const lastStateRef = useRef(false)
+  const stableTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
-  // Track if chat button overlaps with green/primary colored sections
+  // Track if chat button overlaps with dark/green sections - with stability check
   useEffect(() => {
-    const checkOverlapWithGreen = () => {
+    const checkBackground = () => {
       // Get button position (bottom-right corner)
-      const buttonBottom = window.innerHeight - 24 // bottom-6 = 24px
+      const buttonBottom = window.innerHeight - 24
       const buttonRight = window.innerWidth - 24
-      const buttonCenterY = buttonBottom - 32 // center of button
+      const buttonCenterY = buttonBottom - 32
       const buttonCenterX = buttonRight - 32
       
       // Get element at button position
       const elementAtButton = document.elementFromPoint(buttonCenterX, buttonCenterY)
       
+      let isOnDarkBg = false
+      
       if (elementAtButton) {
-        // Check if element or its parents have green/primary background
         let element: Element | null = elementAtButton
-        let isOverGreen = false
         
         while (element && element !== document.body) {
           const computedStyle = window.getComputedStyle(element)
           const bgColor = computedStyle.backgroundColor
           
-          // Check for primary green color (rgb(45, 90, 61) or similar)
-          if (bgColor.includes('45, 90, 61') || 
-              bgColor.includes('45,90,61') ||
-              element.classList.contains('bg-primary') ||
-              element.classList.contains('from-primary') ||
+          // Parse RGB values to determine if dark
+          const rgbMatch = bgColor.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/)
+          if (rgbMatch) {
+            const r = parseInt(rgbMatch[1])
+            const g = parseInt(rgbMatch[2])
+            const b = parseInt(rgbMatch[3])
+            // Calculate luminance - dark if below threshold
+            const luminance = (0.299 * r + 0.587 * g + 0.114 * b)
+            if (luminance < 128 && bgColor !== 'rgba(0, 0, 0, 0)') {
+              isOnDarkBg = true
+              break
+            }
+          }
+          
+          // Also check for known dark classes
+          if (element.classList.contains('bg-primary') ||
+              element.classList.contains('bg-dark') ||
               element.tagName === 'FOOTER') {
-            isOverGreen = true
+            isOnDarkBg = true
             break
           }
           element = element.parentElement
         }
-        
-        setIsNearFooter(isOverGreen)
+      }
+      
+      // Only update if state is stable (same for 150ms to prevent flickering)
+      if (isOnDarkBg !== lastStateRef.current) {
+        if (stableTimeoutRef.current) {
+          clearTimeout(stableTimeoutRef.current)
+        }
+        stableTimeoutRef.current = setTimeout(() => {
+          lastStateRef.current = isOnDarkBg
+          setIsOverDark(isOnDarkBg)
+        }, 150)
       }
     }
 
-    // Debounced version to prevent flickering
-    const handleScrollDebounced = () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current)
+    // Throttled scroll handler
+    let ticking = false
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          checkBackground()
+          ticking = false
+        })
+        ticking = true
       }
-      timeoutRef.current = setTimeout(checkOverlapWithGreen, 50)
     }
 
-    window.addEventListener('scroll', handleScrollDebounced, { passive: true })
-    window.addEventListener('resize', checkOverlapWithGreen)
-    checkOverlapWithGreen() // Check initial position
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    window.addEventListener('resize', checkBackground)
+    
+    // Initial check after a short delay to let page render
+    setTimeout(checkBackground, 100)
     
     return () => {
-      window.removeEventListener('scroll', handleScrollDebounced)
-      window.removeEventListener('resize', checkOverlapWithGreen)
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current)
+      window.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('resize', checkBackground)
+      if (stableTimeoutRef.current) {
+        clearTimeout(stableTimeoutRef.current)
       }
     }
   }, [])
@@ -170,12 +198,18 @@ export default function Chatbot() {
 
   return (
     <>
-      {/* Chat Button */}
+      {/* Chat Button - smooth color transition based on background */}
       <motion.button
         onClick={() => setIsOpen(!isOpen)}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        className={`fixed bottom-4 right-4 md:bottom-6 md:right-6 w-12 h-12 md:w-16 md:h-16 rounded-full shadow-xl flex items-center justify-center z-50 transition-all duration-300 ${isNearFooter ? 'bg-cream text-primary shadow-dark/20 hover:bg-white' : 'bg-primary text-white shadow-primary/30 hover:bg-primary-dark'}`}
+        style={{
+          backgroundColor: isOverDark ? '#F5F0E8' : '#2D5A3D',
+          color: isOverDark ? '#2D5A3D' : '#FFFFFF',
+          boxShadow: isOverDark ? '0 10px 25px -5px rgba(0, 0, 0, 0.2)' : '0 10px 25px -5px rgba(45, 90, 61, 0.3)',
+          transition: 'background-color 400ms ease-in-out, color 400ms ease-in-out, box-shadow 400ms ease-in-out',
+        }}
+        className="fixed bottom-4 right-4 md:bottom-6 md:right-6 w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center z-50"
         aria-label="Open chat"
       >
         <AnimatePresence mode="wait">
