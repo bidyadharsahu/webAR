@@ -49,39 +49,32 @@ const socialLinks = [
   },
 ]
 
-// Logo Component - matches the webAR brand logo
+// Logo Component - matches the Magic Frames XR brand logo
 function Logo({ className = '' }: { className?: string }) {
   return (
     <div className={`flex items-center gap-1.5 ${className}`}>
-      {/* Logo Icon - White bracket with play button */}
+      {/* Logo Icon - Magic frame with XR elements */}
       <svg className="w-8 h-8" viewBox="0 0 40 40" fill="none">
-        {/* Left bracket */}
+        {/* Frame corners */}
         <path 
-          d="M8 8L4 12V28L8 32" 
+          d="M8 4H4V8M32 4H36V8M8 36H4V32M32 36H36V32" 
           stroke="currentColor" 
           strokeWidth="3" 
           strokeLinecap="round" 
           strokeLinejoin="round"
-          fill="none"
         />
-        {/* Right bracket */}
+        {/* XR text in center */}
         <path 
-          d="M32 8L36 12V28L32 32" 
+          d="M14 15L18 20L14 25M22 15L26 20L22 25" 
           stroke="currentColor" 
-          strokeWidth="3" 
+          strokeWidth="2.5" 
           strokeLinecap="round" 
           strokeLinejoin="round"
-          fill="none"
-        />
-        {/* Play triangle */}
-        <path 
-          d="M16 13L28 20L16 27V13Z" 
-          fill="currentColor"
         />
       </svg>
       {/* Logo Text */}
       <span className="text-xl font-bold tracking-tight">
-        web<span className="opacity-80">AR</span>
+        Magic <span className="opacity-80">Frames XR</span>
       </span>
     </div>
   )
@@ -232,7 +225,7 @@ export default function Footer() {
         <div className="mt-12 pt-8 border-t border-white/10">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <p className="text-white/50 text-sm">
-              © {new Date().getFullYear()} webAR. All rights reserved.
+              © {new Date().getFullYear()} Magic Frames XR. All rights reserved.
             </p>
             <p className="text-white/50 text-sm">
               Tampa, Florida

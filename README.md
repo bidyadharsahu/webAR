@@ -1,6 +1,6 @@
-# WebAR Website
+# Magic Frames XR Website
 
-A modern, responsive website for WebAR - an augmented reality platform that transforms restaurant visits into interactive memories for customers and immersive marketing tools for restaurants.
+A modern, responsive website for Magic Frames XR - an augmented reality platform that transforms restaurant visits into interactive memories for customers and immersive marketing tools for restaurants.
 
 ## Tech Stack
 

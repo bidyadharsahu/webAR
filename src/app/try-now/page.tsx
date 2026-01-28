@@ -101,7 +101,7 @@ export default function TryNowPage() {
             transition={{ duration: 0.8, delay: 0.1 }}
             className="heading-xl mb-6"
           >
-            Ready to Experience <span className="text-gradient">WebAR</span>?
+            Ready to Experience <span className="text-gradient">Magic Frames XR</span>?
           </motion.h1>
 
           <motion.p
@@ -162,7 +162,7 @@ export default function TryNowPage() {
 
                 <div className="space-y-4 mb-8">
                   {[
-                    'Find a WebAR partner restaurant near you',
+                    'Find a Magic Frames XR partner restaurant near you',
                     'Celebrate your special moment',
                     'Receive your AR-enabled photo',
                     'Scan anytime to relive the memory'

@@ -13,23 +13,23 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'WebAR | Moments & Menus Come Alive',
+  title: 'Magic Frames XR | Moments & Menus Come Alive',
   description: 'Transform dining experiences with augmented reality. AR memories for customers, AR menus for restaurants. No app required.',
-  keywords: ['WebAR', 'augmented reality', 'AR menu', 'restaurant technology', 'AR memories', 'QR experience'],
-  authors: [{ name: 'WebAR' }],
+  keywords: ['Magic Frames XR', 'augmented reality', 'AR menu', 'restaurant technology', 'AR memories', 'QR experience'],
+  authors: [{ name: 'Magic Frames XR' }],
   icons: {
     icon: '/favicon.svg',
     apple: '/apple-touch-icon.svg',
   },
   openGraph: {
-    title: 'WebAR | Moments & Menus Come Alive',
+    title: 'Magic Frames XR | Moments & Menus Come Alive',
     description: 'Transform dining experiences with augmented reality.',
     type: 'website',
     locale: 'en_US',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'WebAR | Moments & Menus Come Alive',
+    title: 'Magic Frames XR | Moments & Menus Come Alive',
     description: 'Transform dining experiences with augmented reality.',
   },
   robots: {
