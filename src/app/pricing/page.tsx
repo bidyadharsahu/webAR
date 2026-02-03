@@ -51,93 +51,118 @@ function AnimatedSection({ children, className = '' }: { children: React.ReactNo
 
 const pricingPlans = [
   {
-    name: 'Free',
-    tagline: 'For learning and experimentation',
-    monthlyPrice: 0,
-    yearlyPrice: 0,
-    billingNote: 'Free forever',
-    features: [
-      'Up to 5 AR experiences',
-      '500 AR views per year',
-      '100 MB storage',
-      'Standard Web AR support',
-      'Community access',
-    ],
-    cta: 'Start for free',
-    popular: false,
-  },
-  {
     name: 'Starter',
-    tagline: 'For small businesses and creators',
-    monthlyPrice: 29,
-    yearlyPrice: 288, // $24/month when billed yearly
-    billingNote: '$24/month when billed yearly',
+    tagline: 'Perfect for small restaurants getting started',
+    monthlyPrice: 149,
+    yearlyPrice: 1430, // ~$119/month when billed yearly (20% off)
+    billingNote: '$119/month when billed yearly',
     features: [
-      'Up to 25 AR experiences',
-      '10,000 AR views per month',
-      '1 GB storage',
-      'Custom QR code styling',
-      'Basic analytics',
-      'Email support',
+      // Website & Online Presence
+      'One-Page Website',
+      'Mobile Optimization',
+      'Basic Local SEO',
+      'Google Maps Integration',
+      // AR Features
+      'AR Restaurant Menu (5 dishes)',
+      'QR Code Design',
+      // Support & Customization
+      'Low Customization Level',
+      'Email Support',
     ],
-    cta: 'Get started',
+    cta: 'Get Started',
     popular: false,
   },
   {
     name: 'Growth',
-    tagline: 'For growing brands and teams',
-    monthlyPrice: 79,
-    yearlyPrice: 780, // $65/month when billed yearly
-    billingNote: '$65/month when billed yearly',
+    tagline: 'For restaurants ready to expand their reach',
+    monthlyPrice: 199,
+    yearlyPrice: 1910, // ~$159/month when billed yearly (20% off)
+    billingNote: '$159/month when billed yearly',
     features: [
-      'Up to 100 AR experiences',
-      '50,000 AR views per month',
-      '5 GB storage',
-      'Advanced analytics dashboard',
-      'Custom branded experiences',
-      'Priority email support',
+      // Website & Online Presence
+      'Multi-Page Website',
+      'Mobile Optimization',
+      'Basic Local SEO',
+      'Google Maps Integration',
+      // AR Features
+      'AR Restaurant Menu (Unlimited dishes)',
+      'QR Code Design',
+      // Content & Media
+      'AI Chatbot for Website',
+      'Photo Editing',
+      'Video Editing (Limited)',
+      // Marketing & Events
+      'Limited Event/Festival AR Campaigns',
+      // Support & Customization
+      'Medium Customization Level',
+      'Priority Support',
     ],
     cta: 'Choose Growth',
     popular: true,
   },
   {
-    name: 'Pro',
-    tagline: 'For agencies and businesses at scale',
-    monthlyPrice: 199,
-    yearlyPrice: 1920, // $160/month when billed yearly
-    billingNote: '$160/month when billed yearly',
+    name: 'Premium',
+    tagline: 'Complete solution for ambitious restaurants',
+    monthlyPrice: 299,
+    yearlyPrice: 2870, // ~$239/month when billed yearly (20% off)
+    billingNote: '$239/month when billed yearly',
     features: [
-      'Unlimited AR experiences',
-      '150,000 AR views per month',
-      '10 GB storage',
-      'Advanced analytics with export',
-      'White label experience',
-      'API access',
-      'Dedicated support',
+      // Website & Online Presence
+      'Dynamic Website + Admin Panel',
+      'Mobile Optimization',
+      'Advanced Local SEO',
+      'Google Maps Integration',
+      // AR Features
+      'AR Restaurant Menu (Advanced + 3D Videos)',
+      'Custom QR Code Designs',
+      // Content & Media
+      'Advanced AI Chatbot (Custom-Trained)',
+      'Photo Editing',
+      'Video Editing (Edit + Upload)',
+      // Marketing & Events
+      'Event/Festival AR Campaigns',
+      'Business Promotion',
+      'Social Media Management (Instagram, Facebook, TikTok)',
+      // Reports & Support
+      'Monthly Performance Report',
+      'Full Customization Level',
+      'Dedicated Account Manager',
+      'Dedicated Support',
     ],
-    cta: 'Go Pro',
+    cta: 'Go Premium',
     popular: false,
   },
 ];
 
 const comparisonFeatures = [
-  { feature: 'AR experiences', free: '5', starter: '25', growth: '100', pro: 'Unlimited' },
-  { feature: 'Monthly AR views', free: '500/year', starter: '10,000', growth: '50,000', pro: '150,000' },
-  { feature: 'Storage', free: '100 MB', starter: '1 GB', growth: '5 GB', pro: '10 GB' },
-  { feature: 'Web AR access', free: true, starter: true, growth: true, pro: true },
-  { feature: 'App installation required', free: false, starter: false, growth: false, pro: false },
-  { feature: 'QR code customization', free: false, starter: true, growth: true, pro: true },
-  { feature: 'Analytics', free: '—', starter: 'Basic', growth: 'Advanced', pro: 'Advanced + export' },
-  { feature: 'Branding removal', free: false, starter: false, growth: 'Partial', pro: true },
-  { feature: 'API access', free: false, starter: false, growth: false, pro: true },
-  { feature: 'Support', free: 'Community', starter: 'Email', growth: 'Priority email', pro: 'Dedicated' },
+  // Website & Online Presence
+  { feature: 'Website Type', starter: 'One-Page', growth: 'Multi-Page', premium: 'Dynamic + Admin' },
+  { feature: 'Mobile Optimization', starter: true, growth: true, premium: true },
+  { feature: 'SEO Setup', starter: 'Basic Local', growth: 'Basic Local', premium: 'Advanced Local' },
+  { feature: 'Google Maps Integration', starter: true, growth: true, premium: true },
+  // AR Features
+  { feature: 'AR Restaurant Menu', starter: '5 dishes', growth: 'Unlimited', premium: 'Advanced + 3D Videos' },
+  { feature: 'QR Code Design', starter: true, growth: true, premium: 'Custom Designs' },
+  // AI & Content
+  { feature: 'AI Chatbot (Website)', starter: false, growth: true, premium: 'Custom-Trained' },
+  { feature: 'Photo Editing', starter: false, growth: true, premium: true },
+  { feature: 'Video Editing', starter: false, growth: 'Limited', premium: 'Edit + Upload' },
+  // Marketing & Promotion
+  { feature: 'Event/Festival AR Campaigns', starter: false, growth: 'Limited', premium: true },
+  { feature: 'Business Promotion', starter: false, growth: false, premium: true },
+  { feature: 'Social Media Management', starter: false, growth: false, premium: 'Instagram, Facebook, TikTok' },
+  // Reports & Support
+  { feature: 'Monthly Performance Report', starter: false, growth: false, premium: true },
+  { feature: 'Customization Level', starter: 'Low', growth: 'Medium', premium: 'Full' },
+  { feature: 'Dedicated Account Manager', starter: false, growth: false, premium: true },
+  { feature: 'Support Type', starter: 'Email', growth: 'Priority', premium: 'Dedicated' },
 ];
 
 const addOns = [
-  { name: 'Extra AR views', price: '$50 per additional 50,000 views' },
-  { name: 'Additional storage', price: '$10 per extra 1 GB per month' },
-  { name: 'Custom domain mapping', price: '$15 per month' },
-  { name: 'Training and onboarding session', price: 'One-time fee of $299' },
+  { name: 'Extra Social Platform', price: '$49/month', description: 'Manage additional social platform' },
+  { name: 'Event AR Campaign', price: 'Custom Pricing', description: 'AR campaigns for events & festivals' },
+  { name: 'Digital Marketing', price: 'According to service fee', description: 'Google / Instagram ads setup' },
+  { name: 'Influencer Collaboration', price: 'Custom Pricing', description: 'Local Tampa influencer promotion' },
 ];
 
 const faqs = [
@@ -230,7 +255,7 @@ export default function PricingPage() {
         <div className="container-custom">
           <motion.div 
             variants={staggerContainer}
-            className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch"
+            className="grid md:grid-cols-3 gap-6 items-stretch max-w-5xl mx-auto"
           >
             {pricingPlans.map((plan, index) => (
               <motion.div
@@ -250,21 +275,22 @@ export default function PricingPage() {
                 <p className="text-dark/50 text-sm mb-4">{plan.tagline}</p>
                 
                 <div className="flex items-baseline gap-1 mb-1">
-                  {plan.monthlyPrice === 0 ? (
-                    <span className="text-4xl font-bold text-dark">$0</span>
-                  ) : (
-                    <>
-                      <span className="text-4xl font-bold text-dark">
-                        ${isYearly ? Math.round(plan.yearlyPrice / 12) : plan.monthlyPrice}
-                      </span>
-                      <span className="text-dark/50">/month</span>
-                    </>
-                  )}
+                  <span className="text-4xl font-bold text-dark">
+                    ${isYearly ? Math.round(plan.yearlyPrice / 12) : plan.monthlyPrice}
+                  </span>
+                  <span className="text-dark/50">/month</span>
                 </div>
                 
-                <p className="text-sm text-dark/40 mb-6">
-                  {plan.monthlyPrice === 0 ? plan.billingNote : (isYearly ? `Billed $${plan.yearlyPrice}/year` : plan.billingNote)}
+                <p className="text-sm text-dark/40 mb-2">
+                  {isYearly ? `Billed $${plan.yearlyPrice}/year` : 'Billed monthly'}
                 </p>
+                
+                {isYearly && (
+                  <p className="text-sm text-primary font-medium mb-6">
+                    Save ${(plan.monthlyPrice * 12) - plan.yearlyPrice}/year
+                  </p>
+                )}
+                {!isYearly && <div className="mb-6" />}
 
                 <ul className="space-y-3 mb-8 flex-grow">
                   {plan.features.map((feature, i) => (
@@ -343,33 +369,19 @@ export default function PricingPage() {
           </motion.h2>
 
           <motion.div variants={fadeUp} className="overflow-x-auto -mx-4 px-4">
-            <table className="w-full min-w-[700px]">
+            <table className="w-full min-w-[600px]">
               <thead>
                 <tr className="border-b border-dark/10">
                   <th className="text-left py-4 px-4 font-semibold text-dark">Feature</th>
-                  <th className="text-center py-4 px-4 font-semibold text-dark">Free</th>
-                  <th className="text-center py-4 px-4 font-semibold text-dark">Starter</th>
-                  <th className="text-center py-4 px-4 font-semibold text-primary">Growth</th>
-                  <th className="text-center py-4 px-4 font-semibold text-dark">Pro</th>
+                  <th className="text-center py-4 px-4 font-semibold text-dark">Starter ($149)</th>
+                  <th className="text-center py-4 px-4 font-semibold text-primary">Growth ($199)</th>
+                  <th className="text-center py-4 px-4 font-semibold text-dark">Premium ($299)</th>
                 </tr>
               </thead>
               <tbody>
                 {comparisonFeatures.map((row, i) => (
                   <tr key={i} className="border-b border-dark/5">
                     <td className="py-4 px-4 font-medium text-dark">{row.feature}</td>
-                    <td className="text-center py-4 px-4 text-dark/70">
-                      {typeof row.free === 'boolean' ? (
-                        row.free ? (
-                          <svg className="w-5 h-5 text-primary mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                          </svg>
-                        ) : (
-                          <svg className="w-5 h-5 text-dark/30 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                          </svg>
-                        )
-                      ) : row.free}
-                    </td>
                     <td className="text-center py-4 px-4 text-dark/70">
                       {typeof row.starter === 'boolean' ? (
                         row.starter ? (
@@ -397,8 +409,8 @@ export default function PricingPage() {
                       ) : row.growth}
                     </td>
                     <td className="text-center py-4 px-4 text-dark/70">
-                      {typeof row.pro === 'boolean' ? (
-                        row.pro ? (
+                      {typeof row.premium === 'boolean' ? (
+                        row.premium ? (
                           <svg className="w-5 h-5 text-primary mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                           </svg>
@@ -407,7 +419,7 @@ export default function PricingPage() {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                           </svg>
                         )
-                      ) : row.pro}
+                      ) : row.premium}
                     </td>
                   </tr>
                 ))}
@@ -435,7 +447,8 @@ export default function PricingPage() {
                 className="bg-cream rounded-xl p-6"
               >
                 <h3 className="font-semibold text-dark mb-2">{addon.name}</h3>
-                <p className="text-dark/60 text-sm">{addon.price}</p>
+                <p className="text-primary font-medium text-sm mb-2">{addon.price}</p>
+                <p className="text-dark/50 text-sm">{addon.description}</p>
               </motion.div>
             ))}
           </motion.div>
@@ -443,8 +456,8 @@ export default function PricingPage() {
           {/* Billing Footnote */}
           <motion.div variants={fadeUp} className="mt-12 text-center">
             <p className="text-dark/50 text-sm max-w-2xl mx-auto">
-              Monthly billing offers flexibility. Yearly billing provides approximately 20 to 30 percent savings. 
-              Starter and Growth plans include a 14-day free trial with no credit card required.
+              Monthly billing offers flexibility. Yearly billing provides 20% savings on all plans. 
+              Contact us for enterprise solutions or add-on services.
             </p>
           </motion.div>
         </div>
