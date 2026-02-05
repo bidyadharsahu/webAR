@@ -12,32 +12,12 @@ const navItems = [
   { label: 'Contact', href: '/company/about' },
 ]
 
-// Logo Component - matches the Magic Frames XR brand logo
+// Logo Component - Netrik XR brand logo
 function Logo({ className = '' }: { className?: string }) {
   return (
-    <div className={`flex items-center gap-1.5 ${className}`}>
-      {/* Logo Icon - Magic frame with XR elements */}
-      <svg className="w-8 h-8" viewBox="0 0 40 40" fill="none">
-        {/* Frame corners */}
-        <path 
-          d="M8 4H4V8M32 4H36V8M8 36H4V32M32 36H36V32" 
-          stroke="currentColor" 
-          strokeWidth="3" 
-          strokeLinecap="round" 
-          strokeLinejoin="round"
-        />
-        {/* XR text in center */}
-        <path 
-          d="M14 15L18 20L14 25M22 15L26 20L22 25" 
-          stroke="currentColor" 
-          strokeWidth="2.5" 
-          strokeLinecap="round" 
-          strokeLinejoin="round"
-        />
-      </svg>
-      {/* Logo Text */}
-      <span className="text-xl font-bold tracking-tight">
-        Magic <span className="opacity-80">Frames XR</span>
+    <div className={`flex items-center ${className}`}>
+      <span className="text-2xl font-bold tracking-tight">
+        Netrik XR
       </span>
     </div>
   )

@@ -11,7 +11,7 @@ interface Message {
 }
 
 const quickReplies = [
-  'What is Magic Frames XR?',
+  'What is Netrik XR?',
   'Pricing plans',
   'How does it work?',
   'Contact information',
@@ -19,14 +19,14 @@ const quickReplies = [
 ]
 
 const botResponses: Record<string, string> = {
-  'what is webar': 'Magic Frames XR is a web-based augmented reality platform that allows you to create immersive AR experiences that work instantly in any browser. No app downloads required!',
-  'pricing': 'We offer 4 pricing plans: Free ($0), Starter ($29/mo), Growth ($79/mo - most popular), and Pro ($199/mo). Visit our pricing page for full details!',
+  'what is webar': 'Netrik XR is a web-based augmented reality platform that creates immersive AR experiences working instantly in any browser. We specialize in AR Photo Frames, AR Business Cards, and Fully Functional Websites. No app downloads required!',
+  'pricing': 'We offer 3 pricing plans: Starter ($149/mo), Growth ($199/mo - most popular), and Premium ($299/mo). Save 20% with yearly billing! Visit our pricing page for full details!',
   'how does it work': 'Simple! 1) Users scan your image or QR code with their phone camera. 2) The browser opens instantly. 3) They experience AR content right there. No app needed!',
   'contact': 'You can reach us at namasterides@gmail.com or visit our Contact page. We are based in Tampa, Florida and typically respond within 24 hours.',
-  'demo': 'You can try our live demos at /try-now or view examples in our showcase section on the homepage!',
+  'demo': 'You can try our live demos at /try-now! We have demos for AR Photo Frames, AR Business Cards, and AR Restaurant Menus!',
   'careers': 'We are hiring! We have openings for UI/UX Designers, AR Designers, AI Designers, Sales Representatives, and more. Check out our Careers page!',
-  'features': 'Magic Frames XR works on any smartphone, requires no app installation, offers instant access, higher engagement, and easy content updates. It\'s perfect for restaurants, real estate, marketing, and more!',
-  'default': 'I\'m here to help! You can ask me about our pricing, how Magic Frames XR works, view demos, or contact information. What would you like to know?',
+  'features': 'Netrik XR offers AR Photo Frames that bring memories to life, AR Business Cards that impress clients, and fully functional websites with AR integration. Works on any smartphone, no app required!',
+  'default': 'I\'m here to help! You can ask me about our AR Photo Frames, AR Business Cards, Website Services, pricing, or contact information. What would you like to know?',
 }
 
 function getBotResponse(userMessage: string): string {
@@ -59,7 +59,7 @@ export default function Chatbot() {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      text: 'Hi! I\'m the Magic Frames XR assistant. How can I help you today?',
+      text: 'Hi! I\'m the Netrik XR assistant. How can I help you today?',
       sender: 'bot',
       timestamp: new Date(),
     },
@@ -263,7 +263,7 @@ export default function Chatbot() {
                 </svg>
               </div>
               <div>
-                <h3 className="font-semibold">Magic Frames XR Assistant</h3>
+                <h3 className="font-semibold">Netrik XR Assistant</h3>
                 <p className="text-xs text-white/80">Online now</p>
               </div>
             </div>

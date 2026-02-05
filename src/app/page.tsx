@@ -82,28 +82,28 @@ function AnimatedSection({ children, className = '', id = '' }: { children: Reac
 // Experience card data
 const experiences = [
   {
-    title: 'AR Photo Stories',
-    description: 'Turn printed photos into living memories. Scan to play videos, messages, or animations right from the image.',
+    title: 'AR Photo Frames',
+    description: 'Turn printed photos into living memories. Scan to play videos, messages, or animations right from the image. Perfect for events, celebrations, and special moments.',
     href: '/services/ar-photo-frames',
   },
   {
-    title: 'AR Food Preview',
-    description: 'Let customers see dishes in 3D before ordering. Reduce waste, increase confidence, boost sales.',
-    href: '/services/restaurant-menu',
-  },
-  {
-    title: 'AR Brand Moments',
-    description: 'Add interactive layers to packaging, posters, or business cards. Make every touchpoint memorable.',
+    title: 'AR Business Cards',
+    description: 'Make your first impression unforgettable. Business cards that come alive with videos, portfolios, or contact info when scanned.',
     href: '/services/ar-business-cards',
   },
   {
-    title: 'AR Space Preview',
-    description: 'Walk through properties or spaces remotely. Perfect for real estate, architecture, or event planning.',
-    href: '/services/real-estate-ar',
+    title: 'Fully Functional Websites',
+    description: 'Modern, responsive websites with AR integration built-in. From single-page sites to dynamic platforms with admin panels.',
+    href: '/company/about',
+  },
+  {
+    title: 'AR Restaurant Menus',
+    description: 'Let customers see dishes in 3D before ordering. Reduce waste, increase confidence, boost sales with immersive food previews.',
+    href: '/services/restaurant-menu',
   },
   {
     title: 'Custom AR Experience',
-    description: 'Something unique in mind? We design and build bespoke AR experiences tailored to your vision.',
+    description: 'Something unique in mind? We design and build bespoke AR experiences tailored to your vision and business needs.',
     href: '/services/3d-modeling',
   },
 ];

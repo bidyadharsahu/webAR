@@ -13,24 +13,24 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'Magic Frames XR | Moments & Menus Come Alive',
-  description: 'Transform dining experiences with augmented reality. AR memories for customers, AR menus for restaurants. No app required.',
-  keywords: ['Magic Frames XR', 'augmented reality', 'AR menu', 'restaurant technology', 'AR memories', 'QR experience'],
-  authors: [{ name: 'Magic Frames XR' }],
+  title: 'Netrik XR | AR Photo Frames, Business Cards & Web Solutions',
+  description: 'Transform your business with augmented reality. AR photo frames, AR business cards, and fully functional websites. No app required.',
+  keywords: ['Netrik XR', 'augmented reality', 'AR photo frames', 'AR business cards', 'web development', 'AR restaurant menu', 'QR experience'],
+  authors: [{ name: 'Netrik XR' }],
   icons: {
     icon: '/favicon.svg',
     apple: '/apple-touch-icon.svg',
   },
   openGraph: {
-    title: 'Magic Frames XR | Moments & Menus Come Alive',
-    description: 'Transform dining experiences with augmented reality.',
+    title: 'Netrik XR | AR Photo Frames, Business Cards & Web Solutions',
+    description: 'Transform your business with augmented reality.',
     type: 'website',
     locale: 'en_US',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Magic Frames XR | Moments & Menus Come Alive',
-    description: 'Transform dining experiences with augmented reality.',
+    title: 'Netrik XR | AR Photo Frames, Business Cards & Web Solutions',
+    description: 'Transform your business with augmented reality.',
   },
   robots: {
     index: true,
