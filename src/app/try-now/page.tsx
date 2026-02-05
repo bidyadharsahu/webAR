@@ -46,13 +46,6 @@ function AnimatedSection({ children, className = '' }: { children: React.ReactNo
   );
 }
 
-// Demo websites for restaurant section
-const demoWebsites = [
-  { name: 'Taiga Sports Bar', url: 'https://taiga-demo.vercel.app', description: 'Sports bar with AR menu' },
-  { name: 'Italiano Bistro', url: '#', description: 'Italian restaurant showcase' },
-  { name: 'Sushi Master', url: '#', description: 'Japanese cuisine AR experience' },
-];
-
 export default function TryNowPage() {
   const [activeTab, setActiveTab] = useState<'photo-frames' | 'business-cards' | 'restaurants'>('photo-frames');
   const [formData, setFormData] = useState({
@@ -226,10 +219,31 @@ export default function TryNowPage() {
                         priority
                       />
                     </div>
-                    <div className="mt-4 text-center">
-                      <p className="text-sm text-dark/60 mb-2">
-                        Scan the QR code in the photo above
-                      </p>
+                    
+                    {/* QR Code Section */}
+                    <div className="mt-4 flex items-center justify-center gap-4 p-4 bg-gradient-to-r from-primary/5 to-primary/10 rounded-xl">
+                      <div className="flex-shrink-0">
+                        <div className="bg-white p-2 rounded-lg shadow-md">
+                          <Image
+                            src="/qr-code.png"
+                            alt="Scan this QR code to experience AR"
+                            width={100}
+                            height={100}
+                            className="rounded"
+                          />
+                        </div>
+                      </div>
+                      <div className="text-left">
+                        <p className="text-sm font-semibold text-dark mb-1">
+                          Scan to Experience AR
+                        </p>
+                        <p className="text-xs text-dark/60">
+                          Point your phone camera at this QR code to see the photo come alive
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="mt-3 text-center">
                       <p className="text-xs text-dark/40">
                         The AR video will play automatically on your phone
                       </p>
@@ -297,31 +311,36 @@ export default function TryNowPage() {
 
               <motion.div variants={fadeUp}>
                 <div className="relative">
-                  {/* Demo Business Card Placeholder */}
+                  {/* Coming Soon Business Card */}
                   <div className="card-bordered p-6 bg-white">
-                    <div className="relative aspect-[1.75/1] rounded-xl overflow-hidden bg-gradient-to-br from-dark to-dark/80 flex items-center justify-center">
-                      {/* Placeholder Business Card Design */}
+                    <div className="relative aspect-[1.75/1] rounded-xl overflow-hidden bg-gradient-to-br from-primary/90 to-primary flex items-center justify-center">
+                      {/* Coming Soon Design */}
                       <div className="text-center text-white p-8">
-                        <div className="w-16 h-16 mx-auto mb-4 bg-white/10 rounded-full flex items-center justify-center">
-                          <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2" />
+                        <motion.div 
+                          className="w-20 h-20 mx-auto mb-6 bg-white/20 rounded-full flex items-center justify-center"
+                          animate={{ scale: [1, 1.1, 1], rotate: [0, 5, -5, 0] }}
+                          transition={{ duration: 3, repeat: Infinity }}
+                        >
+                          <svg className="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                           </svg>
-                        </div>
-                        <h4 className="font-bold text-lg mb-1">Your Name Here</h4>
-                        <p className="text-white/60 text-sm mb-4">CEO / Founder</p>
-                        <div className="w-20 h-20 mx-auto bg-white rounded-lg p-2">
-                          <div className="w-full h-full bg-dark/10 rounded flex items-center justify-center text-dark/40 text-xs">
-                            QR Code
-                          </div>
-                        </div>
+                        </motion.div>
+                        <motion.h4 
+                          className="font-bold text-2xl mb-2"
+                          animate={{ opacity: [0.7, 1, 0.7] }}
+                          transition={{ duration: 2, repeat: Infinity }}
+                        >
+                          Coming Soon
+                        </motion.h4>
+                        <p className="text-white/80 text-sm">AR Business Cards</p>
                       </div>
                     </div>
                     <div className="mt-4 text-center">
-                      <p className="text-sm text-dark/60 mb-2">
-                        Demo coming soon
+                      <p className="text-sm text-primary font-semibold mb-2">
+                        We Are Coming Soon!
                       </p>
-                      <p className="text-xs text-dark/40">
-                        We&apos;re preparing an interactive business card demo
+                      <p className="text-xs text-dark/60">
+                        Our AR Business Cards feature is under development. Stay tuned for an amazing experience!
                       </p>
                     </div>
                   </div>
@@ -350,32 +369,6 @@ export default function TryNowPage() {
                   3D dish previews, ingredient details, and portion sizes. Increase 
                   orders, reduce returns, and create memorable dining experiences.
                 </p>
-
-                {/* Demo Websites */}
-                <div className="mb-8">
-                  <h3 className="font-semibold text-dark mb-4">Live Demo Websites</h3>
-                  <div className="space-y-3">
-                    {demoWebsites.map((site, i) => (
-                      <a
-                        key={i}
-                        href={site.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center justify-between p-4 bg-sand rounded-xl hover:bg-primary/5 transition-colors group"
-                      >
-                        <div>
-                          <h4 className="font-medium text-dark group-hover:text-primary transition-colors">
-                            {site.name}
-                          </h4>
-                          <p className="text-sm text-dark/50">{site.description}</p>
-                        </div>
-                        <svg className="w-5 h-5 text-dark/30 group-hover:text-primary transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                        </svg>
-                      </a>
-                    ))}
-                  </div>
-                </div>
 
                 <div className="space-y-4 mb-8">
                   <h3 className="font-semibold text-dark">How It Works for Restaurants</h3>

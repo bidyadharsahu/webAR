@@ -12,20 +12,78 @@ const navItems = [
   { label: 'Contact', href: '/company/about' },
 ]
 
-// Logo Component - Netrik XR brand logo
-function Logo({ className = '' }: { className?: string }) {
+// Animated Logo Component - Netrik XR brand logo
+function Logo({ className = '', animate = false }: { className?: string; animate?: boolean }) {
+  const [isHovered, setIsHovered] = useState(false)
+  const [hasAnimated, setHasAnimated] = useState(false)
+
+  useEffect(() => {
+    if (animate && !hasAnimated) {
+      setHasAnimated(true)
+    }
+  }, [animate, hasAnimated])
+
+  const letterVariants = {
+    initial: { opacity: 0, y: 20, rotateX: -90 },
+    animate: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      rotateX: 0,
+      transition: {
+        delay: i * 0.08,
+        duration: 0.5,
+        ease: [0.25, 0.46, 0.45, 0.94]
+      }
+    }),
+    hover: (i: number) => ({
+      y: [-2, 2, -2],
+      color: ['#ffffff', '#a8d5ba', '#ffffff'],
+      transition: {
+        delay: i * 0.05,
+        duration: 0.4,
+        ease: 'easeInOut'
+      }
+    })
+  }
+
+  const logoText = 'Netrik XR'
+  
   return (
-    <div className={`flex items-center ${className}`}>
-      <span className="text-2xl font-bold tracking-tight">
-        Netrik XR
+    <motion.div 
+      className={`flex items-center cursor-pointer ${className}`}
+      onHoverStart={() => setIsHovered(true)}
+      onHoverEnd={() => setIsHovered(false)}
+      initial="initial"
+      animate={animate || hasAnimated ? "animate" : "initial"}
+      whileHover="hover"
+    >
+      <span className="text-2xl font-bold tracking-tight flex">
+        {logoText.split('').map((letter, i) => (
+          <motion.span
+            key={i}
+            custom={i}
+            variants={letterVariants}
+            animate={isHovered ? "hover" : (animate || hasAnimated ? "animate" : "initial")}
+            style={{ display: 'inline-block', whiteSpace: letter === ' ' ? 'pre' : 'normal' }}
+          >
+            {letter}
+          </motion.span>
+        ))}
       </span>
-    </div>
+    </motion.div>
   )
 }
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [logoAnimated, setLogoAnimated] = useState(false)
+
+  useEffect(() => {
+    // Trigger logo animation on mount
+    const timer = setTimeout(() => setLogoAnimated(true), 100)
+    return () => clearTimeout(timer)
+  }, [])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -63,11 +121,10 @@ export default function Header() {
             {/* Logo */}
             <Link href="/" className="relative z-10">
               <motion.div
-                whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 transition={{ type: 'spring', stiffness: 400, damping: 17 }}
               >
-                <Logo />
+                <Logo animate={logoAnimated} />
               </motion.div>
             </Link>
 

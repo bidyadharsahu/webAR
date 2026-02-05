@@ -108,57 +108,6 @@ const experiences = [
   },
 ];
 
-// Pricing data
-const pricingPlans = [
-  {
-    name: 'Free',
-    price: '0',
-    description: 'For learning and experimentation',
-    features: [
-      'Up to 5 AR experiences',
-      '500 AR views per year',
-      '100 MB storage',
-      'Community access',
-    ],
-  },
-  {
-    name: 'Starter',
-    price: '29',
-    description: 'For small businesses and creators',
-    features: [
-      'Up to 25 AR experiences',
-      '10,000 AR views/month',
-      '1 GB storage',
-      'Basic analytics',
-    ],
-  },
-  {
-    name: 'Growth',
-    price: '79',
-    description: 'For growing brands and teams',
-    features: [
-      'Up to 100 AR experiences',
-      '50,000 AR views/month',
-      '5 GB storage',
-      'Advanced analytics',
-      'Priority support',
-    ],
-    popular: true,
-  },
-  {
-    name: 'Pro',
-    price: '199',
-    description: 'For agencies at scale',
-    features: [
-      'Unlimited AR experiences',
-      '150,000 AR views/month',
-      '10 GB storage',
-      'API access',
-      'Dedicated support',
-    ],
-  },
-];
-
 
 
 export default function HomePage() {
@@ -365,53 +314,6 @@ export default function HomePage() {
         </div>
       </AnimatedSection>
 
-      {/* SECTION 5: LIVE DEMO */}
-      <AnimatedSection className="py-24 bg-gradient-to-b from-sand via-dark/[0.03] to-sand" id="demo">
-        <div className="container-custom">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div>
-              <motion.p variants={fadeIn} className="text-dark/50 text-sm tracking-wide uppercase mb-6">
-                Try it now
-              </motion.p>
-              <motion.h2 variants={fadeUp} className="text-3xl md:text-4xl font-bold text-dark mb-6">
-                See it for yourself
-              </motion.h2>
-              <motion.p variants={fadeUp} className="text-dark/60 text-lg leading-relaxed mb-8">
-                Scan this QR code with your phone camera. No app needed — 
-                the experience opens right in your browser.
-              </motion.p>
-              <motion.div variants={fadeUp}>
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                  <a href="https://webar-lovat.vercel.app/" className="btn-primary">
-                    View all demos
-                    <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                    </svg>
-                  </a>
-                </motion.div>
-              </motion.div>
-            </div>
-            
-            <motion.div variants={scaleIn} className="flex justify-center">
-              <motion.div 
-                className="bg-white rounded-3xl p-8 shadow-xl shadow-primary/10"
-                whileHover={{ scale: 1.02, boxShadow: '0 25px 50px -12px rgba(45, 90, 61, 0.2)' }}
-                transition={{ type: 'spring', stiffness: 300 }}
-              >
-                <img 
-                  src="/qr-code.png" 
-                  alt="Scan QR Code for AR Demo" 
-                  className="w-64 h-64 object-contain"
-                />
-                <p className="text-center text-dark/60 text-sm mt-4 font-medium">
-                  Scan with your camera
-                </p>
-              </motion.div>
-            </motion.div>
-          </div>
-        </div>
-      </AnimatedSection>
-
       {/* SECTION 6: HOW WE BUILD */}
       <AnimatedSection className="py-24 bg-gradient-to-b from-cream via-dark/[0.02] to-cream">
         <div className="container-custom">
@@ -444,84 +346,6 @@ export default function HomePage() {
                 </p>
               </motion.div>
             ))}
-          </motion.div>
-        </div>
-      </AnimatedSection>
-
-      {/* SECTION 7: PRICING */}
-      <AnimatedSection className="py-24 bg-gradient-to-b from-dark/[0.04] via-sand to-cream" id="pricing">
-        <div className="container-custom">
-          <motion.p variants={fadeIn} className="text-dark/50 text-sm tracking-wide uppercase mb-6">
-            Pricing
-          </motion.p>
-          <motion.h2 variants={fadeUp} className="text-3xl md:text-4xl font-bold text-dark mb-6">
-            Simple pricing that grows with you
-          </motion.h2>
-          <motion.p variants={fadeUp} className="text-dark/60 text-lg mb-16 max-w-xl">
-            Start small, scale when you're ready. No hidden costs.
-          </motion.p>
-
-          <motion.div variants={staggerContainer} className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {pricingPlans.map((plan, i) => (
-              <motion.div 
-                key={i} 
-                variants={scaleIn}
-                whileHover={{ 
-                  y: -10, 
-                  boxShadow: plan.popular 
-                    ? '0 25px 50px -12px rgba(45, 90, 61, 0.25)' 
-                    : '0 20px 40px -12px rgba(0, 0, 0, 0.1)'
-                }}
-                className={`bg-cream rounded-2xl p-8 transition-all duration-400 border ${
-                  plan.popular 
-                    ? 'ring-2 ring-primary lg:scale-105 lg:z-10 border-primary/20' 
-                    : 'border-primary/5 hover:border-primary/20'
-                }`}
-              >
-                {plan.popular && (
-                  <motion.span 
-                    className="inline-block text-xs font-medium text-white bg-primary px-3 py-1 rounded-full mb-4"
-                    animate={{ scale: [1, 1.05, 1] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                  >
-                    Most popular
-                  </motion.span>
-                )}
-                <h3 className="text-xl font-semibold text-dark mb-2">{plan.name}</h3>
-                <div className="flex items-baseline gap-1 mb-3">
-                  {plan.price === '0' ? (
-                    <span className="text-3xl font-bold text-dark">$0</span>
-                  ) : (
-                    <>
-                      <span className="text-3xl font-bold text-dark">${plan.price}</span>
-                      <span className="text-dark/50">/month</span>
-                    </>
-                  )}
-                </div>
-                <p className="text-dark/60 text-sm mb-6">{plan.description}</p>
-                <ul className="space-y-3">
-                  {plan.features.map((feature, j) => (
-                    <li key={j} className="flex items-start gap-3 text-sm text-dark/70">
-                      <svg className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-              </motion.div>
-            ))}
-          </motion.div>
-
-          <motion.div variants={fadeUp} className="text-center mt-12">
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Link href="/pricing" className="btn-secondary">
-                View full pricing details
-                <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </Link>
-            </motion.div>
           </motion.div>
         </div>
       </AnimatedSection>

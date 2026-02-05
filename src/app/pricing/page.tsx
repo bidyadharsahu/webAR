@@ -304,7 +304,7 @@ export default function PricingPage() {
                 </ul>
 
                 <Link 
-                  href="/try-now"
+                  href={`/payment?plan=${plan.name}&price=${isYearly ? Math.round(plan.yearlyPrice / 12) : plan.monthlyPrice}&ticket=NXR-${Date.now().toString(36).toUpperCase()}`}
                   className={`block text-center py-3 px-6 rounded-full text-[15px] font-medium transition-all duration-300 ${
                     plan.popular
                       ? 'bg-primary text-white hover:bg-primary/90'
