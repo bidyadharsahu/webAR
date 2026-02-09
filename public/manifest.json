@@ -1,0 +1,46 @@
+{
+  "name": "Netrik XR - Augmented Reality Solutions",
+  "short_name": "Netrik XR",
+  "description": "Transform your business with AR photo frames, business cards, restaurant menus & more. No app required!",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en-US",
+  "categories": ["business", "technology", "utilities"],
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/apple-touch-icon.svg",
+      "sizes": "180x180",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Try AR Demo",
+      "short_name": "Demo",
+      "description": "Experience AR photo frames, business cards and more",
+      "url": "/try-now",
+      "icons": [{"src": "/favicon.svg", "sizes": "96x96"}]
+    },
+    {
+      "name": "View Pricing",
+      "short_name": "Pricing",
+      "description": "Check our AR solution pricing plans",
+      "url": "/pricing",
+      "icons": [{"src": "/favicon.svg", "sizes": "96x96"}]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false
+}

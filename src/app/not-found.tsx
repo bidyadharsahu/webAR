@@ -1,4 +1,14 @@
 import Link from 'next/link'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: '404 - Page Not Found',
+  description: 'The page you are looking for does not exist. Return to Netrik XR homepage for AR photo frames, business cards, and restaurant menu solutions.',
+  robots: {
+    index: false,
+    follow: true,
+  },
+}
 
 export default function NotFound() {
   return (
