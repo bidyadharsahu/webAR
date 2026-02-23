@@ -13,85 +13,25 @@ const navItems = [
   { label: 'Contact', href: '/company/about' },
 ]
 
-// Animated Logo Component - Netrik XR brand logo with image
-function Logo({ className = '', animate = false }: { className?: string; animate?: boolean }) {
-  const [isHovered, setIsHovered] = useState(false)
-  const [hasAnimated, setHasAnimated] = useState(false)
-
-  useEffect(() => {
-    if (animate && !hasAnimated) {
-      setHasAnimated(true)
-    }
-  }, [animate, hasAnimated])
-
+// Logo Component - Netrik XR brand logo
+function Logo({ className = '' }: { className?: string }) {
   return (
-    <motion.div 
-      className={`flex items-center cursor-pointer relative ${className}`}
-      onHoverStart={() => setIsHovered(true)}
-      onHoverEnd={() => setIsHovered(false)}
-      initial={{ opacity: 0, scale: 0.8, y: -10 }}
-      animate={animate || hasAnimated ? { 
-        opacity: 1, 
-        scale: 1, 
-        y: 0,
-      } : { opacity: 0, scale: 0.8, y: -10 }}
-      transition={{ 
-        duration: 0.6, 
-        ease: [0.25, 0.46, 0.45, 0.94],
-        delay: 0.1
-      }}
-    >
-      {/* Logo container with hover effects */}
-      <motion.div
-        className="relative flex items-center"
-        animate={isHovered ? { scale: 1.05 } : { scale: 1 }}
-        transition={{ type: 'spring', stiffness: 400, damping: 20 }}
-      >
-        {/* Main Logo Image */}
-        <Image
-          src="/netrik-xr-logo.png"
-          alt="Netrik XR - Augmented Reality Company"
-          width={400}
-          height={110}
-          className="h-[110px] w-auto object-contain relative z-10"
-          priority
-        />
-        
-        {/* Glow effect on hover */}
-        <motion.div
-          className="absolute -inset-2 -z-10 blur-xl rounded-full"
-          style={{
-            background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(139, 92, 246, 0.25), rgba(236, 72, 153, 0.15))',
-          }}
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={isHovered ? { opacity: 1, scale: 1.3 } : { opacity: 0, scale: 0.8 }}
-          transition={{ duration: 0.3 }}
-        />
-        
-        {/* Shimmer effect on hover */}
-        <motion.div
-          className="absolute inset-0 z-20 pointer-events-none overflow-hidden rounded"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: isHovered ? 1 : 0 }}
-          transition={{ duration: 0.2 }}
-        >
-          <div className="logo-shimmer absolute inset-0" />
-        </motion.div>
-      </motion.div>
-    </motion.div>
+    <div className={`flex items-center ${className}`}>
+      <Image
+        src="/netrik-xr-logo.png"
+        alt="Netrik XR - Augmented Reality Company"
+        width={280}
+        height={75}
+        className="h-[52px] w-auto object-contain"
+        priority
+      />
+    </div>
   )
 }
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [logoAnimated, setLogoAnimated] = useState(false)
-
-  useEffect(() => {
-    // Trigger logo animation on mount
-    const timer = setTimeout(() => setLogoAnimated(true), 100)
-    return () => clearTimeout(timer)
-  }, [])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -125,15 +65,10 @@ export default function Header() {
         <div className="absolute bottom-0 left-0 right-0 h-px bg-white/10" />
         
         <nav className="container-custom">
-          <div className="flex items-center justify-between h-32">
+          <div className="flex items-center justify-between h-20">
             {/* Logo */}
             <Link href="/" className="relative z-10">
-              <motion.div
-                whileTap={{ scale: 0.98 }}
-                transition={{ type: 'spring', stiffness: 400, damping: 17 }}
-              >
-                <Logo animate={logoAnimated} />
-              </motion.div>
+              <Logo />
             </Link>
 
             {/* Desktop Navigation */}
