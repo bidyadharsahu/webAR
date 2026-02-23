@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const navItems = [
@@ -12,7 +13,7 @@ const navItems = [
   { label: 'Contact', href: '/company/about' },
 ]
 
-// Animated Logo Component - Netrik XR brand logo
+// Animated Logo Component - Netrik XR brand logo with image
 function Logo({ className = '', animate = false }: { className?: string; animate?: boolean }) {
   const [isHovered, setIsHovered] = useState(false)
   const [hasAnimated, setHasAnimated] = useState(false)
@@ -23,53 +24,60 @@ function Logo({ className = '', animate = false }: { className?: string; animate
     }
   }, [animate, hasAnimated])
 
-  const letterVariants = {
-    initial: { opacity: 0, y: 20, rotateX: -90 },
-    animate: (i: number) => ({
-      opacity: 1,
-      y: 0,
-      rotateX: 0,
-      transition: {
-        delay: i * 0.08,
-        duration: 0.5,
-        ease: [0.25, 0.46, 0.45, 0.94]
-      }
-    }),
-    hover: (i: number) => ({
-      y: [-2, 2, -2],
-      color: ['#ffffff', '#a8d5ba', '#ffffff'],
-      transition: {
-        delay: i * 0.05,
-        duration: 0.4,
-        ease: 'easeInOut'
-      }
-    })
-  }
-
-  const logoText = 'Netrik XR'
-  
   return (
     <motion.div 
-      className={`flex items-center cursor-pointer ${className}`}
+      className={`flex items-center cursor-pointer relative ${className}`}
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
-      initial="initial"
-      animate={animate || hasAnimated ? "animate" : "initial"}
-      whileHover="hover"
+      initial={{ opacity: 0, scale: 0.8, y: -10 }}
+      animate={animate || hasAnimated ? { 
+        opacity: 1, 
+        scale: 1, 
+        y: 0,
+      } : { opacity: 0, scale: 0.8, y: -10 }}
+      transition={{ 
+        duration: 0.6, 
+        ease: [0.25, 0.46, 0.45, 0.94],
+        delay: 0.1
+      }}
     >
-      <span className="text-2xl font-bold tracking-tight flex">
-        {logoText.split('').map((letter, i) => (
-          <motion.span
-            key={i}
-            custom={i}
-            variants={letterVariants}
-            animate={isHovered ? "hover" : (animate || hasAnimated ? "animate" : "initial")}
-            style={{ display: 'inline-block', whiteSpace: letter === ' ' ? 'pre' : 'normal' }}
-          >
-            {letter}
-          </motion.span>
-        ))}
-      </span>
+      {/* Logo container with shimmer effect */}
+      <motion.div
+        className="relative"
+        animate={isHovered ? { scale: 1.05 } : { scale: 1 }}
+        transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+      >
+        {/* Main Logo Image */}
+        <Image
+          src="/netrik-xr-logo.png"
+          alt="Netrik XR"
+          width={160}
+          height={45}
+          className="h-10 w-auto object-contain relative z-10"
+          priority
+        />
+        
+        {/* Glow effect on hover */}
+        <motion.div
+          className="absolute inset-0 -z-10 blur-xl rounded-full"
+          style={{
+            background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.4), rgba(147, 51, 234, 0.3), rgba(236, 72, 153, 0.2))',
+          }}
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={isHovered ? { opacity: 1, scale: 1.2 } : { opacity: 0, scale: 0.8 }}
+          transition={{ duration: 0.3 }}
+        />
+        
+        {/* Shimmer overlay that animates periodically */}
+        <motion.div
+          className="absolute inset-0 z-20 pointer-events-none overflow-hidden"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: isHovered ? 1 : 0 }}
+          transition={{ duration: 0.2 }}
+        >
+          <div className="logo-shimmer absolute inset-0" />
+        </motion.div>
+      </motion.div>
     </motion.div>
   )
 }

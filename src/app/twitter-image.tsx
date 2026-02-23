@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og'
 
 export const runtime = 'edge'
-export const alt = 'Netrik XR - Augmented Reality Solutions'
+export const alt = 'Netrik XR | #1 AR Company - Photo Frames, Business Cards & Menus'
 export const size = {
   width: 1200,
   height: 630,
@@ -34,22 +34,39 @@ export default async function Image() {
         >
           <div
             style={{
-              fontSize: 96,
-              fontWeight: 700,
-              background: 'linear-gradient(135deg, #ffffff 0%, #a1a1aa 100%)',
-              backgroundClip: 'text',
-              color: 'transparent',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 16,
               marginBottom: 16,
             }}
           >
-            Netrik XR
+            <span
+              style={{
+                fontSize: 96,
+                fontWeight: 700,
+                color: '#ffffff',
+              }}
+            >
+              Netrik
+            </span>
+            <span
+              style={{
+                fontSize: 96,
+                fontWeight: 700,
+                background: 'linear-gradient(135deg, #3B82F6 0%, #8B5CF6 50%, #EC4899 100%)',
+                backgroundClip: 'text',
+                color: 'transparent',
+              }}
+            >
+              XR
+            </span>
           </div>
           
           <div
             style={{
               width: 300,
               height: 4,
-              background: 'linear-gradient(90deg, #6366f1, #8b5cf6)',
+              background: 'linear-gradient(90deg, #3B82F6, #8B5CF6, #EC4899)',
               borderRadius: 2,
               marginBottom: 24,
             }}
@@ -62,7 +79,7 @@ export default async function Image() {
               marginBottom: 24,
             }}
           >
-            Augmented Reality Solutions
+            #1 Augmented Reality Company
           </div>
           
           <div
@@ -71,14 +88,14 @@ export default async function Image() {
               alignItems: 'center',
               justifyContent: 'center',
               padding: '12px 32px',
-              background: 'linear-gradient(90deg, #6366f1, #8b5cf6)',
+              background: 'linear-gradient(90deg, #3B82F6, #8B5CF6, #EC4899)',
               borderRadius: 25,
               fontSize: 18,
               fontWeight: 600,
               color: '#ffffff',
             }}
           >
-            No App Required
+            No App Required - Scan & Experience AR
           </div>
           
           <div

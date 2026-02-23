@@ -1,13 +1,20 @@
 <svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <!-- Background -->
-  <rect width="180" height="180" fill="#2D5A3D" rx="40"/>
+  <defs>
+    <!-- Gradient matching the Netrik XR brand -->
+    <linearGradient id="xr-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3B82F6"/>
+      <stop offset="50%" style="stop-color:#8B5CF6"/>
+      <stop offset="100%" style="stop-color:#EC4899"/>
+    </linearGradient>
+  </defs>
   
-  <!-- Left bracket -->
-  <path d="M45 50L30 65V115L45 130" stroke="#FAF9F6" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Background with gradient -->
+  <rect width="180" height="180" fill="url(#xr-gradient)" rx="40"/>
   
-  <!-- Right bracket -->
-  <path d="M135 50L150 65V115L135 130" stroke="#FAF9F6" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Stylized X letter -->
+  <path d="M50 45L90 90L50 135" stroke="white" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M130 45L90 90L130 135" stroke="white" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
   
-  <!-- Play triangle -->
-  <path d="M70 60L120 90L70 120V60Z" fill="#FAF9F6"/>
+  <!-- R accent line -->
+  <path d="M105 90L140 140" stroke="white" stroke-width="12" stroke-linecap="round" opacity="0.8"/>
 </svg>

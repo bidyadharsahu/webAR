@@ -132,18 +132,23 @@ export default function HomePage() {
 
         <div className="container-custom relative z-10">
           <div className="max-w-3xl">
-            <motion.h1
+            {/* Hidden SEO H1 for brand */}
+            <h1 className="sr-only">Netrik XR - #1 Augmented Reality Company | AR Photo Frames, Business Cards & Menus</h1>
+            
+            <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.1 }}
               className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white leading-[1.1] mb-8"
+              role="heading"
+              aria-level={2}
             >
               Point your phone at the real world.
               <br />
-              <span className="bg-gradient-to-r from-green-300 via-emerald-300 to-green-300 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
                 We add the magic.
               </span>
-            </motion.h1>
+            </motion.div>
 
             <motion.p
               initial={{ opacity: 0, y: 30 }}
@@ -151,7 +156,7 @@ export default function HomePage() {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="text-xl text-white/80 max-w-xl mb-12 leading-relaxed"
             >
-              Web-based augmented reality experiences that work instantly. 
+              <strong>Netrik XR</strong> creates web-based augmented reality experiences that work instantly. 
               No apps to download, no barriers to entry.
             </motion.p>
 
@@ -202,10 +207,10 @@ export default function HomePage() {
       <AnimatedSection className="py-24 bg-gradient-to-b from-cream via-dark/[0.02] to-sand" id="experiences">
         <div className="container-custom">
           <motion.p variants={fadeIn} className="text-dark/50 text-sm tracking-wide uppercase mb-6">
-            What you can create
+            Netrik XR Services
           </motion.p>
           <motion.h2 variants={fadeUp} className="text-3xl md:text-4xl font-bold text-dark mb-16">
-            Experiences built for real moments
+            AR Experiences built for real moments by Netrik XR
           </motion.h2>
 
           <motion.div variants={staggerContainer} className="space-y-4">
@@ -250,10 +255,10 @@ export default function HomePage() {
       <AnimatedSection className="py-24 bg-gradient-to-b from-dark/[0.03] via-sand to-cream">
         <div className="container-custom">
           <motion.p variants={fadeIn} className="text-dark/50 text-sm tracking-wide uppercase mb-6">
-            Why web AR
+            Why Choose Netrik XR WebAR
           </motion.p>
           <motion.h2 variants={fadeUp} className="text-3xl md:text-4xl font-bold text-dark mb-16 max-w-3xl">
-            No app to install. No friction. Just point, scan, and experience.
+            No app to install. No friction. Just point, scan, and experience Netrik XR magic.
           </motion.h2>
 
           <motion.div variants={staggerContainer} className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -358,10 +363,10 @@ export default function HomePage() {
               Who we are
             </motion.p>
             <motion.h2 variants={fadeUp} className="text-3xl md:text-4xl font-bold text-dark mb-8">
-              Built by people who care about the details
+              Netrik XR: Built by people who care about the details
             </motion.h2>
             <motion.p variants={fadeUp} className="text-xl text-dark/60 leading-relaxed mb-8">
-              We're a small team that believes technology should feel invisible. 
+              At <strong>Netrik XR</strong>, we're a small team that believes technology should feel invisible. 
               The best AR experiences are the ones where people forget they're using AR 
               — they're just having a moment.
             </motion.p>
@@ -395,11 +400,11 @@ export default function HomePage() {
         <div className="container-custom relative z-10">
           <div className="max-w-2xl mx-auto text-center">
             <motion.h2 variants={fadeUp} className="text-3xl md:text-4xl font-bold text-dark mb-6">
-              Ready to create something?
+              Ready to create something with Netrik XR?
             </motion.h2>
             <motion.p variants={fadeUp} className="text-dark/60 text-lg mb-10">
-              Start with a demo, or reach out to talk about your project. 
-              No pressure, just a conversation.
+              Start with a <strong>Netrik XR</strong> demo, or reach out to discuss your project. 
+              No pressure, just a conversation about how AR can transform your business.
             </motion.p>
             <motion.div variants={fadeUp} className="flex flex-wrap justify-center gap-4">
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
