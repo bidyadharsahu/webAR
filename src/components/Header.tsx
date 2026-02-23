@@ -51,9 +51,9 @@ function Logo({ className = '', animate = false }: { className?: string; animate
         <Image
           src="/netrik-xr-logo.png"
           alt="Netrik XR - Augmented Reality Company"
-          width={220}
-          height={60}
-          className="h-14 w-auto object-contain relative z-10"
+          width={400}
+          height={110}
+          className="h-[110px] w-auto object-contain relative z-10"
           priority
         />
         
@@ -125,7 +125,7 @@ export default function Header() {
         <div className="absolute bottom-0 left-0 right-0 h-px bg-white/10" />
         
         <nav className="container-custom">
-          <div className="flex items-center justify-between h-20">
+          <div className="flex items-center justify-between h-32">
             {/* Logo */}
             <Link href="/" className="relative z-10">
               <motion.div
