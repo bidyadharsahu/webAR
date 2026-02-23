@@ -55,7 +55,7 @@ export default function Header() {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-primary text-white ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-primary text-white overflow-visible ${
           isScrolled
             ? 'shadow-lg shadow-black/10'
             : ''
@@ -67,8 +67,15 @@ export default function Header() {
         <nav className="container-custom">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
-            <Link href="/" className="relative z-10">
-              <Logo />
+            <Link href="/" className="relative z-10 flex items-center">
+              <Image
+                src="/netrik-xr-logo.png"
+                alt="Netrik XR - Augmented Reality Company"
+                width={500}
+                height={140}
+                className="h-[130px] w-auto object-contain"
+                priority
+              />
             </Link>
 
             {/* Desktop Navigation */}
