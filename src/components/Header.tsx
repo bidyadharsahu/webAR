@@ -72,8 +72,8 @@ export default function Header() {
                 src="/netrik-xr-logo.png"
                 alt="Netrik XR - Augmented Reality Company"
                 width={500}
-                height={140}
-                className="h-[130px] w-auto object-contain"
+                height={145}
+                className="h-[145px] w-auto object-contain"
                 priority
               />
             </Link>
