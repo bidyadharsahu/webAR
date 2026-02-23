@@ -51,9 +51,9 @@ function Logo({ className = '', animate = false }: { className?: string; animate
         <Image
           src="/netrik-xr-logo.png"
           alt="Netrik XR - Augmented Reality Company"
-          width={180}
-          height={50}
-          className="h-10 w-auto object-contain relative z-10"
+          width={220}
+          height={60}
+          className="h-14 w-auto object-contain relative z-10"
           priority
         />
         
