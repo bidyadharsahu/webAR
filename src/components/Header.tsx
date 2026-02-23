@@ -41,36 +41,36 @@ function Logo({ className = '', animate = false }: { className?: string; animate
         delay: 0.1
       }}
     >
-      {/* Logo container with shimmer effect */}
+      {/* Logo container with hover effects */}
       <motion.div
-        className="relative"
+        className="relative flex items-center"
         animate={isHovered ? { scale: 1.05 } : { scale: 1 }}
         transition={{ type: 'spring', stiffness: 400, damping: 20 }}
       >
         {/* Main Logo Image */}
         <Image
           src="/netrik-xr-logo.png"
-          alt="Netrik XR"
-          width={160}
-          height={45}
+          alt="Netrik XR - Augmented Reality Company"
+          width={180}
+          height={50}
           className="h-10 w-auto object-contain relative z-10"
           priority
         />
         
         {/* Glow effect on hover */}
         <motion.div
-          className="absolute inset-0 -z-10 blur-xl rounded-full"
+          className="absolute -inset-2 -z-10 blur-xl rounded-full"
           style={{
-            background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.4), rgba(147, 51, 234, 0.3), rgba(236, 72, 153, 0.2))',
+            background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(139, 92, 246, 0.25), rgba(236, 72, 153, 0.15))',
           }}
           initial={{ opacity: 0, scale: 0.8 }}
-          animate={isHovered ? { opacity: 1, scale: 1.2 } : { opacity: 0, scale: 0.8 }}
+          animate={isHovered ? { opacity: 1, scale: 1.3 } : { opacity: 0, scale: 0.8 }}
           transition={{ duration: 0.3 }}
         />
         
-        {/* Shimmer overlay that animates periodically */}
+        {/* Shimmer effect on hover */}
         <motion.div
-          className="absolute inset-0 z-20 pointer-events-none overflow-hidden"
+          className="absolute inset-0 z-20 pointer-events-none overflow-hidden rounded"
           initial={{ opacity: 0 }}
           animate={{ opacity: isHovered ? 1 : 0 }}
           transition={{ duration: 0.2 }}

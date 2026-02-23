@@ -49,12 +49,30 @@ const socialLinks = [
   },
 ]
 
-// Logo Component - Netrik XR brand logo
+// Logo Component - Netrik XR brand logo with gradient
 function Logo({ className = '' }: { className?: string }) {
   return (
     <div className={`flex items-center ${className}`}>
-      <span className="text-2xl font-bold tracking-tight">
-        Netrik XR
+      <span 
+        className="text-2xl font-bold tracking-tight text-white"
+        style={{ 
+          fontVariant: 'small-caps',
+          letterSpacing: '-0.02em'
+        }}
+      >
+        Netrik
+      </span>
+      <span 
+        className="text-2xl font-bold ml-1.5"
+        style={{ 
+          background: 'linear-gradient(135deg, #3B82F6 0%, #8B5CF6 40%, #06B6D4 70%, #EC4899 100%)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          backgroundClip: 'text',
+          letterSpacing: '-0.02em'
+        }}
+      >
+        XR
       </span>
     </div>
   )
