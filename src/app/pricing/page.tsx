@@ -53,20 +53,20 @@ const pricingPlans = [
   {
     name: 'Starter',
     tagline: 'Perfect for small restaurants getting started',
-    monthlyPrice: 149,
-    yearlyPrice: 1430, // ~$119/month when billed yearly (20% off)
-    billingNote: '$119/month when billed yearly',
+    monthlyPrice: 249,
+    yearlyPrice: 2390, // ~$199/month when billed yearly (20% off)
+    billingNote: '$199/month when billed yearly',
     features: [
       // Website & Online Presence
       'One-Page Website',
       'Mobile Optimization',
-      'Basic Local SEO',
+      'Basic Local SEO Setup',
       'Google Maps Integration',
       // AR Features
-      'AR Restaurant Menu (5 dishes)',
-      'QR Code Design',
-      // Support & Customization
-      'Low Customization Level',
+      'AR Restaurant Menu 3D (5 Items)',
+      'AR Business Card',
+      'QR Code Table Branding',
+      // Support
       'Email Support',
     ],
     cta: 'Get Started',
@@ -75,26 +75,26 @@ const pricingPlans = [
   {
     name: 'Growth',
     tagline: 'For restaurants ready to expand their reach',
-    monthlyPrice: 199,
-    yearlyPrice: 1910, // ~$159/month when billed yearly (20% off)
-    billingNote: '$159/month when billed yearly',
+    monthlyPrice: 399,
+    yearlyPrice: 3830, // ~$319/month when billed yearly (20% off)
+    billingNote: '$319/month when billed yearly',
     features: [
       // Website & Online Presence
       'Multi-Page Website',
       'Mobile Optimization',
-      'Basic Local SEO',
+      'Basic + Keywords SEO Setup',
       'Google Maps Integration',
       // AR Features
-      'AR Restaurant Menu (Unlimited dishes)',
-      'QR Code Design',
+      'AR Restaurant Menu 3D (10 Items)',
+      'AR Business Card',
+      'QR Code Table Branding',
       // Content & Media
-      'AI Chatbot for Website',
-      'Photo Editing',
-      'Video Editing (Limited)',
+      'AI Chatbot',
+      'Video Editing (Edit Only - 10)',
+      'Content Suggestions',
       // Marketing & Events
-      'Limited Event/Festival AR Campaigns',
-      // Support & Customization
-      'Medium Customization Level',
+      'Limited AR Event Campaigns',
+      // Support
       'Priority Support',
     ],
     cta: 'Choose Growth',
@@ -103,30 +103,28 @@ const pricingPlans = [
   {
     name: 'Premium',
     tagline: 'Complete solution for ambitious restaurants',
-    monthlyPrice: 299,
-    yearlyPrice: 2870, // ~$239/month when billed yearly (20% off)
-    billingNote: '$239/month when billed yearly',
+    monthlyPrice: 499,
+    yearlyPrice: 4790, // ~$399/month when billed yearly (20% off)
+    billingNote: '$399/month when billed yearly',
     features: [
       // Website & Online Presence
       'Dynamic Website + Admin Panel',
       'Mobile Optimization',
-      'Advanced Local SEO',
+      'Advanced Local SEO + Reviews',
       'Google Maps Integration',
       // AR Features
-      'AR Restaurant Menu (Advanced + 3D Videos)',
-      'Custom QR Code Designs',
+      'AR Restaurant Menu 3D (Whole Menu)',
+      'AR Business Card',
+      'Custom Designed QR Code',
       // Content & Media
       'Advanced AI Chatbot (Custom-Trained)',
-      'Photo Editing',
-      'Video Editing (Edit + Upload)',
+      'Video Editing (Edit + Upload + Optimization)',
+      'Monthly Content Calendar',
       // Marketing & Events
-      'Event/Festival AR Campaigns',
-      'Business Promotion',
-      'Social Media Management (Instagram, Facebook, TikTok)',
+      'AR Event Campaigns (Seasonal & Events)',
+      'Social Media Management (Instagram, X, TikTok)',
       // Reports & Support
       'Monthly Performance Report',
-      'Full Customization Level',
-      'Dedicated Account Manager',
       'Dedicated Support',
     ],
     cta: 'Go Premium',
@@ -136,33 +134,29 @@ const pricingPlans = [
 
 const comparisonFeatures = [
   // Website & Online Presence
-  { feature: 'Website Type', starter: 'One-Page', growth: 'Multi-Page', premium: 'Dynamic + Admin' },
+  { feature: 'Website Type', starter: 'One-Page', growth: 'Multi-Page', premium: 'Dynamic + Admin Panel' },
   { feature: 'Mobile Optimization', starter: true, growth: true, premium: true },
-  { feature: 'SEO Setup', starter: 'Basic Local', growth: 'Basic Local', premium: 'Advanced Local' },
+  { feature: 'Local SEO Setup', starter: 'Basic', growth: 'Basic + Keywords', premium: 'Advanced + Reviews' },
   { feature: 'Google Maps Integration', starter: true, growth: true, premium: true },
   // AR Features
-  { feature: 'AR Restaurant Menu', starter: '5 dishes', growth: 'Unlimited', premium: 'Advanced + 3D Videos' },
-  { feature: 'QR Code Design', starter: true, growth: true, premium: 'Custom Designs' },
+  { feature: 'AR Restaurant Menu (3D)', starter: '5 Items', growth: '10 Items', premium: 'Whole Menu' },
+  { feature: 'AR Business Card', starter: true, growth: true, premium: true },
+  { feature: 'QR Code Table Branding', starter: true, growth: true, premium: 'Custom Designed' },
   // AI & Content
-  { feature: 'AI Chatbot (Website)', starter: false, growth: true, premium: 'Custom-Trained' },
-  { feature: 'Photo Editing', starter: false, growth: true, premium: true },
-  { feature: 'Video Editing', starter: false, growth: 'Limited', premium: 'Edit + Upload' },
+  { feature: 'AI Chatbot', starter: false, growth: true, premium: 'Advanced (Custom-Trained)' },
+  { feature: 'Video Editing', starter: false, growth: 'Edit Only (10)', premium: 'Edit + Upload + Optimization' },
+  { feature: 'Content Suggestions', starter: false, growth: true, premium: 'Monthly Content Calendar' },
   // Marketing & Promotion
-  { feature: 'Event/Festival AR Campaigns', starter: false, growth: 'Limited', premium: true },
-  { feature: 'Business Promotion', starter: false, growth: false, premium: true },
-  { feature: 'Social Media Management', starter: false, growth: false, premium: 'Instagram, Facebook, TikTok' },
+  { feature: 'Social Media Management', starter: false, growth: false, premium: 'Instagram + X + TikTok' },
+  { feature: 'AR Event Campaigns', starter: false, growth: 'Limited', premium: 'Seasonal & Events' },
   // Reports & Support
   { feature: 'Monthly Performance Report', starter: false, growth: false, premium: true },
-  { feature: 'Customization Level', starter: 'Low', growth: 'Medium', premium: 'Full' },
-  { feature: 'Dedicated Account Manager', starter: false, growth: false, premium: true },
   { feature: 'Support Type', starter: 'Email', growth: 'Priority', premium: 'Dedicated' },
 ];
 
 const addOns = [
-  { name: 'Extra Social Platform', price: '$49/month', description: 'Manage additional social platform' },
-  { name: 'Event AR Campaign', price: 'Custom Pricing', description: 'AR campaigns for events & festivals' },
-  { name: 'Digital Marketing', price: 'According to service fee', description: 'Google / Instagram ads setup' },
-  { name: 'Influencer Collaboration', price: 'Custom Pricing', description: 'Local Tampa influencer promotion' },
+  { name: 'Custom AI Chatbot Training', price: '$99 (One-time)', description: 'Brand-specific custom responses with advanced personalization' },
+  { name: 'Influencer Collaboration', price: 'Custom Pricing', description: 'Local Tampa influencer promotion, based on influencer rate' },
 ];
 
 const faqs = [
@@ -373,9 +367,9 @@ export default function PricingPage() {
               <thead>
                 <tr className="border-b border-dark/10">
                   <th className="text-left py-4 px-4 font-semibold text-dark">Feature</th>
-                  <th className="text-center py-4 px-4 font-semibold text-dark">Starter ($149)</th>
-                  <th className="text-center py-4 px-4 font-semibold text-primary">Growth ($199)</th>
-                  <th className="text-center py-4 px-4 font-semibold text-dark">Premium ($299)</th>
+                  <th className="text-center py-4 px-4 font-semibold text-dark">Starter ($249)</th>
+                  <th className="text-center py-4 px-4 font-semibold text-primary">Growth ($399)</th>
+                  <th className="text-center py-4 px-4 font-semibold text-dark">Premium ($499)</th>
                 </tr>
               </thead>
               <tbody>
@@ -439,7 +433,7 @@ export default function PricingPage() {
             Optional add-ons
           </motion.h2>
 
-          <motion.div variants={staggerContainer} className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <motion.div variants={staggerContainer} className="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto">
             {addOns.map((addon, index) => (
               <motion.div
                 key={index}

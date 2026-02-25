@@ -68,36 +68,41 @@ const contextResponses = {
   ],
   pricing: [
     "Great question! We have three plans:\n\n" +
-    "• **Starter** - $149/mo: Perfect for small businesses\n" +
-    "• **Growth** - $199/mo: Most popular with unlimited AR menu\n" +
-    "• **Premium** - $299/mo: Complete solution\n\n" +
+    "• **Starter** - $249/mo: Perfect for small businesses\n" +
+    "• **Growth** - $399/mo: Most popular with expanded features\n" +
+    "• **Premium** - $499/mo: Complete solution\n\n" +
     "Save 20% with yearly billing! Would you like to subscribe?",
   ],
   starter: [
-    "The **Starter plan** at $149/month includes:\n\n" +
+    "The **Starter plan** at $249/month includes:\n\n" +
     "• One-Page Website\n" +
-    "• AR Menu (up to 5 dishes)\n" +
-    "• QR Code Design\n" +
-    "• Basic SEO\n" +
+    "• AR Restaurant Menu 3D (5 Items)\n" +
+    "• AR Business Card\n" +
+    "• QR Code Table Branding\n" +
+    "• Basic Local SEO Setup\n" +
+    "• Google Maps Integration\n" +
     "• Email Support\n\n" +
     "Would you like to subscribe?"
   ],
   growth: [
-    "The **Growth plan** at $199/month is our most popular! Includes:\n\n" +
+    "The **Growth plan** at $399/month is our most popular! Includes:\n\n" +
     "• Multi-Page Website\n" +
-    "• Unlimited AR Menu Items\n" +
-    "• AI Chatbot for your website\n" +
-    "• Photo & Video Editing\n" +
+    "• AR Restaurant Menu 3D (10 Items)\n" +
+    "• AR Business Card\n" +
+    "• AI Chatbot\n" +
+    "• Video Editing (Edit Only - 10)\n" +
+    "• Content Suggestions\n" +
     "• Priority Support\n\n" +
     "Ready to grow? Would you like to subscribe?"
   ],
   premium: [
-    "The **Premium plan** at $299/month is our complete solution:\n\n" +
-    "• Dynamic Website with Admin Panel\n" +
-    "• Advanced AR with 3D Videos\n" +
-    "• Custom AI Chatbot\n" +
-    "• Social Media Management\n" +
-    "• Dedicated Account Manager\n\n" +
+    "The **Premium plan** at $499/month is our complete solution:\n\n" +
+    "• Dynamic Website + Admin Panel\n" +
+    "• AR Restaurant Menu 3D (Whole Menu)\n" +
+    "• Advanced AI Chatbot (Custom-Trained)\n" +
+    "• Social Media Management (Instagram, X, TikTok)\n" +
+    "• Monthly Performance Report\n" +
+    "• Dedicated Support\n\n" +
     "Would you like to subscribe?"
   ],
   howItWorks: [
@@ -340,15 +345,15 @@ export default function Chatbot() {
       case 'plan':
         const inputLower = input.toLowerCase()
         let plan = '', price = 0
-        if (inputLower.includes('starter') || inputLower === '1') { plan = 'Starter'; price = 149 }
-        else if (inputLower.includes('growth') || inputLower === '2') { plan = 'Growth'; price = 199 }
-        else if (inputLower.includes('premium') || inputLower === '3') { plan = 'Premium'; price = 299 }
+        if (inputLower.includes('starter') || inputLower === '1') { plan = 'Starter'; price = 249 }
+        else if (inputLower.includes('growth') || inputLower === '2') { plan = 'Growth'; price = 399 }
+        else if (inputLower.includes('premium') || inputLower === '3') { plan = 'Premium'; price = 499 }
         
         if (plan) {
           setOrderFlow(prev => ({ ...prev, step: 'name', data: { ...prev.data, plan, planPrice: price, billingCycle: 'monthly' } }))
           addBotMessage(`Great! You selected **${plan}** at $${price}/month.\n\nWhat's your full name?`)
         } else {
-          addBotMessage("Please select:\n\n1. Starter ($149/mo)\n2. Growth ($199/mo)\n3. Premium ($299/mo)")
+          addBotMessage("Please select:\n\n1. Starter ($249/mo)\n2. Growth ($399/mo)\n3. Premium ($499/mo)")
         }
         break
 
@@ -401,9 +406,9 @@ export default function Chatbot() {
         } else if (input.toLowerCase().includes('edit')) {
           setOrderFlow({ active: true, step: 'plan', data: {} })
           addBotMessage("Let's start over. Which plan?", [
-            { id: 's', text: 'Starter - $149/mo', action: 'selectPlan', data: 'Starter' },
-            { id: 'g', text: 'Growth - $199/mo', action: 'selectPlan', data: 'Growth' },
-            { id: 'p', text: 'Premium - $299/mo', action: 'selectPlan', data: 'Premium' }
+            { id: 's', text: 'Starter - $249/mo', action: 'selectPlan', data: 'Starter' },
+            { id: 'g', text: 'Growth - $399/mo', action: 'selectPlan', data: 'Growth' },
+            { id: 'p', text: 'Premium - $499/mo', action: 'selectPlan', data: 'Premium' }
           ])
         }
         break
@@ -430,16 +435,16 @@ export default function Chatbot() {
       if (intent === 'order') {
         setOrderFlow({ active: true, step: 'plan', data: {} })
         addBotMessage("Which plan would you like?", [
-          { id: 's', text: 'Starter - $149/mo', action: 'selectPlan', data: 'Starter' },
-          { id: 'g', text: 'Growth - $199/mo', action: 'selectPlan', data: 'Growth' },
-          { id: 'p', text: 'Premium - $299/mo', action: 'selectPlan', data: 'Premium' }
+          { id: 's', text: 'Starter - $249/mo', action: 'selectPlan', data: 'Starter' },
+          { id: 'g', text: 'Growth - $399/mo', action: 'selectPlan', data: 'Growth' },
+          { id: 'p', text: 'Premium - $499/mo', action: 'selectPlan', data: 'Premium' }
         ], 400)
       } else if (intent === 'confirm' && ['pricing', 'starter', 'growth', 'premium'].includes(lastIntent)) {
         setOrderFlow({ active: true, step: 'plan', data: {} })
         addBotMessage("Let's get you set up. Which plan?", [
-          { id: 's', text: 'Starter - $149/mo', action: 'selectPlan', data: 'Starter' },
-          { id: 'g', text: 'Growth - $199/mo', action: 'selectPlan', data: 'Growth' },
-          { id: 'p', text: 'Premium - $299/mo', action: 'selectPlan', data: 'Premium' }
+          { id: 's', text: 'Starter - $249/mo', action: 'selectPlan', data: 'Starter' },
+          { id: 'g', text: 'Growth - $399/mo', action: 'selectPlan', data: 'Growth' },
+          { id: 'p', text: 'Premium - $499/mo', action: 'selectPlan', data: 'Premium' }
         ], 400)
       } else if (['pricing', 'starter', 'growth', 'premium'].includes(intent)) {
         addBotMessage(getResponse(intent as keyof typeof contextResponses), [
@@ -471,9 +476,9 @@ export default function Chatbot() {
       case 'order':
         setOrderFlow({ active: true, step: 'plan', data: {} })
         addBotMessage("Which plan would you like?", [
-          { id: 's', text: 'Starter - $149/mo', action: 'selectPlan', data: 'Starter' },
-          { id: 'g', text: 'Growth - $199/mo', action: 'selectPlan', data: 'Growth' },
-          { id: 'p', text: 'Premium - $299/mo', action: 'selectPlan', data: 'Premium' }
+          { id: 's', text: 'Starter - $249/mo', action: 'selectPlan', data: 'Starter' },
+          { id: 'g', text: 'Growth - $399/mo', action: 'selectPlan', data: 'Growth' },
+          { id: 'p', text: 'Premium - $499/mo', action: 'selectPlan', data: 'Premium' }
         ])
         break
       case 'selectPlan':
