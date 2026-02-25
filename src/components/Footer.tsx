@@ -5,7 +5,6 @@ import { motion } from 'framer-motion'
 
 const footerLinks = {
   product: [
-    { label: 'Live Demo', href: '/try-now' },
     { label: 'Pricing', href: '/pricing' },
     { label: 'Features', href: '/#experiences' },
   ],

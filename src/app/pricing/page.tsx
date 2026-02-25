@@ -519,8 +519,8 @@ export default function PricingPage() {
               <Link href="/company/about" className="btn-primary">
                 Contact us
               </Link>
-              <Link href="/try-now" className="btn-secondary">
-                Start free trial
+              <Link href="/pricing" className="btn-secondary">
+                View Plans
               </Link>
             </motion.div>
           </div>

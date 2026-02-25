@@ -27,13 +27,6 @@
   "screenshots": [],
   "shortcuts": [
     {
-      "name": "Try AR Demo",
-      "short_name": "Demo",
-      "description": "Experience AR photo frames, business cards and more",
-      "url": "/try-now",
-      "icons": [{"src": "/favicon.svg", "sizes": "96x96"}]
-    },
-    {
       "name": "View Pricing",
       "short_name": "Pricing",
       "description": "Check our AR solution pricing plans",

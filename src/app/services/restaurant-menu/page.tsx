@@ -106,14 +106,14 @@ export default function RestaurantMenuARPage() {
               transition={{ duration: 0.8, delay: 0.3 }}
               className="flex flex-wrap gap-4"
             >
-              <Link href="/try-now" className="btn-primary">
-                See Demo Menu
+              <Link href="/pricing" className="btn-primary">
+                Get Started
                 <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
               </Link>
-              <Link href="/pricing" className="btn-outline">
-                Partner With Us
+              <Link href="/company/about" className="btn-outline">
+                Contact Us
               </Link>
             </motion.div>
           </div>
@@ -382,10 +382,10 @@ export default function RestaurantMenuARPage() {
                   Get Started
                 </Link>
                 <Link 
-                  href="/try-now" 
+                  href="/company/about" 
                   className="inline-flex items-center justify-center px-8 py-4 border-2 border-white/30 text-white rounded-full font-medium transition-all duration-300 hover:bg-white hover:text-dark hover:scale-105"
                 >
-                  See Demo First
+                  Contact Us
                 </Link>
               </motion.div>
             </div>

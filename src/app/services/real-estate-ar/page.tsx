@@ -106,14 +106,14 @@ export default function RealEstateARPage() {
               transition={{ duration: 0.8, delay: 0.3 }}
               className="flex flex-wrap gap-4"
             >
-              <Link href="/try-now" className="btn-primary">
-                See Demo Tour
+              <Link href="/pricing" className="btn-primary">
+                Get Started
                 <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
               </Link>
-              <Link href="/pricing" className="btn-outline">
-                Get Started
+              <Link href="/company/about" className="btn-outline">
+                Contact Us
               </Link>
             </motion.div>
           </div>
@@ -260,8 +260,8 @@ export default function RealEstateARPage() {
                 ))}
               </motion.ul>
               <motion.div variants={fadeUp}>
-                <Link href="/try-now" className="btn-primary">
-                  Try Demo Tour
+                <Link href="/company/about" className="btn-primary">
+                  Contact Us
                 </Link>
               </motion.div>
             </div>
@@ -352,8 +352,8 @@ export default function RealEstateARPage() {
                 <Link href="/pricing" className="btn-primary hover:shadow-[0_0_30px_rgba(0,204,102,0.4)] hover:scale-105 transition-all duration-300">
                   Get Started
                 </Link>
-                <Link href="/try-now" className="btn-outline border-white/30 text-white hover:bg-white/10 hover:scale-105 transition-all duration-300">
-                  See Demo First
+                <Link href="/company/about" className="btn-outline border-white/30 text-white hover:bg-white/10 hover:scale-105 transition-all duration-300">
+                  Contact Us
                 </Link>
               </motion.div>
             </div>

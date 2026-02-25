@@ -117,7 +117,7 @@ const contextResponses = {
     "• **AR Photo Frames** - Memories come to life\n" +
     "• **AR Business Cards** - Make an impression\n" +
     "• **AR Menus** - Preview dishes in 3D\n\n" +
-    "Visit our Try Now page to experience them!"
+    "Contact us to experience them or check our pricing!"
   ],
   contact: [
     `You can reach us:\n\n` +
@@ -495,8 +495,8 @@ export default function Chatbot() {
         addBotMessage(getResponse('contact'), [{ id: 'o', text: 'Place Order', action: 'order' }])
         break
       case 'demo': case 'goToDemo':
-        addBotMessage("Taking you to demos!")
-        setTimeout(() => router.push('/try-now'), 1500)
+        addBotMessage("Let me show you our experiences!")
+        setTimeout(() => router.push('/#experiences'), 1500)
         break
       case 'confirmOrder': processOrderStep('confirm'); break
       case 'editOrder': processOrderStep('edit'); break
