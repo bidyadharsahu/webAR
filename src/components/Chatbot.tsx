@@ -367,7 +367,7 @@ export default function Chatbot() {
       case 'email':
         if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input)) {
           setOrderFlow(prev => ({ ...prev, step: 'phone', data: { ...prev.data, customerEmail: input } }))
-          addBotMessage("Perfect! Your phone number? (with country code, e.g., +91 7205211669)")
+          addBotMessage("Perfect! Your phone number? (with country code, e.g., +1 71252569994)")
         } else addBotMessage("Please enter a valid email:")
         break
 
