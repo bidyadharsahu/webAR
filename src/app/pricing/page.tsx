@@ -90,7 +90,7 @@ const pricingPlans = [
       'QR Code Table Branding',
       // Content & Media
       'AI Chatbot',
-      'Video Editing (Edit Only - 10)',
+      'Video Editing (Edit Only (10 Videos))',
       'Content Suggestions',
       // Marketing & Events
       'Limited AR Event Campaigns',
@@ -118,7 +118,7 @@ const pricingPlans = [
       'Custom Designed QR Code',
       // Content & Media
       'Advanced AI Chatbot (Custom-Trained)',
-      'Video Editing (Edit + Upload + Optimization)',
+      'Video Editing (Edit (25 Videos) + Upload + Optimization)',
       'Monthly Content Calendar',
       // Marketing & Events
       'AR Event Campaigns (Seasonal & Events)',
