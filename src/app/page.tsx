@@ -132,8 +132,15 @@ export default function HomePage() {
 
         <div className="container-custom relative z-10">
           <div className="max-w-3xl">
-            {/* Hidden SEO H1 for brand */}
-            <h1 className="sr-only">Netrik XR - #1 Augmented Reality Company | AR Photo Frames, Business Cards & Menus</h1>
+            {/* Main H1 - Visible for SEO and Users */}
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.05 }}
+              className="text-lg md:text-xl font-medium text-white/90 mb-4 tracking-wide"
+            >
+              Netrik XR — #1 Augmented Reality Company
+            </motion.h1>
             
             <motion.div
               initial={{ opacity: 0, y: 30 }}

@@ -50,16 +50,16 @@ export default function NotFound() {
                 Pricing
               </Link>
               <span className="text-dark/20">•</span>
-              <Link href="/try-now" className="text-sm text-primary hover:underline">
-                Try Demo
-              </Link>
-              <span className="text-dark/20">•</span>
               <Link href="/company/careers" className="text-sm text-primary hover:underline">
                 Careers
               </Link>
               <span className="text-dark/20">•</span>
               <Link href="/#experiences" className="text-sm text-primary hover:underline">
                 Experiences
+              </Link>
+              <span className="text-dark/20">•</span>
+              <Link href="/company/about" className="text-sm text-primary hover:underline">
+                Contact
               </Link>
             </div>
           </div>

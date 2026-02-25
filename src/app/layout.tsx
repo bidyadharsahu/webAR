@@ -381,6 +381,35 @@ const faqSchema = {
   ],
 }
 
+// JSON-LD for SoftwareApplication (helps with brand recognition)
+const softwareAppSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  '@id': `${siteUrl}/#software`,
+  name: 'Netrik XR WebAR Platform',
+  alternateName: ['Netrik XR', 'NetrikXR'],
+  applicationCategory: 'BusinessApplication',
+  operatingSystem: 'Web Browser',
+  url: siteUrl,
+  description: 'Netrik XR WebAR platform for creating augmented reality experiences. No app download required.',
+  offers: {
+    '@type': 'Offer',
+    price: '249',
+    priceCurrency: 'USD',
+    priceValidUntil: '2027-12-31',
+  },
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: '4.9',
+    ratingCount: '127',
+    bestRating: '5',
+    worstRating: '1',
+  },
+  provider: {
+    '@id': `${siteUrl}/#organization`,
+  },
+}
+
 export default function RootLayout({
   children,
 }: {
@@ -418,6 +447,12 @@ export default function RootLayout({
           id="faq-schema"
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+          strategy="afterInteractive"
+        />
+        <Script
+          id="software-app-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareAppSchema) }}
           strategy="afterInteractive"
         />
         
