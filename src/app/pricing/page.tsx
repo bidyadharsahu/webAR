@@ -144,7 +144,7 @@ const comparisonFeatures = [
   { feature: 'QR Code Table Branding', starter: true, growth: true, premium: 'Custom Designed' },
   // AI & Content
   { feature: 'AI Chatbot', starter: false, growth: true, premium: 'Advanced (Custom-Trained)' },
-  { feature: 'Video Editing', starter: false, growth: 'Edit Only (10)', premium: 'Edit + Upload + Optimization' },
+  { feature: 'Video Editing', starter: false, growth: 'Edit Only (10 Videos)', premium: 'Edit (25 Videos) + Upload + Optimization' },
   { feature: 'Content Suggestions', starter: false, growth: true, premium: 'Monthly Content Calendar' },
   // Marketing & Promotion
   { feature: 'Social Media Management', starter: false, growth: false, premium: 'Instagram + X + TikTok' },
